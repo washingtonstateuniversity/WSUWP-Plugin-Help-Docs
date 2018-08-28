@@ -22,6 +22,7 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
+* Base plugin loader and index placeholder.
 * Plugin documentation and licensing files.
 * Build tools and configuration.
 * Initial config files.
