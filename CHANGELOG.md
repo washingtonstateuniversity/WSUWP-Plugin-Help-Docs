@@ -22,6 +22,8 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
+* Extension of the `Walker_Page` class to fix output of `wp_list_pages()` on the admin dashboard page.
+* Template to display the plugin admin dashboard page.
 * Plugin setup and uninstall classes.
 * Base plugin loader and index placeholder.
 * Plugin documentation and licensing files.
