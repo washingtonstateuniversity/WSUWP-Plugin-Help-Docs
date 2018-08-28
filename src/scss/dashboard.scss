@@ -1,0 +1,84 @@
+/*
+Plugin Name: WSUWP HRS Help
+Author: Adam Turner, WSU University Communications
+Author URI: https://hrs.wsu.edu/
+Version: 0.1.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+*/
+
+$highlight-bright: #00b9eb; // Bright blue
+$highlight-light: #f7fcfe; // Light blue
+$wp-dark: #23282d;
+$wp-gray: #e1e1e1;
+
+.hrs-help-documents-wrap {
+	background-color: #fff;
+	border: 1px solid $wp-gray;
+	border-radius: 3px;
+	margin-top: 1.5em;
+}
+
+.hrs-help-documents-list {
+
+	a {
+		border-left: 4px solid transparent;
+		display: block;
+		padding: 8px 10px;
+		text-decoration: none;
+	}
+
+	li.current_page_item > a {
+		background-color: lighten($wp-dark, 10%);
+		border-color: $highlight-bright;
+		color: #fff;
+		font-weight: 600;
+		position: relative;
+
+		&:after {
+			border: 8px solid transparent;
+			border-right-color: $highlight-light;
+			content: " ";
+			height: 0;
+			margin-top: -8px;
+			pointer-events: none;
+			position: absolute;
+			right: -1px;
+			top: 50%;
+			width: 0;
+		}
+	}
+
+}
+
+.hrs-help-documents {
+	background-color: $highlight-light;
+}
+
+.hrs-help-document {
+	font-size: 16px;
+	min-height: 370px;
+	padding: 0 1em 1.5em;
+
+	p {
+		font-size: inherit;
+	}
+
+	.article-body {
+		margin-top: 1.5em;
+	}
+}
+
+@media (min-width: 34em) {
+
+	.hrs-help-documents-wrap {
+		display: grid;
+		grid-auto-rows: minmax(4rem, auto);
+		grid-template-columns: minmax(100px, .25fr) 1fr;
+	}
+
+	.hrs-help-document {
+		font-size: 18px;
+	}
+
+}
