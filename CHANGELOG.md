@@ -22,5 +22,6 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
+* Plugin documentation and licensing files.
 * Build tools and configuration.
 * Initial config files.

@@ -1,0 +1,48 @@
+# WSUWP HRS Help
+
+This plugin creates a Help custom post type. The Help posts cannot be viewed or queries from the front end of the site. They are intended to provide help, guidance, and instructions for registered site users. The plugin generates two new areas in the WP Admin area:
+
+1. A subpage under the Tools section where registered site users (with Editor capabilities and up) can manage Help posts.
+2. A Help dashboard under the main Dashboard section where registered site users (with at least "read" permissions) can view Help posts.
+
+## For Developers
+
+@todo Explain the directory structure, build process, and build and testing tools.
+
+### Initial Setup
+
+1. Install the NPM dependencies.
+2. Install the Composer dependencies.
+3. Ensure PHP coding standards are properly sniffed.
+4. Ensure Sass files are properly linted.
+
+In a terminal:
+
+~~~
+npm install
+composer install
+npm run phpcs
+npm run lintscss
+~~~
+
+### Browser Support
+
+The WSUWP HRS Help plugin uses [Browserlist](https://github.com/browserslist/browserslist) to help monitor feature support. It aims provide a reasonably fast and fully usable experience on older browsers while progressively enhancing the user experience on more modern browsers.
+
+Specifically, this plugin aims to support all browsers with greater than 1% global usage (based on data from [Can I Use](http://caniuse.com/)), as well as IE 8-11, and the Firefox Extended Support Release (ESR). The Browserlist configuration, defined in `package.json` is:
+
+~~~
+"browserslist": [
+  "> 1%",
+  "ie 8-11",
+  "Firefox ESR"
+],
+~~~
+
+Use the [Browserlist online demo](http://browserl.ist/) (search for `> 1%,ie 8-11,Firefox ESR`) to review the current list of mobile and desktop browsers this resolves to.
+
+### Bugs and/or Fixes for WSUP HRS Help
+
+Please submit bugs and/or fixes to: <https://github.com/washingtonstateuniversity/wsuwp-hrs-help/issues>. Please read (and adhere to) the guidelines for contributions detailed in [CONTRIBUTING.md](https://github.com/washingtonstateuniversity/wsuwp-hrs-help/blob/master/CONTRIBUTING.md).
+
+To view release & update notes, read the [CHANGELOG.md]https://github.com/washingtonstateuniversity/wsuwp-hrs-help/blob/master/CHANGELOG.md).
