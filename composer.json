@@ -1,0 +1,17 @@
+{
+  "name": "washingtonstateuniversity/wsuwp-hrs-help",
+  "authors": [
+    {
+      "name": "Adam Turner"
+    }
+  ],
+  "require-dev": {
+    "squizlabs/php_codesniffer": "3.3.x",
+    "wp-coding-standards/wpcs": "1.0.x",
+    "phpunit/phpunit": "7.3.x"
+  },
+  "scripts": {
+    "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
+    "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+  }
+}

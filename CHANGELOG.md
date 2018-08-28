@@ -22,4 +22,5 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
-* 
+* Build tools and configuration.
+* Initial config files.
