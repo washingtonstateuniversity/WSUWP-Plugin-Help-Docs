@@ -18,7 +18,7 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2018-08-28)
 
 ### Added
 
