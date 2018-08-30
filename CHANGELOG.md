@@ -18,6 +18,12 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
+## 0.2.0 (unreleased)
+
+### Added
+
+* Custom syntax highlighting to match HRS Style Guide.
+
 ## 0.1.0 (2018-08-28)
 
 ### Added
