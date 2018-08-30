@@ -22,6 +22,7 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
+* Deploy NPM script in `package.json` to create a production build version.
 * Custom syntax highlighting to match HRS Style Guide.
 
 ## 0.1.0 (2018-08-28)
