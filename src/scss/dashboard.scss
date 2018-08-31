@@ -7,6 +7,10 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
+// Import partials.
+@import "partials/syntax-highlighting";
+
+$highlight: #0073aa; // WP blue
 $highlight-bright: #00b9eb; // Bright blue
 $highlight-light: #f7fcfe; // Light blue
 $wp-dark: #23282d;
@@ -21,16 +25,20 @@ $wp-gray: #e1e1e1;
 
 .hrs-help-documents-list {
 
+	li {
+		margin-bottom: 0;
+	}
+
 	a {
 		border-left: 4px solid transparent;
 		display: block;
-		padding: 8px 10px;
+		padding: 12px 10px;
 		text-decoration: none;
 	}
 
 	li.current_page_item > a {
-		background-color: lighten($wp-dark, 10%);
-		border-color: $highlight-bright;
+		background-color: lighten($wp-dark, 15%);
+		border-color: $highlight;
 		color: #fff;
 		font-weight: 600;
 		position: relative;
@@ -49,6 +57,49 @@ $wp-gray: #e1e1e1;
 		}
 	}
 
+	li.current_page_parent > a {
+		background-color: $highlight;
+		color: #fff;
+	}
+
+	ul.children {
+		list-style: none;
+		position: absolute;
+		top: -1000em;
+		left: 160px;
+		overflow: visible;
+		word-wrap: break-word;
+
+		a {
+			color: #fff;
+
+			&:hover,
+			&:focus {
+				color: $highlight-bright;
+			}
+		}
+	}
+
+	li.page_item_has_children.current_page_item,
+	li.page_item_has_children.current_page_parent,
+	li.page_item_has_children.current_page_ancestor {
+
+		> a {
+			background-color: $highlight;
+			color: #fff;
+		}
+
+		ul.children {
+			background-color: #32373c;
+			bottom: auto;
+			left: auto;
+			position: relative;
+			right: auto;
+			top: auto;
+			z-index: 3;
+		}
+	}
+
 }
 
 .hrs-help-documents {
@@ -64,9 +115,44 @@ $wp-gray: #e1e1e1;
 		font-size: inherit;
 	}
 
+	ul {
+		list-style-type: disc;
+		margin-left: 2em;
+	}
+
+	dd,
+	li {
+		line-height: 1.5;
+	}
+
 	.article-body {
 		margin-top: 1.5em;
 	}
+
+	aside p,
+	.aside p {
+		font-size: 1.2rem;
+	}
+
+	.clarification {
+		background-color: #fff;
+		border: 1px solid $highlight;
+		box-sizing: border-box;
+		margin-bottom: 1.5rem;
+		padding: 0 1.5rem;
+	}
+
+	aside,
+	.aside,
+	.clarification,
+	figure {
+
+		img {
+			height: auto;
+			max-width: 100%;
+		}
+	}
+
 }
 
 @media (min-width: 34em) {
@@ -74,11 +160,36 @@ $wp-gray: #e1e1e1;
 	.hrs-help-documents-wrap {
 		display: grid;
 		grid-auto-rows: minmax(4rem, auto);
-		grid-template-columns: minmax(100px, .25fr) 1fr;
+		grid-template-columns: minmax(100px, .25fr) minmax(300px, 1fr);
 	}
 
 	.hrs-help-document {
 		font-size: 18px;
+	}
+
+	.comparison {
+		display: grid;
+		margin-bottom: 1.5em;
+		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	}
+
+	.comparison-option:not(:last-child) {
+		border-right: 3px solid $dt-orange;
+		margin-right: 2em;
+		padding-right: 2em;
+	}
+
+}
+
+@media (min-width: 46em) {
+
+	aside,
+	.aside {
+		float: right;
+		margin-top: 0;
+		margin-left: 2rem;
+		max-width: 594px;
+		width: 30vw;
 	}
 
 }
