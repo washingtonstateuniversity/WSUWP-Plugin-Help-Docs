@@ -22,6 +22,7 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
+* Dashboard widget on the main admin dashboard page to display recently updated help documents and links to view and manage documents.
 * Styles to allow for nested hierarchical menus in the Help page nav menu.
 * Deploy NPM script in `package.json` to create a production build version.
 * Custom syntax highlighting to match HRS Style Guide.

@@ -10,11 +10,64 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 // Import partials.
 @import "partials/syntax-highlighting";
 
+/***************
+Define variables
+***************/
+
 $highlight: #0073aa; // WP blue
 $highlight-bright: #00b9eb; // Bright blue
 $highlight-light: #f7fcfe; // Light blue
 $wp-dark: #23282d;
 $wp-gray: #e1e1e1;
+
+/************************
+The Help Dashboard Widget
+************************/
+
+#wsuwp-help-welcome p:first-of-type:before {
+	color: #82878c;
+	content: "\f339";
+	font: 400 20px/1 dashicons;
+	speak: none;
+	display: inline-block;
+	padding: 0 5px 0 0;
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-decoration: none !important;
+	vertical-align: top;
+}
+
+#wsuwp-help-updated {
+	border-top: 1px solid #eee;
+}
+
+.wsuwp-updated-help-documents-list li {
+	color: #72777c;
+	display: flex;
+	justify-content: space-between;
+}
+
+#wsuwp-help-access {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: flex-end;
+
+	a {
+		margin-left: 1em;
+	}
+
+	.wsu-cougar-head {
+		height: 36px;
+		margin-right: auto;
+		width: auto;
+	}
+}
+
+/**********************
+The Help Dashboard Page
+**********************/
 
 .hrs-help-documents-wrap {
 	background-color: #fff;
