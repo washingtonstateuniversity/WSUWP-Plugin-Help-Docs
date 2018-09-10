@@ -30,7 +30,7 @@ class WSU_HRS_Help {
 	 * @since 0.1.0
 	 * @var int
 	 */
-	protected static $current_help_doc = 1;
+	protected static $default_help_doc = 1;
 
 	/**
 	 * Slug used to register the post type.
@@ -100,6 +100,7 @@ class WSU_HRS_Help {
 		add_action( 'after_setup_theme', array( $this, 'maybe_flush_rewrite_rules' ) );
 		add_action( 'admin_menu', array( $this, 'help_menu' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'dashboard_setup' ) );
+		add_action( 'post_submitbox_misc_actions', array( $this, 'post_submitbox_options' ) );
 		add_filter( 'post_type_link', array( $this, 'set_page_link' ), 10, 2 );
 	}
 
@@ -205,13 +206,13 @@ class WSU_HRS_Help {
 		// Verify the requst nonce and save the document ID if successful.
 		if ( isset( $_GET['_wsuwp_hrs_help_nonce'] ) ) {
 			if ( wp_verify_nonce( $_GET['_wsuwp_hrs_help_nonce'], 'wsuwp-hrs-help-nav_' . $doc ) ) {
-				self::$current_help_doc = $doc;
+				self::$default_help_doc = $doc;
 			} else {
 				wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-hrs-help' ) );
 			}
 		}
 
-		return self::$current_help_doc;
+		return self::$default_help_doc;
 	}
 
 	/**
@@ -371,6 +372,35 @@ class WSU_HRS_Help {
 			<a class="button button-primary" href="<?php echo esc_url( $this->get_admin_page_url() ); ?>">
 				<?php esc_html_e( 'View Help', 'wsu-hrs-help' ); ?>
 			</a>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Adds options to the Help post submit box.
+	 *
+	 * Callback function for the `post_submitbox_misc_actions` action hook.
+	 *
+	 * @link https://codex.wordpress.org/Plugin_API/Action_Reference/post_submitbox_misc_actions
+	 *
+	 * @since 0.2.0
+	 */
+	public function post_submitbox_options() {
+		$post = get_post();
+
+		if ( self::$post_type_slug !== $post->post_type ) {
+			return;
+		}
+
+		// Add nonce for use in save_spacetime_meta() function.
+		wp_nonce_field( 'postbox-actions_' . $post->ID, '_wsuwp_help_postbox_actions_nonce' );
+
+		?>
+		<div class="misc-pub-section">
+		    <input type="checkbox" name="wsuwp_help_homepage_select" id="wsuwp_help_homepage_select" <?php checked( $post->ID === self::$default_help_doc ); ?> />
+		    <label for="cws_wp_help_make_default_doc">
+		        <?php _e( 'Set as default help document', 'wsu-hrs-help' ); ?>
+		    </label>
 		</div>
 		<?php
 	}
