@@ -1,8 +1,8 @@
-# WSUWP HRS Help Changelog
+# WSUWP Help Docs Changelog
 
 Author: Adam Turner
 Author: Washington State University
-URI: https://github.com/washingtonstateuniversity/wsuwp-hrs-help
+URI: https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs
 
 <!--
 Changelog formatting (http://semver.org/):
@@ -18,14 +18,16 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
-## 0.2.1 (2018-09-11)
+## 0.2.2 (2018-09-11)
 
 ### Fixed
 
+* Rename to site-agnostic plugin.
 * Some phpcs linting corrections.
 
 ### Changed
 
+* Clean up gitignore file.
 * Use `0` instead of `1` as the default help document placeholder ID to avoid collisions.
 * Updated default help document (dashboard homepage) to provide more information to users with Editor+ permissions.
 * Set several properties to non-static since they don't really need to be accessible outside of the class.
@@ -39,7 +41,7 @@ Changelog formatting (http://semver.org/):
 * Dashboard widget on the main admin dashboard page to display recently updated help documents and links to view and manage documents.
 * Styles to allow for nested hierarchical menus in the Help page nav menu.
 * Deploy NPM script in `package.json` to create a production build version.
-* Custom syntax highlighting to match HRS Style Guide.
+* Custom syntax highlighting.
 
 ### Removed
 

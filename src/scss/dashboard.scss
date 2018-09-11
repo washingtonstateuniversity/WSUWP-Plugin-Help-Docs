@@ -1,6 +1,6 @@
 /*
-Plugin Name: WSUWP HRS Help
-Author: Adam Turner, WSU University Communications
+Plugin Name: WSUWP Help Docs
+Author: Adam Turner, WSU University Communication
 Author URI: https://hrs.wsu.edu/
 Version: 0.2.1
 License: GPLv2 or later
@@ -69,14 +69,14 @@ The Help Dashboard Widget
 The Help Dashboard Page
 **********************/
 
-.hrs-help-documents-wrap {
+.wsuwp-help-documents-wrap {
 	background-color: #fff;
 	border: 1px solid $wp-gray;
 	border-radius: 3px;
 	margin-top: 1.5em;
 }
 
-.hrs-help-documents-list {
+.wsuwp-help-documents-list {
 
 	li {
 		margin-bottom: 0;
@@ -155,11 +155,11 @@ The Help Dashboard Page
 
 }
 
-.hrs-help-documents {
+.wsuwp-help-documents {
 	background-color: $highlight-light;
 }
 
-.hrs-help-document {
+.wsuwp-help-document {
 	font-size: 16px;
 	min-height: 370px;
 	padding: 0 1em 1.5em;
@@ -210,13 +210,13 @@ The Help Dashboard Page
 
 @media (min-width: 34em) {
 
-	.hrs-help-documents-wrap {
+	.wsuwp-help-documents-wrap {
 		display: grid;
 		grid-auto-rows: minmax(4rem, auto);
 		grid-template-columns: minmax(100px, .25fr) minmax(300px, 1fr);
 	}
 
-	.hrs-help-document {
+	.wsuwp-help-document {
 		font-size: 18px;
 	}
 

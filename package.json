@@ -1,9 +1,9 @@
 {
-  "name": "wsuwp-hrs-help",
+  "name": "wsuwp-help-docs",
   "version": "0.2.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/washingtonstateuniversity/wsuwp-hrs-help"
+    "url": "https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs"
   },
   "author": "washingtonstateuniversity",
   "contributors": [

@@ -1,8 +1,8 @@
 <?php
 /**
- * Custom Post API: Walker_HRS_Help_Page_List class
+ * Custom Post API: Walker_WSUWP_Help_Page_List class
  *
- * @package WSUWP_HRS_Help
+ * @package WSUWP_Help_Docs
  * @since 0.1.0
  */
 
@@ -16,7 +16,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * This is essentially a duplicate of the default Walker_Page::start_el()
  * method. It is only modified to account for the lack of a `$current_page`
- * object. We use `WSU_HRS_Help::get_current_help_doc_id()` to set the value
+ * object. We use `WSUWP_Help_Docs::get_current_help_doc_id()` to set the value
  * of `$current_page` so that the current page conditional classes work as
  * expected. We've also added a nonce verification to the page permalink to aid
  * in verifying in the dashboard template that requests come from the right
@@ -26,7 +26,7 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @see Walker_Page
  */
-class Walker_HRS_Help_Page_List extends Walker_Page {
+class Walker_WSUWP_Help_Page_List extends Walker_Page {
 	/**
 	 * Outputs the beginning of the current element in the tree.
 	 *
@@ -61,7 +61,7 @@ class Walker_HRS_Help_Page_List extends Walker_Page {
 		}
 
 		// Manually retrieve the current page ID.
-		$current_page = WSU_HRS_Help::get_current_help_doc_id();
+		$current_page = WSUWP_Help_Docs::get_current_help_doc_id();
 
 		if ( ! empty( $current_page ) ) {
 			$_current_page = get_post( $current_page );
@@ -104,7 +104,7 @@ class Walker_HRS_Help_Page_List extends Walker_Page {
 		$atts = array();
 
 		// Add a nonce value to the page permalink for verification.
-		$atts['href'] = wp_nonce_url( get_permalink( $page->ID ), 'wsuwp-hrs-help-nav_' . $page->ID, '_wsuwp_hrs_help_nonce' );
+		$atts['href'] = wp_nonce_url( get_permalink( $page->ID ), 'wsuwp-help-docs-nav_' . $page->ID, '_wsuwp_wsuwp_help_nonce' );
 
 		/**
 		 * Filters the HTML attributes applied to a page menu item's anchor element.

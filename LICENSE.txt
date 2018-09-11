@@ -1,4 +1,4 @@
-WSUWP HRS Help
+WSUWP Help Docs
 
 Copyright 2017 by Washington State University
 
@@ -361,6 +361,6 @@ Public License instead of this License.
 WRITTEN OFFER
 
 The source code for any program binaries or compressed scripts that are
-included with WSUWP HRS Help can be freely obtained at the following URL:
+included with WSUWP Help Docs can be freely obtained at the following URL:
 
-https://github.com/washingtonstateuniversity/wsuwp-hrs-help/
+https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs/

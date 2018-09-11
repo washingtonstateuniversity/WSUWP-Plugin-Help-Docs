@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="WSUWP HRS Help">
+<ruleset name="WSUWP Help Docs">
 
     <!-- Config flags for PHPCS
 		 s flag: Show sniff codes in all reports.
@@ -13,7 +13,7 @@
     <!-- Check all files in this directory and the directories below it. -->
     <file>.</file>
 
-    <description>Sniffs for PHP coding standards used by WSUWP HRS Help</description>
+    <description>Sniffs for PHP coding standards used by WSUWP Help Docs</description>
 
     <rule ref="WordPress-Extra">
         <exclude name="WordPress.NamingConventions.ValidFunctionName" />

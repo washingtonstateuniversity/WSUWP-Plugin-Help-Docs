@@ -1,12 +1,12 @@
 <?php
 /**
- * HRS Help Plugin Dashboard Template
+ * WSUWP Help Plugin Dashboard Template
  *
- * A template that displays the main HRS Help Dashboard page, which provides a
+ * A template that displays the main WSUWP Help Dashboard page, which provides a
  * navigation list of all published Help posts and displays the current
  * requested post document.
  *
- * @package WSUWP_HRS_Help
+ * @package WSUWP_Help_Docs
  * @since 0.1.0
  */
 
@@ -15,19 +15,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<div class="wrap hrs-help">
-	<h1 class="wp-heading-inline"><?php esc_html_e( 'Help Documents', 'hrs-wsu-edu' ); ?></h1>
+<div class="wrap wsuwp-help">
+	<h1 class="wp-heading-inline"><?php esc_html_e( 'Help Documents', 'wsuwp-help-docs' ); ?></h1>
 
 	<?php
 	// Stop execution if the user doesn't have read permissions.
 	if ( ! current_user_can( 'read' ) ) {
-		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-hrs-help' ) );
+		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-wsuwp-help' ) );
 	}
 
 	if ( current_user_can( 'publish_posts' ) ) {
 		?>
 		<a class="page-title-action" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' ) . self::$post_type_slug ); ?>">
-			<?php echo esc_html_x( 'Manage', 'verb. Button with limited space', 'wsu-hrs-help' ); ?>
+			<?php echo esc_html_x( 'Manage', 'verb. Button with limited space', 'wsu-wsuwp-help' ); ?>
 		</a>
 		<?php
 	}
@@ -35,8 +35,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<hr class="wp-header-end">
 
-	<div class="hrs-help-documents-wrap">
-		<nav class="hrs-help-documents-list">
+	<div class="wsuwp-help-documents-wrap">
+		<nav class="wsuwp-help-documents-list">
 			<ul>
 				<?php
 				/*
@@ -48,13 +48,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'post_type'    => self::$post_type_slug,
 					'hierarchical' => true,
 					'title_li'     => '',
-					'walker'       => new Walker_HRS_Help_Page_List(),
+					'walker'       => new Walker_WSUWP_Help_Page_List(),
 				) );
 				?>
 			</ul>
 		</nav>
 
-		<section class="hrs-help-documents">
+		<section class="wsuwp-help-documents">
 			<?php
 			// Retrieve the current requested help document ID.
 			$help_doc_id = $this->get_current_help_doc_id();
@@ -68,17 +68,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 				if ( $docs->have_posts() ) :
 					while ( $docs->have_posts() ) : $docs->the_post();
 						?>
-						<article class="hrs-help-document" id="hrs-help-document-<?php the_ID(); ?>">
+						<article class="wsuwp-help-document" id="wsuwp-help-document-<?php the_ID(); ?>">
 							<header class="article-header">
 								<h2><?php the_title(); ?></h2>
-								<p><small><em><?php echo esc_html__( 'Last updated:', 'wsu-hrs-edu' ); ?></em> <time class="article-modify-date" datetime="<?php esc_attr( the_modified_date( 'c' ) ); ?>"><?php esc_html( the_modified_date() ); ?></time></small></p>
+								<p><small><em><?php echo esc_html__( 'Last updated:', 'wsuwp-help-docs' ); ?></em> <time class="article-modify-date" datetime="<?php esc_attr( the_modified_date( 'c' ) ); ?>"><?php esc_html( the_modified_date() ); ?></time></small></p>
 							</header>
 							<div class="article-body">
 								<?php
 								the_content();
 
 								if ( current_user_can( 'edit_others_posts' ) ) {
-									edit_post_link( __( 'Edit', 'wsu-hrs-help' ), ' <pre>', '</pre>' );
+									edit_post_link( __( 'Edit', 'wsu-wsuwp-help' ), ' <pre>', '</pre>' );
 								}
 								?>
 							</div>
@@ -88,25 +88,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 					wp_reset_postdata();
 				else :
 					?>
-					<article class="hrs-help-document">
+					<article class="wsuwp-help-document">
 						<header class="article-header">
-							<h2><?php __( 'No documents found', 'wsu-hrs-help' ); ?></h2>
+							<h2><?php __( 'No documents found', 'wsu-wsuwp-help' ); ?></h2>
 						</header>
 					</article>
 					<?php
 				endif;
 			elseif ( 0 === $help_doc_id ) :
 				?>
-				<article class="hrs-help-document" id="hrs-help-document-home">
+				<article class="wsuwp-help-document" id="wsuwp-help-document-home">
 					<header class="article-header">
-						<h2><?php echo esc_html__( 'Welcome to the Help Dashboard', 'wsu-hrs-help' ); ?></h2>
+						<h2><?php echo esc_html__( 'Welcome to the Help Dashboard', 'wsu-wsuwp-help' ); ?></h2>
 					</header>
 					<div class="article-body">
-						<p><?php echo esc_html__( 'This is the home dashboard of the WSU HRS Help Documents.', 'wsu-hrs-edu' ); ?></p>
+						<p><?php echo esc_html__( 'This is the home dashboard of the Help Documents.', 'wsuwp-help-docs' ); ?></p>
 						<?php if ( current_user_can( 'publish_posts' ) ) : ?>
-							<p><?php echo esc_html__( 'You can set any Help document as this home page by selecting the &ldquo;Set as help home&rdquo; option on the Edit Help Document screen, under Tools > Help Documents.', 'wsu-hrs-edu' ); ?></p>
+							<p><?php echo esc_html__( 'You can set any Help document as this home page by selecting the &ldquo;Set as help home&rdquo; option on the Edit Help Document screen, under Tools > Help Documents.', 'wsuwp-help-docs' ); ?></p>
 							<a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' ) . self::$post_type_slug ); ?>">
-								<?php echo esc_html__( 'Get started editing', 'wsu-hrs-help' ); ?>
+								<?php echo esc_html__( 'Get started editing', 'wsu-wsuwp-help' ); ?>
 							</a>
 						<?php endif; ?>
 					</div>
@@ -114,9 +114,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php
 			else :
 				?>
-				<article class="hrs-help-document">
+				<article class="wsuwp-help-document">
 					<header class="article-header">
-						<h2><?php __( 'No documents found', 'wsu-hrs-help' ); ?></h2>
+						<h2><?php __( 'No documents found', 'wsu-wsuwp-help' ); ?></h2>
 					</header>
 				</article>
 				<?php

@@ -1,8 +1,8 @@
 <?php
 /**
- * WSUWP HRS Help Setup: WSU_HRS_Help class
+ * WSUWP Help Docs Setup: WSUWP_Help_Docs class
  *
- * @package WSUWP_HRS_Help
+ * @package WSUWP_Help_Docs
  * @since 0.1.0
  */
 
@@ -11,11 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * The WSUWP HRS Help setup class.
+ * The WSUWP Help Docs setup class.
  *
  * @since 0.1.0
  */
-class WSU_HRS_Help {
+class WSUWP_Help_Docs {
 	/**
 	 * The plugin version number.
 	 *
@@ -30,7 +30,7 @@ class WSU_HRS_Help {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	public static $post_type_slug = 'wsu_hrs_help';
+	public static $post_type_slug = 'wsu_help_docs';
 
 	/**
 	 * Slug used to handle rewrites.
@@ -41,18 +41,18 @@ class WSU_HRS_Help {
 	public $admin_slug = 'help-documents';
 
 	/**
-	 * Instantiates HRS Help singleton.
+	 * Instantiates WSUWP Help singleton.
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return object The HRS Help object
+	 * @return object The WSUWP Help object
 	 */
 	public static function get_instance() {
 		static $instance = null;
 
 		// Only set up and activate the plugin if it hasn't already been done.
 		if ( null === $instance ) {
-			$instance = new WSU_HRS_Help();
+			$instance = new WSUWP_Help_Docs();
 			$instance->setup_hooks();
 			$instance->includes();
 		}
@@ -61,7 +61,7 @@ class WSU_HRS_Help {
 	}
 
 	/**
-	 * An empty constructor to prevent HRS Help being loaded more than once.
+	 * An empty constructor to prevent WSUWP Help being loaded more than once.
 	 *
 	 * @since 0.1.0
 	 */
@@ -103,14 +103,14 @@ class WSU_HRS_Help {
 	 * @since 0.1.0
 	 */
 	public function maybe_flush_rewrite_rules() {
-		if ( is_admin() && 'activated' === get_option( 'hrs-help-plugin-activated' ) ) {
-			delete_option( 'hrs-help-plugin-activated' );
+		if ( is_admin() && 'activated' === get_option( 'wsuwp-help-plugin-activated' ) ) {
+			delete_option( 'wsuwp-help-plugin-activated' );
 			flush_rewrite_rules();
 		}
 	}
 
 	/**
-	 * Activates the HRS Help plugin.
+	 * Activates the WSUWP Help plugin.
 	 *
 	 * @since 0.1.0
 	 */
@@ -120,11 +120,11 @@ class WSU_HRS_Help {
 		 * rewrite rules only after the post type is created, but
 		 * register_activation_hook	runs before that.
 		 */
-		add_option( 'hrs-helps-plugin-activated', 'activated' );
+		add_option( 'wsuwp-help-plugin-activated', 'activated' );
 	}
 
 	/**
-	 * Deactivates the HRS Help plugin.
+	 * Deactivates the WSUWP Help plugin.
 	 *
 	 * @since 0.1.0
 	 */
@@ -137,7 +137,7 @@ class WSU_HRS_Help {
 	}
 
 	/**
-	 * Registers the HRS Help post type.
+	 * Registers the WSUWP Help post type.
 	 *
 	 * @link https://codex.wordpress.org/Function_Reference/register_post_type
 	 *
@@ -145,21 +145,21 @@ class WSU_HRS_Help {
 	 */
 	public function register() {
 		$labels = array(
-			'name'               => __( 'Help Documents', 'wsuwp-hrs-help' ),
-			'singular_name'      => __( 'Help Document', 'wsuwp-hrs-help' ),
-			'all_items'          => __( 'Help Documents', 'wsuwp-hrs-help' ),
-			'add_new_item'       => __( 'Add New Help Document', 'wsuwp-hrs-help' ),
-			'edit_item'          => __( 'Edit Help Document', 'wsuwp-hrs-help' ),
-			'new_item'           => __( 'New Help Document', 'wsuwp-hrs-help' ),
-			'view_item'          => __( 'View Help Document', 'wsuwp-hrs-help' ),
-			'search_items'       => __( 'Search Help Documents', 'wsuwp-hrs-help' ),
-			'not_found'          => __( 'No Help Documents found', 'wsuwp-hrs-help' ),
-			'not_found_in_trash' => __( 'No Help Documents found in trash', 'wsuwp-hrs-help' ),
+			'name'               => __( 'Help Documents', 'wsuwp-help-docs' ),
+			'singular_name'      => __( 'Help Document', 'wsuwp-help-docs' ),
+			'all_items'          => __( 'Help Documents', 'wsuwp-help-docs' ),
+			'add_new_item'       => __( 'Add New Help Document', 'wsuwp-help-docs' ),
+			'edit_item'          => __( 'Edit Help Document', 'wsuwp-help-docs' ),
+			'new_item'           => __( 'New Help Document', 'wsuwp-help-docs' ),
+			'view_item'          => __( 'View Help Document', 'wsuwp-help-docs' ),
+			'search_items'       => __( 'Search Help Documents', 'wsuwp-help-docs' ),
+			'not_found'          => __( 'No Help Documents found', 'wsuwp-help-docs' ),
+			'not_found_in_trash' => __( 'No Help Documents found in trash', 'wsuwp-help-docs' ),
 		);
 
 		$args = array(
 			'labels'              => $labels,
-			'description'         => __( 'Help details.', 'wsuwp-hrs-help' ),
+			'description'         => __( 'Help details.', 'wsuwp-help-docs' ),
 			'public'              => true,
 			'show_in_menu'        => 'tools.php',
 			'show_in_admin_bar'   => false,
@@ -197,11 +197,11 @@ class WSU_HRS_Help {
 		$doc_id = ( isset( $_GET['doc'] ) ) ? absint( $_GET['doc'] ) : '';
 
 		// Verify the requst nonce and return the document ID if successful.
-		if ( '' !== $doc_id && isset( $_GET['_wsuwp_hrs_help_nonce'] ) ) {
-			if ( wp_verify_nonce( $_GET['_wsuwp_hrs_help_nonce'], 'wsuwp-hrs-help-nav_' . $doc_id ) ) {
+		if ( '' !== $doc_id && isset( $_GET['_wsuwp_wsuwp_help_nonce'] ) ) {
+			if ( wp_verify_nonce( $_GET['_wsuwp_wsuwp_help_nonce'], 'wsuwp-help-docs-nav_' . $doc_id ) ) {
 				return $doc_id;
 			} else {
-				wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-hrs-help' ) );
+				wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-wsuwp-help' ) );
 			}
 		}
 
@@ -214,7 +214,7 @@ class WSU_HRS_Help {
 	 * @since 0.1.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_style( 'hrs-help-dashboard', plugins_url( 'css/dashboard.css', __DIR__ ), array(), $this->version );
+		wp_enqueue_style( 'wsuwp-help-dashboard', plugins_url( 'css/dashboard.css', __DIR__ ), array(), $this->version );
 	}
 
 	/**
@@ -231,7 +231,7 @@ class WSU_HRS_Help {
 	/**
 	 * Constructs the Help document page URL with parameters.
 	 *
-	 * The WSU HRS Help plugin uses a URL parameter to retrieve the requested
+	 * The WSU WSUWP Help plugin uses a URL parameter to retrieve the requested
 	 * Help document. This function is a callback for the `post_type_link`
 	 * filter {@see https://codex.wordpress.org/Plugin_API/Filter_Reference/post_type_link},
 	 * which alters the permalink URL for the custom post type.
@@ -309,7 +309,7 @@ class WSU_HRS_Help {
 		if ( ! current_user_can( 'read' ) ) {
 			return false;
 		}
-		wp_add_dashboard_widget( 'dashboard_wsu_hrs_help', 'Help', array( $this, 'display_help_dashboard_widget' ) );
+		wp_add_dashboard_widget( 'dashboard_wsu_help_docs', 'Help', array( $this, 'display_help_dashboard_widget' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 	}
 
@@ -320,7 +320,7 @@ class WSU_HRS_Help {
 	 */
 	public function display_help_dashboard_widget() {
 		if ( ! current_user_can( 'read' ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-hrs-help' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-wsuwp-help' ) );
 		}
 
 		$docs = get_posts( array(
@@ -331,20 +331,20 @@ class WSU_HRS_Help {
 		<div id="wsuwp-help-welcome">
 			<?php
 			/* translators: the help documents dashboard page URL */
-			printf( __( '<p>Visit the <a href="%s">Help documents</a> for how-to guides and instructions.</p>', 'wsu-hrs-help' ), // WPCS: XSS ok.
+			printf( __( '<p>Visit the <a href="%s">Help documents</a> for how-to guides and instructions.</p>', 'wsu-wsuwp-help' ), // WPCS: XSS ok.
 				esc_url( $this->get_admin_page_url() )
 			);
 			?>
 		</div>
 		<div id="wsuwp-help-updated" class="activity-block">
-			<h3><strong><?php esc_html_e( 'New and Updated Help Documents', 'wsu-hrs-help' ); ?></strong></h3>
+			<h3><strong><?php esc_html_e( 'New and Updated Help Documents', 'wsu-wsuwp-help' ); ?></strong></h3>
 			<?php
 			if ( ! empty( $docs ) ) {
 				echo '<ul class="wsuwp-updated-help-documents-list">';
 				foreach ( $docs as $doc ) {
 					/* translators: 1: the help document url, 2: the help document title, 3: the help document modified date. */
-					printf( __( '<li><a href="%1$s">%2$s</a><span>Updated %3$s</span></li>', 'wsu-hrs-help' ), // WPCS: XSS ok.
-						esc_html( wp_nonce_url( get_permalink( $doc->ID ), 'wsuwp-hrs-help-nav_' . absint( $doc->ID ), '_wsuwp_hrs_help_nonce' ) ),
+					printf( __( '<li><a href="%1$s">%2$s</a><span>Updated %3$s</span></li>', 'wsu-wsuwp-help' ), // WPCS: XSS ok.
+						esc_html( wp_nonce_url( get_permalink( $doc->ID ), 'wsuwp-help-docs-nav_' . absint( $doc->ID ), '_wsuwp_wsuwp_help_nonce' ) ),
 						esc_html( get_the_title( $doc->ID ) ),
 						esc_html( get_the_modified_date() )
 					);
@@ -359,11 +359,11 @@ class WSU_HRS_Help {
 			</svg>
 			<?php if ( current_user_can( 'publish_posts' ) ) : ?>
 				<a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' ) . self::$post_type_slug ); ?>">
-					<?php echo esc_html_x( 'Manage', 'verb. Button with limited space', 'wsu-hrs-help' ); ?>
+					<?php echo esc_html_x( 'Manage', 'verb. Button with limited space', 'wsu-wsuwp-help' ); ?>
 				</a>
 			<?php endif; ?>
 			<a class="button button-primary" href="<?php echo esc_url( $this->get_admin_page_url() ); ?>">
-				<?php esc_html_e( 'View Help', 'wsu-hrs-help' ); ?>
+				<?php esc_html_e( 'View Help', 'wsu-wsuwp-help' ); ?>
 			</a>
 		</div>
 		<?php
@@ -390,7 +390,7 @@ class WSU_HRS_Help {
 		?>
 		<div class="misc-pub-section">
 			<input type="checkbox" name="wsuwp_help_homepage_select" id="wsuwp_help_homepage_select" <?php checked( absint( get_option( 'wsuwp_help_homepage_id' ) ) === $post->ID ); ?> />
-			<label for="wsuwp_help_homepage_select"><?php echo esc_html__( 'Set as Help home', 'wsu-hrs-help' ); ?></label>
+			<label for="wsuwp_help_homepage_select"><?php echo esc_html__( 'Set as Help home', 'wsu-wsuwp-help' ); ?></label>
 		</div>
 		<?php
 	}
@@ -435,17 +435,17 @@ class WSU_HRS_Help {
 }
 
 /**
- * Creates an instance of the HRS Help class.
+ * Creates an instance of the WSUWP Help class.
  *
  * Use this function like you might use a global variable or a direct call to
- * `WSU_HRS_Help::get_instance()`.
+ * `WSUWP_Help_Docs::get_instance()`.
  *
  * @since 0.1.0
  *
- * @return object The single HRS Help instance.
+ * @return object The single WSUWP Help instance.
  */
-function load_hrs_help() {
-	return WSU_HRS_Help::get_instance();
+function load_wsuwp_help() {
+	return WSUWP_Help_Docs::get_instance();
 }
 
-load_hrs_help();
+load_wsuwp_help();
