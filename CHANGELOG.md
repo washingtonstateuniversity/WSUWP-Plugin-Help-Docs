@@ -20,13 +20,24 @@ Changelog formatting (http://semver.org/):
 
 ## 0.2.0 (unreleased)
 
+### Changed
+
+* Set several properties to non-static since they don't really need to be accessible outside of the class.
+* Some naming and verification clarifications.
+
 ### Added
 
+* Option to store the default help document ID.
+* Methods to set, update, and get the default help document (dashboard homepage).
 * Help document metabox to set a given document as the default.
 * Dashboard widget on the main admin dashboard page to display recently updated help documents and links to view and manage documents.
 * Styles to allow for nested hierarchical menus in the Help page nav menu.
 * Deploy NPM script in `package.json` to create a production build version.
 * Custom syntax highlighting to match HRS Style Guide.
+
+### Removed
+
+* The static `$default_help_doc` property, in favor of a WP option.
 
 ## 0.1.0 (2018-08-28)
 

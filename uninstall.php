@@ -37,6 +37,9 @@ if ( ! class_exists( 'Uninstall_WSU_HRS_Help' ) ) :
 			if ( get_option( 'hrs-help-plugin-activated' ) ) {
 				delete_option( 'hrs-help-plugin-activated' );
 			}
+			if ( get_option( 'wsuwp_help_homepage_id' ) ) {
+				delete_option( 'wsuwp_help_homepage_id' );
+			}
 
 			// Delete HRS Help posts.
 			$this->delete_hrs_help_posts();

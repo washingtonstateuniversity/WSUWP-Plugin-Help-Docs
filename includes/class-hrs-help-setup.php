@@ -22,15 +22,7 @@ class WSU_HRS_Help {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	protected static $version = '0.1.0';
-
-	/**
-	 * The ID of the currently viewed help document.
-	 *
-	 * @since 0.1.0
-	 * @var int
-	 */
-	protected static $default_help_doc = 1;
+	protected $version = '0.1.0';
 
 	/**
 	 * Slug used to register the post type.
@@ -46,7 +38,7 @@ class WSU_HRS_Help {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	public static $admin_slug = 'help-documents';
+	public $admin_slug = 'help-documents';
 
 	/**
 	 * Instantiates HRS Help singleton.
@@ -101,6 +93,7 @@ class WSU_HRS_Help {
 		add_action( 'admin_menu', array( $this, 'help_menu' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'dashboard_setup' ) );
 		add_action( 'post_submitbox_misc_actions', array( $this, 'post_submitbox_options' ) );
+		add_action( 'save_post', array( $this, 'save_post_submitbox_options' ), 10, 2 );
 		add_filter( 'post_type_link', array( $this, 'set_page_link' ), 10, 2 );
 	}
 
@@ -201,18 +194,18 @@ class WSU_HRS_Help {
 	 */
 	public static function get_current_help_doc_id() {
 		// Check for a requested help document.
-		$doc = ( isset( $_GET['doc'] ) ) ? absint( $_GET['doc'] ) : '';
+		$doc_id = ( isset( $_GET['doc'] ) ) ? absint( $_GET['doc'] ) : '';
 
-		// Verify the requst nonce and save the document ID if successful.
-		if ( isset( $_GET['_wsuwp_hrs_help_nonce'] ) ) {
-			if ( wp_verify_nonce( $_GET['_wsuwp_hrs_help_nonce'], 'wsuwp-hrs-help-nav_' . $doc ) ) {
-				self::$default_help_doc = $doc;
+		// Verify the requst nonce and return the document ID if successful.
+		if ( '' !== $doc_id && isset( $_GET['_wsuwp_hrs_help_nonce'] ) ) {
+			if ( wp_verify_nonce( $_GET['_wsuwp_hrs_help_nonce'], 'wsuwp-hrs-help-nav_' . $doc_id ) ) {
+				return $doc_id;
 			} else {
 				wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-hrs-help' ) );
 			}
 		}
 
-		return self::$default_help_doc;
+		return absint( get_option( 'wsuwp_help_homepage_id', 0 ) );
 	}
 
 	/**
@@ -221,7 +214,7 @@ class WSU_HRS_Help {
 	 * @since 0.1.0
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_style( 'hrs-help-dashboard', plugins_url( 'css/dashboard.css', __DIR__ ), array(), self::$version );
+		wp_enqueue_style( 'hrs-help-dashboard', plugins_url( 'css/dashboard.css', __DIR__ ), array(), $this->version );
 	}
 
 	/**
@@ -232,7 +225,7 @@ class WSU_HRS_Help {
 	 * @return string The absolute URL of the plugin WP Admin dashboard page.
 	 */
 	public function get_admin_page_url() {
-		return admin_url( 'index.php?page=' . self::$admin_slug );
+		return admin_url( 'index.php?page=' . $this->admin_slug );
 	}
 
 	/**
@@ -388,21 +381,55 @@ class WSU_HRS_Help {
 	public function post_submitbox_options() {
 		$post = get_post();
 
-		if ( self::$post_type_slug !== $post->post_type ) {
-			return;
+		if ( self::$post_type_slug !== $post->post_type || ! current_user_can( 'publish_posts' ) ) {
+			return $post->ID;
 		}
 
-		// Add nonce for use in save_spacetime_meta() function.
+		// Add nonce.
 		wp_nonce_field( 'postbox-actions_' . $post->ID, '_wsuwp_help_postbox_actions_nonce' );
-
 		?>
 		<div class="misc-pub-section">
-		    <input type="checkbox" name="wsuwp_help_homepage_select" id="wsuwp_help_homepage_select" <?php checked( $post->ID === self::$default_help_doc ); ?> />
-		    <label for="cws_wp_help_make_default_doc">
-		        <?php _e( 'Set as default help document', 'wsu-hrs-help' ); ?>
-		    </label>
+			<input type="checkbox" name="wsuwp_help_homepage_select" id="wsuwp_help_homepage_select" <?php checked( $post->ID === absint( get_option( 'wsuwp_help_homepage_id' ) ) ); ?> />
+		    <label for="wsuwp_help_homepage_select"><?php _e( 'Set as Help home', 'wsu-hrs-help' ); ?></label>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Handles saving Help postbox options on post save or update.
+	 *
+	 * @since 0.2.0
+	 *
+	 * @param int $post_id The Post ID.
+	 * @return int|bool Post ID on check failure, True if option value has
+	 *                  changed, false if not or if update failed.
+	 */
+	public function save_post_submitbox_options( $post_id ) {
+		// Run security checks.
+		if ( ! isset( $_POST['_wsuwp_help_postbox_actions_nonce'] ) || ! wp_verify_nonce( $_POST['_wsuwp_help_postbox_actions_nonce'], 'postbox-actions_' . $post_id ) ) {
+			return $post_id;
+		}
+
+		// Check user permissions.
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return $post_id;
+		}
+
+		// Check if not autosave or AJAX.
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return $post_id;
+		}
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return $post_id;
+		}
+
+		if ( isset( $_POST['wsuwp_help_homepage_select'] ) ) {
+			// Update default Help document if selected.
+			update_option( 'wsuwp_help_homepage_id', absint( $post_id ) );
+		} elseif ( $post_id === absint( get_option( 'wsuwp_help_homepage_id' ) ) ) {
+			// Unset default Help document if active and deselected.
+			update_option( 'wsuwp_help_homepage_id', 0 );
+		}
 	}
 
 }
