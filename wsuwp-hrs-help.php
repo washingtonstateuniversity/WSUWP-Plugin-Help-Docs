@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WSUWP HRS Help
-Version: 0.1.0
+Version: 0.2.1
 Description: A plugin to create a Help custom post type for use in the Admin area.
 Author: Adam Turner, washingtonstateuniversity
 Author URI: https://hrs.wsu.edu/

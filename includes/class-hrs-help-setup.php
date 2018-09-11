@@ -22,7 +22,7 @@ class WSU_HRS_Help {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	protected $version = '0.1.0';
+	protected $version = '0.2.1';
 
 	/**
 	 * Slug used to register the post type.
