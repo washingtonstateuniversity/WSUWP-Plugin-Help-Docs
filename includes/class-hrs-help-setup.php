@@ -389,8 +389,8 @@ class WSU_HRS_Help {
 		wp_nonce_field( 'postbox-actions_' . $post->ID, '_wsuwp_help_postbox_actions_nonce' );
 		?>
 		<div class="misc-pub-section">
-			<input type="checkbox" name="wsuwp_help_homepage_select" id="wsuwp_help_homepage_select" <?php checked( $post->ID === absint( get_option( 'wsuwp_help_homepage_id' ) ) ); ?> />
-		    <label for="wsuwp_help_homepage_select"><?php _e( 'Set as Help home', 'wsu-hrs-help' ); ?></label>
+			<input type="checkbox" name="wsuwp_help_homepage_select" id="wsuwp_help_homepage_select" <?php checked( absint( get_option( 'wsuwp_help_homepage_id' ) ) === $post->ID ); ?> />
+			<label for="wsuwp_help_homepage_select"><?php echo esc_html__( 'Set as Help home', 'wsu-hrs-help' ); ?></label>
 		</div>
 		<?php
 	}
@@ -426,7 +426,7 @@ class WSU_HRS_Help {
 		if ( isset( $_POST['wsuwp_help_homepage_select'] ) ) {
 			// Update default Help document if selected.
 			update_option( 'wsuwp_help_homepage_id', absint( $post_id ) );
-		} elseif ( $post_id === absint( get_option( 'wsuwp_help_homepage_id' ) ) ) {
+		} elseif ( absint( get_option( 'wsuwp_help_homepage_id' ) ) === $post_id ) {
 			// Unset default Help document if active and deselected.
 			update_option( 'wsuwp_help_homepage_id', 0 );
 		}

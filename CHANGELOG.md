@@ -18,7 +18,11 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
-## 0.2.0 (unreleased)
+## 0.2.1 (unreleased)
+
+### Fixed
+
+* Some phpcs linting corrections.
 
 ### Changed
 
