@@ -22,6 +22,8 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
+* Use `0` instead of `1` as the default help document placeholder ID to avoid collisions.
+* Updated default help document (dashboard homepage) to provide more information to users with Editor+ permissions.
 * Set several properties to non-static since they don't really need to be accessible outside of the class.
 * Some naming and verification clarifications.
 

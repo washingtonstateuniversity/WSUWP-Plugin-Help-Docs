@@ -59,7 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			// Retrieve the current requested help document ID.
 			$help_doc_id = $this->get_current_help_doc_id();
 
-			if ( '' !== $help_doc_id && 1 !== $help_doc_id ) :
+			if ( '' !== $help_doc_id && 0 !== $help_doc_id ) :
 				$docs = new WP_Query( array(
 					'post_type' => self::$post_type_slug,
 					'p'         => $help_doc_id,
@@ -95,14 +95,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</article>
 					<?php
 				endif;
-			elseif ( 1 === $help_doc_id ) :
+			elseif ( 0 === $help_doc_id ) :
 				?>
 				<article class="hrs-help-document" id="hrs-help-document-home">
 					<header class="article-header">
-						<h2><?php echo esc_html__( 'Welcome', 'wsu-hrs-edu' ); ?></h2>
+						<h2><?php echo esc_html__( 'Welcome to the Help Dashboard', 'wsu-hrs-help' ); ?></h2>
 					</header>
 					<div class="article-body">
-						<?php echo wp_kses_post( wpautop( 'This is the dashboard of the WSU HRS Help Plugin.' ) ); ?>
+						<p><?php echo esc_html__( 'This is the home dashboard of the WSU HRS Help Documents.', 'wsu-hrs-edu' ); ?></p>
+						<?php if ( current_user_can( 'publish_posts' ) ) : ?>
+							<p><?php echo esc_html__( 'You can set any Help document as this home page by selecting the &ldquo;Set as help home&rdquo; option on the Edit Help Document screen, under Tools > Help Documents.', 'wsu-hrs-edu' ); ?></p>
+							<a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' ) . self::$post_type_slug ); ?>">
+								<?php echo esc_html__( 'Get started editing', 'wsu-hrs-help' ); ?>
+							</a>
+						<?php endif; ?>
 					</div>
 				</article>
 				<?php
