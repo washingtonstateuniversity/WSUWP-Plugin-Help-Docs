@@ -18,6 +18,12 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
+## 0.2.3 (2018-09-12)
+
+### Fixed
+
+* `README.md` typos and URL formatting.
+
 ## 0.2.2 (2018-09-11)
 
 ### Fixed
