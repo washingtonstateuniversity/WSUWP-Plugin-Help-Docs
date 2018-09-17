@@ -445,23 +445,26 @@ class WSUWP_Help_Docs {
 	 * @since 0.3.0
 	 *
 	 * @param $atts {
-	 *     Required. Attributes of the hrs last update shortcode.
+	 *     Optional. Attributes of the hrs last update shortcode.
 	 *
-	 *     @type int $id Post ID of the Help document to create a URL for.
+	 *     @type int    $id     Post ID of the Help document to create a URL for. Defaults to home page.
+	 *     @type string $anchor Anchor text to append to the formatted URL.
 	 * }
 	 * @param string $content The enclosed content.
 	 * @return string HTML formatted link element.
 	 */
 	public function help_nonce_link_shortcode( $atts, $content = null ) {
 		$defaults = array(
-			'id' => absint( get_option( 'wsuwp_help_homepage_id', 0 ) ),
+			'id'     => absint( get_option( 'wsuwp_help_homepage_id', 0 ) ),
+			'anchor' => '',
 		);
 
 		$args = shortcode_atts( $defaults, $atts, 'helplink' );
 
-		/* translators: 1: the target permalink, 2: the link text */
-		return sprintf( __( '<a href="%1$s">%2$s</a>', 'wsuwp-help-docs' ),
+		/* translators: 1: the target permalink, 2: optional link anchor text, 3: the link text */
+		return sprintf( __( '<a href="%1$s%2$s">%3$s</a>', 'wsuwp-help-docs' ),
 			esc_url_raw( wp_nonce_url( get_permalink( $args['id'] ), 'wsuwp-help-docs-nav_' . $args['id'], '_wsuwp_wsuwp_help_nonce' ) ),
+			( '' !== $args['anchor'] ) ? '#' . esc_attr( $args['anchor'] ) : '',
 			esc_html( $content )
 		);
 	}

@@ -26,12 +26,13 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
-* Increase help document header font size. 
+* Increase help document header font size.
 * Use `add_query_arg` instead of manual concatenation to build Help document URLs in `set_page_link()`.
 * Updated data list styles so that data titles stand out more and to improve legibility.
 
 ### Added
 
+* "Anchor" parameter to the insert link shortcode to allow linking to specific anchors within a page.
 * Shortcode for Help post types to insert links to other help documents, to fix #2 (normal links between help documents are missing the required URL nonce, so they fail).
 
 ## 0.2.3 (2018-09-12)
