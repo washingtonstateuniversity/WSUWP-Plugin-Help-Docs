@@ -95,7 +95,7 @@ class Walker_WSUWP_Help_Page_List extends Walker_Page {
 
 		if ( '' === $page->post_title ) {
 			/* translators: %d: ID of a post */
-			$page->post_title = sprintf( __( '#%d (no title)' ), $page->ID );
+			$page->post_title = sprintf( __( '#%d (no title)', 'wsuwp-help-docs' ), $page->ID );
 		}
 
 		$args['link_before'] = empty( $args['link_before'] ) ? '' : $args['link_before'];

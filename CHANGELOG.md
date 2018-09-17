@@ -18,7 +18,11 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
-## 0.3.0 (unreleased)
+## 0.3.1 (unreleased)
+
+### Fixed
+
+* Corrected incorrect text domains.
 
 ### Changed
 

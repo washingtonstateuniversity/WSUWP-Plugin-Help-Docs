@@ -202,7 +202,7 @@ class WSUWP_Help_Docs {
 			if ( wp_verify_nonce( $_GET['_wsuwp_wsuwp_help_nonce'], 'wsuwp-help-docs-nav_' . $doc_id ) ) {
 				return $doc_id;
 			} else {
-				wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-wsuwp-help' ) );
+				wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsuwp-help-docs' ) );
 			}
 		}
 
@@ -321,7 +321,7 @@ class WSUWP_Help_Docs {
 	 */
 	public function display_help_dashboard_widget() {
 		if ( ! current_user_can( 'read' ) ) {
-			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-wsuwp-help' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsuwp-help-docs' ) );
 		}
 
 		$docs = get_posts( array(
@@ -332,19 +332,19 @@ class WSUWP_Help_Docs {
 		<div id="wsuwp-help-welcome">
 			<?php
 			/* translators: the help documents dashboard page URL */
-			printf( __( '<p>Visit the <a href="%s">Help documents</a> for how-to guides and instructions.</p>', 'wsu-wsuwp-help' ), // WPCS: XSS ok.
+			printf( __( '<p>Visit the <a href="%s">Help documents</a> for how-to guides and instructions.</p>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
 				esc_url( $this->get_admin_page_url() )
 			);
 			?>
 		</div>
 		<div id="wsuwp-help-updated" class="activity-block">
-			<h3><strong><?php esc_html_e( 'New and Updated Help Documents', 'wsu-wsuwp-help' ); ?></strong></h3>
+			<h3><strong><?php esc_html_e( 'New and Updated Help Documents', 'wsuwp-help-docs' ); ?></strong></h3>
 			<?php
 			if ( ! empty( $docs ) ) {
 				echo '<ul class="wsuwp-updated-help-documents-list">';
 				foreach ( $docs as $doc ) {
 					/* translators: 1: the help document url, 2: the help document title, 3: the help document modified date. */
-					printf( __( '<li><a href="%1$s">%2$s</a><span>Updated %3$s</span></li>', 'wsu-wsuwp-help' ), // WPCS: XSS ok.
+					printf( __( '<li><a href="%1$s">%2$s</a><span>Updated %3$s</span></li>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
 						esc_html( wp_nonce_url( get_permalink( $doc->ID ), 'wsuwp-help-docs-nav_' . absint( $doc->ID ), '_wsuwp_wsuwp_help_nonce' ) ),
 						esc_html( get_the_title( $doc->ID ) ),
 						esc_html( get_the_modified_date() )
@@ -360,11 +360,11 @@ class WSUWP_Help_Docs {
 			</svg>
 			<?php if ( current_user_can( 'publish_posts' ) ) : ?>
 				<a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' ) . self::$post_type_slug ); ?>">
-					<?php echo esc_html_x( 'Manage', 'verb. Button with limited space', 'wsu-wsuwp-help' ); ?>
+					<?php echo esc_html_x( 'Manage', 'verb. Button with limited space', 'wsuwp-help-docs' ); ?>
 				</a>
 			<?php endif; ?>
 			<a class="button button-primary" href="<?php echo esc_url( $this->get_admin_page_url() ); ?>">
-				<?php esc_html_e( 'View Help', 'wsu-wsuwp-help' ); ?>
+				<?php esc_html_e( 'View Help', 'wsuwp-help-docs' ); ?>
 			</a>
 		</div>
 		<?php
@@ -391,7 +391,7 @@ class WSUWP_Help_Docs {
 		?>
 		<div class="misc-pub-section">
 			<input type="checkbox" name="wsuwp_help_homepage_select" id="wsuwp_help_homepage_select" <?php checked( absint( get_option( 'wsuwp_help_homepage_id' ) ) === $post->ID ); ?> />
-			<label for="wsuwp_help_homepage_select"><?php echo esc_html__( 'Set as Help home', 'wsu-wsuwp-help' ); ?></label>
+			<label for="wsuwp_help_homepage_select"><?php echo esc_html__( 'Set as Help home', 'wsuwp-help-docs' ); ?></label>
 		</div>
 		<?php
 	}

@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php
 	// Stop execution if the user doesn't have read permissions.
 	if ( ! current_user_can( 'read' ) ) {
-		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsu-wsuwp-help' ) );
+		wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsuwp-help-docs' ) );
 	}
 
 	if ( current_user_can( 'publish_posts' ) ) {
@@ -78,7 +78,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								the_content();
 
 								if ( current_user_can( 'edit_others_posts' ) ) {
-									edit_post_link( __( 'Edit', 'wsu-wsuwp-help' ), ' <pre>', '</pre>' );
+									edit_post_link( __( 'Edit', 'wsuwp-help-docs' ), ' <pre>', '</pre>' );
 								}
 								?>
 							</div>
@@ -90,7 +90,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					?>
 					<article class="wsuwp-help-document">
 						<header class="article-header">
-							<h2><?php __( 'No documents found', 'wsu-wsuwp-help' ); ?></h2>
+							<h2><?php __( 'No documents found', 'wsuwp-help-docs' ); ?></h2>
 						</header>
 					</article>
 					<?php
@@ -99,14 +99,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 				<article class="wsuwp-help-document" id="wsuwp-help-document-home">
 					<header class="article-header">
-						<h2><?php echo esc_html__( 'Welcome to the Help Dashboard', 'wsu-wsuwp-help' ); ?></h2>
+						<h2><?php echo esc_html__( 'Welcome to the Help Dashboard', 'wsuwp-help-docs' ); ?></h2>
 					</header>
 					<div class="article-body">
 						<p><?php echo esc_html__( 'This is the home dashboard of the Help Documents.', 'wsuwp-help-docs' ); ?></p>
 						<?php if ( current_user_can( 'publish_posts' ) ) : ?>
 							<p><?php echo esc_html__( 'You can set any Help document as this home page by selecting the &ldquo;Set as help home&rdquo; option on the Edit Help Document screen, under Tools > Help Documents.', 'wsuwp-help-docs' ); ?></p>
 							<a class="button" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' ) . self::$post_type_slug ); ?>">
-								<?php echo esc_html__( 'Get started editing', 'wsu-wsuwp-help' ); ?>
+								<?php echo esc_html__( 'Get started editing', 'wsuwp-help-docs' ); ?>
 							</a>
 						<?php endif; ?>
 					</div>
@@ -116,7 +116,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 				<article class="wsuwp-help-document">
 					<header class="article-header">
-						<h2><?php __( 'No documents found', 'wsu-wsuwp-help' ); ?></h2>
+						<h2><?php __( 'No documents found', 'wsuwp-help-docs' ); ?></h2>
 					</header>
 				</article>
 				<?php
