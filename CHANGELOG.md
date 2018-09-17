@@ -26,6 +26,7 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
+* Increase help document header font size. 
 * Use `add_query_arg` instead of manual concatenation to build Help document URLs in `set_page_link()`.
 * Updated data list styles so that data titles stand out more and to improve legibility.
 
