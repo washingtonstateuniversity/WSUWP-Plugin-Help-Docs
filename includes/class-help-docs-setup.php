@@ -246,10 +246,10 @@ class WSUWP_Help_Docs {
 
 		// If requesting a Help document, add the URL parameter.
 		if ( self::$post_type_slug === $post->post_type ) {
-			return $this->get_admin_page_url() . '&doc=' . absint( $post->ID );
-		} else {
-			return $link;
+			$link = add_query_arg( 'doc', absint( $post->ID ), esc_url( $this->get_admin_page_url() ) );
 		}
+
+		return $link;
 	}
 
 	/**
