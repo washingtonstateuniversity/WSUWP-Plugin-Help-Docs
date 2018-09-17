@@ -20,6 +20,10 @@ Changelog formatting (http://semver.org/):
 
 ## 0.3.0 (unreleased)
 
+### Changed
+
+* Updated data list styles so that data titles stand out more and to improve legibility.
+
 ### Added
 
 * Shortcode for Help post types to insert links to other help documents, to fix #2 (normal links between help documents are missing the required URL nonce, so they fail).
