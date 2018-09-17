@@ -95,6 +95,7 @@ class WSUWP_Help_Docs {
 		add_action( 'post_submitbox_misc_actions', array( $this, 'post_submitbox_options' ) );
 		add_action( 'save_post', array( $this, 'save_post_submitbox_options' ), 10, 2 );
 		add_filter( 'post_type_link', array( $this, 'set_page_link' ), 10, 2 );
+		add_shortcode( 'helplink', array( $this, 'help_nonce_link_shortcode' ) );
 	}
 
 	/**
@@ -430,6 +431,39 @@ class WSUWP_Help_Docs {
 			// Unset default Help document if active and deselected.
 			update_option( 'wsuwp_help_homepage_id', 0 );
 		}
+	}
+
+	/**
+	 * Inserts an HTML link with the necessary URL nonce.
+	 *
+	 * An enclosing shortcode to return a URL to another Help document,
+	 * identified by post ID, with the URL nonce needed to display the document
+	 * in the Admin area.
+	 *
+	 * Default usage is: [helplink id="9999"]Link text[/helplink]
+	 *
+	 * @since 0.3.0
+	 *
+	 * @param $atts {
+	 *     Required. Attributes of the hrs last update shortcode.
+	 *
+	 *     @type int $id Post ID of the Help document to create a URL for.
+	 * }
+	 * @param string $content The enclosed content.
+	 * @return string HTML formatted link element.
+	 */
+	public function help_nonce_link_shortcode( $atts, $content = null ) {
+		$defaults = array(
+			'id' => absint( get_option( 'wsuwp_help_homepage_id', 0 ) ),
+		);
+
+		$args = shortcode_atts( $defaults, $atts, 'helplink' );
+
+		/* translators: 1: the target permalink, 2: the link text */
+		return sprintf( __( '<a href="%1$s">%2$s</a>', 'wsuwp-help-docs' ),
+			esc_url_raw( wp_nonce_url( get_permalink( $args['id'] ), 'wsuwp-help-docs-nav_' . $args['id'], '_wsuwp_wsuwp_help_nonce' ) ),
+			esc_html( $content )
+		);
 	}
 
 }

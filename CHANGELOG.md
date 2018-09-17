@@ -18,6 +18,12 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
+## 0.3.0 (unreleased)
+
+### Added
+
+* Shortcode for Help post types to insert links to other help documents, to fix #2 (normal links between help documents are missing the required URL nonce, so they fail).
+
 ## 0.2.3 (2018-09-12)
 
 ### Fixed
