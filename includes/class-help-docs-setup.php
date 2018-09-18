@@ -226,7 +226,7 @@ class WSUWP_Help_Docs {
 	 *
 	 * @return string The absolute URL of the plugin WP Admin dashboard page.
 	 */
-	public function get_admin_page_url() {
+	protected function get_admin_page_url() {
 		return admin_url( 'index.php?page=' . $this->admin_slug );
 	}
 

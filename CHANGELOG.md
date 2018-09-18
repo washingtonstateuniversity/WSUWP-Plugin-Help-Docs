@@ -28,6 +28,7 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
+* Limit access to get admin url function.
 * Move plugin initialization trigger from the class to a WP action from the main plugin file .
 * Increase help document header font size.
 * Use `add_query_arg` instead of manual concatenation to build Help document URLs in `set_page_link()`.
