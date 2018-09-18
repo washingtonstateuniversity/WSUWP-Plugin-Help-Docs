@@ -34,6 +34,7 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
+* Function to unset the "helplink" shortcode on plugin deactivation.
 * "Anchor" parameter to the insert link shortcode to allow linking to specific anchors within a page.
 * Shortcode for Help post types to insert links to other help documents, to fix #2 (normal links between help documents are missing the required URL nonce, so they fail).
 

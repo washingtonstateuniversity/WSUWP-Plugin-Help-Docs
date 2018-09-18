@@ -132,6 +132,7 @@ class WSUWP_Help_Docs {
 	public static function deactivate() {
 		// Deregister custom post type, taxonomy, and shortcode (remove rules from memory).
 		unregister_post_type( self::$post_type_slug );
+		remove_shortcode( 'helplink' );
 
 		// Flush rewrite rules on plugin deactivation to remove custom permalinks.
 		flush_rewrite_rules();
