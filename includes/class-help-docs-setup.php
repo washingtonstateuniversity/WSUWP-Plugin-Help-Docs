@@ -97,6 +97,7 @@ class WSUWP_Help_Docs {
 		add_action( 'post_submitbox_misc_actions', array( $this, 'post_submitbox_options' ) );
 		add_action( 'save_post', array( $this, 'save_post_submitbox_options' ), 10, 2 );
 		add_filter( 'post_type_link', array( $this, 'set_page_link' ), 10, 2 );
+		add_filter( 'post_updated_messages', array( $this, 'help_doc_updated_messages' ) );
 		add_shortcode( 'helplink', array( $this, 'help_nonce_link_shortcode' ) );
 	}
 
@@ -437,6 +438,62 @@ class WSUWP_Help_Docs {
 			// Unset default Help document if active and deselected.
 			update_option( 'wsuwp_help_homepage_id', 0 );
 		}
+	}
+
+	/**
+	 * Adds messages to display on post update.
+	 *
+	 * Callback function for the `post_updated_messages` WP API filter hook.
+	 *
+	 * @param array $messages The default post updated messages.
+	 *
+	 * @since 0.4.0
+	 */
+	public function help_doc_updated_messages( $messages ) {
+		global $post_ID, $post;
+
+		$permalink = get_permalink( $post_ID );
+		if ( ! $permalink ) {
+			$permalink = '';
+		}
+
+		// The preview help document link element.
+		$preview_help_link_html = sprintf( ' <a target="_blank" href="%1$s">%2$s</a>',
+			esc_url_raw( wp_nonce_url( add_query_arg( 'preview', 'true', $permalink ), 'wsuwp-help-docs-nav_' . $post_ID, '_wsuwp_wsuwp_help_nonce' ) ),
+			__( 'Preview help document', 'wsuwp-help-docs' )
+		);
+
+		// The scheduled help document link element.
+		$scheduled_help_link_html = sprintf( ' <a target="_blank" href="%1$s">%2$s</a>',
+			esc_url_raw( wp_nonce_url( $permalink, 'wsuwp-help-docs-nav_' . $post_ID, '_wsuwp_wsuwp_help_nonce' ) ),
+			__( 'Preview help document', 'wsuwp-help-docs' )
+		);
+
+		// The view help document link element.
+		$view_help_link_html = sprintf( ' <a href="%1$s">%2$s</a>',
+			esc_url_raw( wp_nonce_url( $permalink, 'wsuwp-help-docs-nav_' . $post_ID, '_wsuwp_wsuwp_help_nonce' ) ),
+			__( 'View help document', 'wsuwp-help-docs' )
+		);
+
+		$doc_scheduled_date = date_i18n( __( 'M j, Y @ H:i', 'wsuwp-help-docs' ), strtotime( $post->post_date ) );
+
+		$messages[ self::$post_type_slug ] = array(
+			0  => '', // Unused. Messages start at index 1.
+			1  => sprintf( '%1$s%2$s', __( 'Help document updated.', 'wsuwp-help-docs' ), $view_help_link_html ),
+			2  => __( 'Custom field updated.', 'wsuwp-help-docs' ),
+			3  => __( 'Custom field deleted.', 'wsuwp-help-docs' ),
+			4  => __( 'Help document updated.', 'wsuwp-help-docs' ),
+			/* translators: %s: date and time of the revision */
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Help document restored to revision from %s', 'wsuwp-help-docs' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false, // WPCS: CSRF ok.
+			6  => sprintf( '%1$s%2$s', __( 'Help document published.', 'wsuwp-help-docs' ), $view_help_link_html ),
+			7  => __( 'Help document saved.', 'wsuwp-help-docs' ),
+			8  => sprintf( '%1$s%2$s', __( 'Help document submitted.', 'wsuwp-help-docs' ), $preview_help_link_html ),
+			/* translators: 1: scheduled publication date and time */
+			9  => sprintf( __( 'Help document scheduled for: %1$s', 'wsuwp-help-docs' ), '<strong>' . $doc_scheduled_date . '</strong>' ) . $scheduled_help_link_html,
+			10 => sprintf( '%1$s%2$s', __( 'Help document draft updated.', 'wsuwp-help-docs' ), $preview_help_link_html ),
+		);
+
+		return $messages;
 	}
 
 	/**
