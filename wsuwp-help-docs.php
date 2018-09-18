@@ -21,6 +21,20 @@ if ( ! defined( 'WPINC' ) ) {
  */
 require_once __DIR__ . '/includes/class-help-docs-setup.php';
 
-// Flush rules on activation and clean up on deactivation.
+// Starts things up.
+add_action( 'after_setup_theme', 'load_wsuwp_help' );
+
+// Flushes rules on activation and cleans up on deactivation.
 register_activation_hook( __FILE__, array( 'WSUWP_Help_Docs', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'WSUWP_Help_Docs', 'deactivate' ) );
+
+/**
+ * Creates an instance of the WSUWP Help class.
+ *
+ * @since 0.1.0
+ *
+ * @return object An instance of WSUWP_Help_Docs
+ */
+function load_wsuwp_help() {
+	return WSUWP_Help_Docs::get_instance();
+}

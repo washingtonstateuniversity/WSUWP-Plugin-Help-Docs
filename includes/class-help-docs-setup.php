@@ -470,19 +470,3 @@ class WSUWP_Help_Docs {
 	}
 
 }
-
-/**
- * Creates an instance of the WSUWP Help class.
- *
- * Use this function like you might use a global variable or a direct call to
- * `WSUWP_Help_Docs::get_instance()`.
- *
- * @since 0.1.0
- *
- * @return object The single WSUWP Help instance.
- */
-function load_wsuwp_help() {
-	return WSUWP_Help_Docs::get_instance();
-}
-
-load_wsuwp_help();
