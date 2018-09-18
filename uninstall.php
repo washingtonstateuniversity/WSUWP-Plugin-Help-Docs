@@ -60,12 +60,10 @@ if ( ! class_exists( 'Uninstall_WSUWP_Help_Docs' ) ) :
 				return array();
 			}
 
-			$args = array(
-				'post_type'   => 'wsuwp_help',
+			$wsuwp_help_posts = get_posts( array(
+				'post_type'   => 'wsu_help_docs',
 				'numberposts' => absint( $limit ),
-			);
-
-			$wsuwp_help_posts = get_posts( $args );
+			) );
 
 			$ids = array();
 			foreach ( $wsuwp_help_posts as $p ) {

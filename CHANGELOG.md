@@ -22,6 +22,7 @@ Changelog formatting (http://semver.org/):
 
 ### Fixed
 
+* Incorrect `post_type` definition in `uninstall.php`.
 * Corrected incorrect text domains.
 
 ### Changed
