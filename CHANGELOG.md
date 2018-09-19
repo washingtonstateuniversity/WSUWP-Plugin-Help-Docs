@@ -18,6 +18,12 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
+## 0.4.0 (unreleased)
+
+### Added
+
+* Updater class to check GitHub repo for newer plugin version and install it if found.
+
 ## 0.3.1 (2018-09-18)
 
 ### Fixed
