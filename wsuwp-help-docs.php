@@ -38,3 +38,31 @@ register_deactivation_hook( __FILE__, array( 'WSUWP_Help_Docs', 'deactivate' ) )
 function load_wsuwp_help() {
 	return WSUWP_Help_Docs::get_instance();
 }
+
+/**
+ * Creates an instance of the WSUWP Help Docs Updater class.
+ *
+ * This class handles updating the plugin from its GitHub repository. Update
+ * the GitHub username and repository name here to match the desired build
+ * source.
+ *
+ * @since 0.4.0
+ *
+ * @return object Instance of WSUWP_Help_Docs_Updater
+ */
+function load_wsuwp_help_updater() {
+	$updater = WSUWP_Help_Docs_Updater::get_instance( __FILE__ );
+
+	/*
+	 * Define the plugin repo GitHub credentials. Required properties include:
+	 * 'username' (the GitHub username) and 'repository' (the name of the repo).
+	 * For private repositories you must also include an auth token value for
+	 * the 'auth_token' property.
+	 */
+	$updater->set_github_credentials( array(
+		'username'   => 'admturner',
+		'repository' => 'WSUWP-Plugin-Help-Docs',
+	) );
+
+	return $updater;
+}

@@ -20,6 +20,10 @@ Changelog formatting (http://semver.org/):
 
 ## 0.4.0 (unreleased)
 
+### Changed
+
+* Load the updater class in the main plugin file and setup class and define the base credentials in the main plugin file.
+
 ### Added
 
 * Updater class to check GitHub repo for newer plugin version and install it if found.

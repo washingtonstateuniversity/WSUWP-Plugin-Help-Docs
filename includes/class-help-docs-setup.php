@@ -78,6 +78,7 @@ class WSUWP_Help_Docs {
 	 */
 	private function includes() {
 		require __DIR__ . '/class-page-list-walker.php';
+		require __DIR__ . '/class-help-docs-updater.php';
 	}
 
 	/**
@@ -88,6 +89,7 @@ class WSUWP_Help_Docs {
 	 * @access private
 	 */
 	private function setup_hooks() {
+		add_action( 'init', 'load_wsuwp_help_updater' );
 		add_action( 'init', array( $this, 'register' ), 10 );
 		add_action( 'after_setup_theme', array( $this, 'maybe_flush_rewrite_rules' ) );
 		add_action( 'admin_menu', array( $this, 'help_menu' ) );
