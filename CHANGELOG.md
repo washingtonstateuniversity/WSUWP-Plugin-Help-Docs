@@ -22,10 +22,13 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
+* Use `transient_update_plugins` hook instead of `pre_set_site_transient_update_plugins`.
 * Load the updater class in the main plugin file and setup class and define the base credentials in the main plugin file.
 
 ### Added
 
+* Method for retrieving plugin details from the GitHub API and displaying on the plugins admin screen.
+* Method for checking and updating the WP `update_plugins` transient with information from the GitHub API.
 * Updater class to check GitHub repo for newer plugin version and install it if found.
 
 ## 0.3.1 (2018-09-18)
