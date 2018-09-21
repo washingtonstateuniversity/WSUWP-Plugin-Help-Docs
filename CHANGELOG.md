@@ -18,7 +18,11 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
-## 0.4.0 (unreleased)
+## 0.4.1 (unreleased)
+
+### Fixed
+
+* Corrected plugin repo username.
 
 ### Changed
 

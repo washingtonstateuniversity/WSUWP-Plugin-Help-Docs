@@ -60,7 +60,7 @@ function load_wsuwp_help_updater() {
 	 * the 'auth_token' property.
 	 */
 	$updater->set_github_credentials( array(
-		'username'   => 'admturner',
+		'username'   => 'washingtonstateuniversity',
 		'repository' => 'WSUWP-Plugin-Help-Docs',
 	) );
 
