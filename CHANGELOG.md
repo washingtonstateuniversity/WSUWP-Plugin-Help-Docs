@@ -22,15 +22,19 @@ Changelog formatting (http://semver.org/):
 
 ### Fixed
 
+* Remove the "v" from the GitHub version number for more reliable version comparison.
 * Corrected plugin repo username.
 
 ### Changed
 
+* Replace `current( explode(` method to build the plugin slug with `$slug` class property.
 * Use `transient_update_plugins` hook instead of `pre_set_site_transient_update_plugins`.
 * Load the updater class in the main plugin file and setup class and define the base credentials in the main plugin file.
 
 ### Added
 
+* Method to add a "view details" link to the row meta on the plugins admin screen.
+* Dedicated `$slug` property in `WSUWP_Help_Docs_Updater` class to fetch slug separate from basename.
 * Method for retrieving plugin details from the GitHub API and displaying on the plugins admin screen.
 * Method for checking and updating the WP `update_plugins` transient with information from the GitHub API.
 * Updater class to check GitHub repo for newer plugin version and install it if found.

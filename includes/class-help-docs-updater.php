@@ -46,6 +46,14 @@ class WSUWP_Help_Docs_Updater {
 	private $basename;
 
 	/**
+	 * The plugin slug.
+	 *
+	 * @since 0.4.1
+	 * @var string
+	 */
+	private $slug;
+
+	/**
 	 * Whether the plugin is activated.
 	 *
 	 * @since 0.4.0
@@ -126,6 +134,7 @@ class WSUWP_Help_Docs_Updater {
 		add_filter( 'transient_update_plugins', array( $this, 'push_transient_update' ), 10, 1 );
 		add_filter( 'site_transient_update_plugins', array( $this, 'push_transient_update' ), 10, 1 );
 		add_filter( 'plugins_api', array( $this, 'display_plugin_details' ), 10, 3 );
+		add_filter( 'plugin_row_meta', array( $this, 'update_plugin_row_meta' ), 10, 2 );
 		add_filter( 'upgrader_post_install', array( $this, 'after_install' ), 10, 3 );
 	}
 
@@ -160,6 +169,7 @@ class WSUWP_Help_Docs_Updater {
 
 		$this->plugin_meta = get_plugin_data( $this->file );
 		$this->basename    = plugin_basename( $this->file );
+		$this->slug        = current( explode( '/', $this->basename ) );
 		$this->active      = is_plugin_active( $this->basename );
 	}
 
@@ -265,10 +275,9 @@ echo '<script type="text/javascript">console.log("Step 1: No cached version foun
 				echo '<script type="text/javascript">console.log("Yes version compare was true.")</script>'; // DEBUG: check if this fired
 
 				$package = $this->github_response['zipball_url'];
-				$slug    = current( explode( '/', $this->basename ) );
 
 				$obj              = new stdClass();
-				$obj->slug        = $slug;
+				$obj->slug        = $this->slug;
 				$obj->plugin      = $this->basename;
 				$obj->new_version = $this->github_response['tag_name'];
 				$obj->package     = $package;
@@ -308,7 +317,7 @@ echo '<script type="text/javascript">console.log("Step 1: No cached version foun
 		}
 
 		// Return the result now if it isn't our plugin.
-		if ( current( explode( '/', $this->basename ) ) !== $args->slug ) {
+		if ( $this->slug !== $args->slug ) {
 			return $result;
 		}
 
@@ -326,8 +335,8 @@ echo '<script type="text/javascript">console.log("Step 1: No cached version foun
 
 			$result = new stdClass();
 			$result->name = $this->plugin_meta["Name"];
-			$result->slug = $this->basename;
-			$result->version = $this->github_response['tag_name'];
+			$result->slug = $this->slug;
+			$result->version = str_replace( 'v', '', $this->github_response['tag_name'] );
 			$result->requires = '3.3';
 			$result->tested = '4.9';
 			$result->rating = '100';
@@ -348,6 +357,39 @@ echo '<script type="text/javascript">console.log("Step 1: No cached version foun
 		}
 
 		return false;
+	}
+
+	/**
+	 * Adds a "view details" link to the plugin row meta.
+	 *
+	 * Callback function for the `plugin_row_meta` filter hook. This funciton
+	 * modifies the plugin_meta variable to add a "View Details" link like the
+	 * one for plugins in the WP plugin repository. The link will generate
+	 * the modal ({@uses install_plugin_information()}) using `plugins_api()`,
+	 * which we filter with `$this->display_plugin_details()`.
+	 *
+	 * @since 0.4.1
+	 *
+	 * @param array @plugin_meta The plugin's metadata.
+	 * @param string @plugin_file Path to the plugin file, relative to the plugins directory.
+	 * @return string HTML formatted meta data for the plugins table row, altered or not.
+	 */
+	public function update_plugin_row_meta( $plugin_meta, $plugin_file ) {
+		// Return the result now if it isn't our plugin.
+		if ( $this->basename !== $plugin_file ) {
+			return $plugin_meta;
+		}
+
+		if ( current_user_can( 'install_plugins' ) ) {
+			$plugin_meta[] = sprintf( '<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
+				esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $this->slug . '&TB_iframe=true&width=600&height=550' ) ),
+				esc_attr( sprintf( __( 'More information about %s', 'wsuwp-help-docs' ), $this->plugin_meta['Name'] ) ),
+				esc_attr( $this->plugin_meta['Name'] ),
+				__( 'View details', 'wsuwp-help-docs' )
+			);
+		}
+
+		return $plugin_meta;
 	}
 
 	/**
