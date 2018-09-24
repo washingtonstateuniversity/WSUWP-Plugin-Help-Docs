@@ -27,12 +27,17 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
+* Clean up debugging and phpcs issues in WSUWP_Help_Docs_Updater class.
+* The `update_pluign_{slug}` transient now not only stores the GitHub response of a successful request, but also an error placeholder (for 60 minutes) on a failed request. This guarantees we only ping the GitHub API at most once an hour, helping to prevent spamming the service if something breaks on our end.
+* Fine-tuned error handling in `WSUWP_Help_Docs_Updater->get_repository_details()` to warn of failed requests.
+* We only need the latest release from GitHub, so specify `/latest` in the request URI instead of requesting all releases (which means we also don't need the `is_array` > `current()` conditional on the API response).
 * Replace `current( explode(` method to build the plugin slug with `$slug` class property.
 * Use `transient_update_plugins` hook instead of `pre_set_site_transient_update_plugins`.
 * Load the updater class in the main plugin file and setup class and define the base credentials in the main plugin file.
 
 ### Added
 
+* WSUWP_Help_Docs_Updater method to handle displaying errors when the connection fails.
 * Method to add a "view details" link to the row meta on the plugins admin screen.
 * Dedicated `$slug` property in `WSUWP_Help_Docs_Updater` class to fetch slug separate from basename.
 * Method for retrieving plugin details from the GitHub API and displaying on the plugins admin screen.

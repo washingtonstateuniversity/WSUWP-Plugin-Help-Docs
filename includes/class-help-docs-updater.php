@@ -183,7 +183,7 @@ class WSUWP_Help_Docs_Updater {
 	 *
 	 * @since 0.4.0
 	 *
-	 * @return array Array of parsed JSON GitHub repository details.
+	 * @return array|false Array of parsed JSON GitHub repository details or false if the request failed.
 	 */
 	private function get_repository_details() {
 		// If a response already exists, return it.
@@ -192,7 +192,7 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		// Build the GitHub API request URI.
-		$request_uri = sprintf( 'https://api.github.com/repos/%1$s/%2$s/releases',
+		$request_uri = sprintf( 'https://api.github.com/repos/%1$s/%2$s/releases/latest',
 			$this->username,
 			$this->repository
 		);
@@ -202,25 +202,63 @@ class WSUWP_Help_Docs_Updater {
 			$request_uri = add_query_arg( 'access_token', $this->auth_token, $request_uri );
 		}
 
-		$response = wp_remote_get( esc_url_raw( $request_uri ) );
+		$raw_response = wp_remote_get( esc_url_raw( $request_uri ) );
 
-		if ( ! $response ) {
+		if ( is_wp_error( $raw_response ) ) {
+			$this->error( $raw_response->get_error_message() );
+			return false;
+		}
+
+		$response_code = wp_remote_retrieve_response_code( $raw_response );
+
+		if ( 200 !== (int) $response_code ) {
+			$this->error( sprintf( 'GitHub API request failed. The request for <%1$s> returned HTTP code: %2$s',
+				esc_url_raw( $request_uri ),
+				$response_code
+			) );
 			return false;
 		}
 
 		// Get the response body and parse it.
-		$api_response = json_decode( wp_remote_retrieve_body( $response ), true );
-
-		if ( is_array( $api_response ) ) {
-			$api_response = current( $api_response );
-		}
+		$response = json_decode( wp_remote_retrieve_body( $raw_response ), true );
 
 		// If there is an auth token, add it to the zip url.
 		if ( $this->auth_token ) {
-			$api_response['zipball_url'] = add_query_arg( 'access_token', $this->auth_token, $api_response['zipball_url'] );
+			$response['zipball_url'] = add_query_arg( 'access_token', $this->auth_token, $response['zipball_url'] );
 		}
 
-		return $api_response;
+		return $response;
+	}
+
+	/**
+	 * Prints errors if debugging is enabled.
+	 *
+	 * @since 0.4.1
+	 *
+	 * @param string|array $message The error message to display. Accepts a single string or an array of strings.
+	 * @param string $error_code Optional. A computer-readable string to identify the error.
+	 * @return void|false The HTML formatted error message if debug display is enabled and false if not.
+	 */
+	private function error( $message, $error_code = '500' ) {
+		if ( ! WP_DEBUG || ! WP_DEBUG_DISPLAY || ! current_user_can( 'install_plugins' ) ) {
+			return false;
+		}
+
+		if ( is_array( $message ) ) {
+			foreach ( $message as $msg ) {
+				/* translators: 1: the plugin name, 2: the error message */
+				printf( __( '<div class="notice notice-error"><p><strong>%1$s updater error:</strong> %2$s</p></div>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
+					esc_html( $this->plugin_meta['Name'] ),
+					esc_html( $msg['message'] )
+				);
+			}
+		} else {
+			/* translators: 1: the plugin name, 2: the error message */
+			printf( __( '<div class="notice notice-error"><p><strong>%1$s updater error:</strong> %2$s</p></div>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
+				esc_html( $this->plugin_meta['Name'] ),
+				esc_html( $message )
+			);
+		}
 	}
 
 	/**
@@ -250,57 +288,34 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		// Try to get plugin details from the cache before checking the API.
-		if ( false === ( $this->github_response = get_transient( 'update_plugin_' . WSUWP_Help_Docs::$post_type_slug ) ) ) {
-			$this->github_response = $this->get_repository_details();
+		$this->github_response = get_transient( 'update_plugin_' . $this->slug );
 
-echo '<script type="text/javascript">console.log("Step 1: No cached version found; ran a new request.")</script>'; // DEBUG: check if this fired
+		if ( false === $this->github_response ) {
+			$this->github_response = $this->get_repository_details();
 
 			if ( ! is_wp_error( $this->github_response ) && ! empty( $this->github_response['zipball_url'] ) ) {
 				// Save results of a successful API call to a 12-hour transient cache.
-				set_transient( 'update_plugin_' . WSUWP_Help_Docs::$post_type_slug, $this->github_response, 43200 );
-
-				dbgx_trace_var( get_transient( 'update_plugin_' . WSUWP_Help_Docs::$post_type_slug ) ); // DEBUG:
+				set_transient( 'update_plugin_' . $this->slug, $this->github_response, 43200 );
+			} else {
+				// Save results of an error to a 1-hour transient to prevent overloading the GitHub API.
+				set_transient( 'update_plugin_' . $this->slug, 'request-error-wait', 3600 );
 			}
 		}
 
-		// If have the plugin details, add them to the update_plugins transient.
-		if ( $this->github_response ) {
-
-			echo '<script type="text/javascript">console.log("Yes there is a response.")</script>'; // DEBUG: check if this fired
-			dbgx_trace_var( $this->basename ); // DEBUG: why are you missing?
-
+		// If we have the plugin details, add them to the update_plugins transient.
+		if ( $this->github_response && 'request-error-wait' !== $this->github_response ) {
 			// If GitHub version greater than installed version.
 			if ( true === version_compare( str_replace( 'v', '', $this->github_response['tag_name'] ), $transient->checked[ $this->basename ], 'gt' ) ) {
-
-				echo '<script type="text/javascript">console.log("Yes version compare was true.")</script>'; // DEBUG: check if this fired
-
-				$package = $this->github_response['zipball_url'];
-
 				$obj              = new stdClass();
 				$obj->slug        = $this->slug;
 				$obj->plugin      = $this->basename;
 				$obj->new_version = $this->github_response['tag_name'];
-				$obj->package     = $package;
-				$obj->url         = $this->plugin_meta["PluginURI"];
+				$obj->package     = $this->github_response['zipball_url'];
+				$obj->url         = $this->plugin_meta['PluginURI'];
 
 				$transient->response[ $this->basename ] = $obj;
 			}
-
-			echo '<script type="text/javascript">console.log("Trigger 2")</script>'; // DEBUG: check if this fired
-			if ( isset( $obj ) ) {
-				dbgx_trace_var( $obj ); // DEBUG: check the response format
-			}
-			// $obj = stdClass::__set_state(array(
-			//    'slug' => '',
-			//    'plugin' => NULL,
-			//    'new_version' => 'v0.3.1',
-			//    'package' => 'https://api.github.com/repos/washingtonstateuniversity/WSUWP-Plugin-Help-Docs/zipball/v0.3.1',
-			//    'url' => NULL,
-			// ))
 		}
-
-		echo '<script type="text/javascript">console.log("Trigger 3")</script>'; // DEBUG: check if this fired
-		dbgx_trace_var( $transient ); // DEBUG: check the response format
 
 		return $transient;
 	}
@@ -322,36 +337,40 @@ echo '<script type="text/javascript">console.log("Step 1: No cached version foun
 		}
 
 		// Try to get plugin details from the cache before checking the API.
-		if ( false === ( $this->github_response = get_transient( 'update_plugin_' . WSUWP_Help_Docs::$post_type_slug ) ) ) {
+		$this->github_response = get_transient( 'update_plugin_' . $this->slug );
+
+		if ( false === $this->github_response ) {
 			$this->github_response = $this->get_repository_details();
 
 			if ( ! is_wp_error( $this->github_response ) && ! empty( $this->github_response['zipball_url'] ) ) {
 				// Save results of a successful API call to a 12-hour transient cache.
-				set_transient( 'update_plugin_' . WSUWP_Help_Docs::$post_type_slug, $this->github_response, 43200 );
+				set_transient( 'update_plugin_' . $this->slug, $this->github_response, 43200 );
+			} else {
+				// Save results of an error to a 1-hour transient to prevent overloading the GitHub API.
+				set_transient( 'update_plugin_' . $this->slug, 'request-error-wait', 3600 );
 			}
 		}
 
-		if ( $this->github_response ) {
-
-			$result = new stdClass();
-			$result->name = $this->plugin_meta["Name"];
-			$result->slug = $this->slug;
-			$result->version = str_replace( 'v', '', $this->github_response['tag_name'] );
-			$result->requires = '3.3';
-			$result->tested = '4.9';
-			$result->rating = '100';
-			$result->num_ratings = '1';
-			$result->downloaded = '1';
-			$result->author = $this->plugin_meta["AuthorName"];
-			$result->author_profile = $this->plugin_meta["AuthorURI"];
-			$result->last_updated = $this->github_response['published_at'];
-			$result->homepage = $this->plugin_meta["PluginURI"];
-			$result->short_description = $this->plugin_meta["Description"];
-			$result->sections = array(
-				'description' => $this->plugin_meta["Description"],
-				'updates' => $this->github_response['body'],
+		if ( $this->github_response && 'request-error-wait' !== $this->github_response ) {
+			$result                    = new stdClass();
+			$result->name              = $this->plugin_meta['Name'];
+			$result->slug              = $this->slug;
+			$result->version           = str_replace( 'v', '', $this->github_response['tag_name'] );
+			$result->requires          = '3.3';
+			$result->tested            = '4.9';
+			$result->rating            = '100';
+			$result->num_ratings       = '1';
+			$result->downloaded        = '1';
+			$result->author            = $this->plugin_meta['AuthorName'];
+			$result->author_profile    = $this->plugin_meta['AuthorURI'];
+			$result->last_updated      = $this->github_response['published_at'];
+			$result->homepage          = $this->plugin_meta['PluginURI'];
+			$result->short_description = $this->plugin_meta['Description'];
+			$result->sections          = array(
+				'description' => $this->plugin_meta['Description'],
+				'updates'     => $this->github_response['body'],
 			);
-			$result->download_link = $this->github_response['zipball_url'];
+			$result->download_link     = $this->github_response['zipball_url'];
 
 			return $result;
 		}
@@ -383,6 +402,7 @@ echo '<script type="text/javascript">console.log("Step 1: No cached version foun
 		if ( current_user_can( 'install_plugins' ) ) {
 			$plugin_meta[] = sprintf( '<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
 				esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $this->slug . '&TB_iframe=true&width=600&height=550' ) ),
+				/* translators: the plugin name */
 				esc_attr( sprintf( __( 'More information about %s', 'wsuwp-help-docs' ), $this->plugin_meta['Name'] ) ),
 				esc_attr( $this->plugin_meta['Name'] ),
 				__( 'View details', 'wsuwp-help-docs' )
