@@ -142,6 +142,13 @@ class WSUWP_Help_Docs_Updater {
 	 * Sets the plugin GitHub credentials.
 	 *
 	 * @since 0.4.0
+	 *
+	 * @param $props {
+	 *     @type string $username   Required. A valid GitHub username for the repository.
+	 *     @type string $repository Required. The GitHub repository to watch for updates.
+	 *     @type string $auth_token Optional. A GitHub authorization token.
+	 * }
+	 * @return void
 	 */
 	public function set_github_credentials( $props ) {
 		$defaults = array(
@@ -158,7 +165,7 @@ class WSUWP_Help_Docs_Updater {
 	}
 
 	/**
-	 * Sets the plugin properties to pass to the GitHub API.
+	 * Sets the plugin properties.
 	 *
 	 * @since 0.4.0
 	 */
@@ -262,7 +269,7 @@ class WSUWP_Help_Docs_Updater {
 	}
 
 	/**
-	 * Checks for a newer version and updates the transient if so.
+	 * Checks for a newer version and updates the transient accordingly.
 	 *
 	 * Callback function for the WP API `{site_}transient_update_plugins`
 	 * filter hooks. Checks the version number from the installed version of the
@@ -273,7 +280,7 @@ class WSUWP_Help_Docs_Updater {
 	 *
 	 * @since 0.4.0
 	 *
-	 * @param object $transient Required. The WP update_plugins transient.
+	 * @param object $transient Required. The WP `update_plugins` transient.
 	 * @return object $transient The same or modified transient object.
 	 */
 	public function push_transient_update( $transient ) {
@@ -321,9 +328,18 @@ class WSUWP_Help_Docs_Updater {
 	}
 
 	/**
-	 * display the plugin details modal window
+	 * Displays the plugin details modal.
 	 *
-	 * retrieve and display the plugin release info as the details window.
+	 * The callback function for the 'plugins_api' WP API filter hook. This
+	 * retrieves and displays the plugin release info along with the plugin
+	 * meta information in the WordPress details modal window.
+	 *
+	 * @since 0.4.0
+	 *
+	 * @param object $result Required. The result object is required for the `plugin_information` action.
+	 * @param string $action The type of information being requested from the Plugin Installation API.
+	 * @param object $args The Plugin API arguments.
+	 * @return object|false The result object with the plugin details added or false.
 	 */
 	public function display_plugin_details( $result, $action, $args ) {
 		// Do nothing if this isn't a request for information.

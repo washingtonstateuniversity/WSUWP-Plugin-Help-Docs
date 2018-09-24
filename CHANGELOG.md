@@ -27,6 +27,7 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
+* Update WSUWP_Help_Docs_Updater class documentation.
 * Clean up debugging and phpcs issues in WSUWP_Help_Docs_Updater class.
 * The `update_pluign_{slug}` transient now not only stores the GitHub response of a successful request, but also an error placeholder (for 60 minutes) on a failed request. This guarantees we only ping the GitHub API at most once an hour, helping to prevent spamming the service if something breaks on our end.
 * Fine-tuned error handling in `WSUWP_Help_Docs_Updater->get_repository_details()` to warn of failed requests.
