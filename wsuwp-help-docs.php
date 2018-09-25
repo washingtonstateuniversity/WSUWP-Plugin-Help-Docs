@@ -7,6 +7,9 @@ Author: Adam Turner, washingtonstateuniversity
 Author URI: https://github.com/washingtonstateuniversity/
 Plugin URI: https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs
 Text Domain: wsuwp-help-docs
+Requires at least: 3.3
+Tested up to: 4.9.9
+Requires PHP: 5.3
 */
 
 // If this file is called directly, abort.

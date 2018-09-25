@@ -1,7 +1,6 @@
 # WSUWP Help Docs Changelog
 
-Authors: Adam Turner, Washington State University
-
+Authors: Adam Turner, Washington State University\
 URI: https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs
 
 <!--
@@ -27,7 +26,7 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
-* Include WordPress-ish head matter in `README.md`.
+* Move WP required version, tested version, and PHP version meta to plugin head matter.
 * Update WSUWP_Help_Docs_Updater class documentation.
 * Clean up debugging and phpcs issues in WSUWP_Help_Docs_Updater class.
 * The `update_pluign_{slug}` transient now not only stores the GitHub response of a successful request, but also an error placeholder (for 60 minutes) on a failed request. This guarantees we only ping the GitHub API at most once an hour, helping to prevent spamming the service if something breaks on our end.
