@@ -26,6 +26,7 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
+* Use plugin metadata for the required version fields when fetching plugin info in the WSUWP_Help_Docs_Updater class.
 * Move WP required version, tested version, and PHP version meta to plugin head matter.
 * Update WSUWP_Help_Docs_Updater class documentation.
 * Clean up debugging and phpcs issues in WSUWP_Help_Docs_Updater class.
@@ -38,6 +39,7 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
+* WSUWP_Help_Docs_Updater method to add additional header fields to the `get_plugin_data` function call.
 * WSUWP_Help_Docs_Updater method to handle displaying errors when the connection fails.
 * Method to add a "view details" link to the row meta on the plugins admin screen.
 * Dedicated `$slug` property in `WSUWP_Help_Docs_Updater` class to fetch slug separate from basename.

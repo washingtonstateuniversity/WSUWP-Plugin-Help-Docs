@@ -136,6 +136,7 @@ class WSUWP_Help_Docs_Updater {
 		add_filter( 'plugins_api', array( $this, 'display_plugin_details' ), 10, 3 );
 		add_filter( 'plugin_row_meta', array( $this, 'update_plugin_row_meta' ), 10, 2 );
 		add_filter( 'upgrader_post_install', array( $this, 'after_install' ), 10, 3 );
+		add_filter( 'extra_plugin_headers', array( $this, 'add_plugin_headers' ), 10, 1 );
 	}
 
 	/**
@@ -372,11 +373,9 @@ class WSUWP_Help_Docs_Updater {
 			$result->name              = $this->plugin_meta['Name'];
 			$result->slug              = $this->slug;
 			$result->version           = str_replace( 'v', '', $this->github_response['tag_name'] );
-			$result->requires          = '3.3';
-			$result->tested            = '4.9';
-			$result->rating            = '100';
-			$result->num_ratings       = '1';
-			$result->downloaded        = '1';
+			$result->requires          = $this->plugin_meta['Requires at least'];
+			$result->tested            = $this->plugin_meta['Tested up to'];
+			$result->requires_php      = $this->plugin_meta['Requires PHP'];
 			$result->author            = $this->plugin_meta['AuthorName'];
 			$result->author_profile    = $this->plugin_meta['AuthorURI'];
 			$result->last_updated      = $this->github_response['published_at'];
@@ -384,7 +383,7 @@ class WSUWP_Help_Docs_Updater {
 			$result->short_description = $this->plugin_meta['Description'];
 			$result->sections          = array(
 				'description' => $this->plugin_meta['Description'],
-				'updates'     => $this->github_response['body'],
+				'changelog'     => $this->github_response['body'],
 			);
 			$result->download_link     = $this->github_response['zipball_url'];
 
@@ -426,6 +425,19 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		return $plugin_meta;
+	}
+
+	/**
+	 * try adding custom plugin headers
+	 */
+	public function add_plugin_headers( $extra_headers ) {
+		$extra_headers = array(
+			'requires_at_least' => 'Requires at least',
+			'tested_up_to'      => 'Tested up to',
+			'requires_php'      => 'Requires PHP',
+		);
+
+		return $extra_headers;
 	}
 
 	/**
