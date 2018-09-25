@@ -26,6 +26,7 @@ Changelog formatting (http://semver.org/):
 
 ### Changed
 
+* Format WSUWP_Help_Docs_Updater changelog output with `the_content` filter.
 * Use plugin metadata for the required version fields when fetching plugin info in the WSUWP_Help_Docs_Updater class.
 * Move WP required version, tested version, and PHP version meta to plugin head matter.
 * Update WSUWP_Help_Docs_Updater class documentation.

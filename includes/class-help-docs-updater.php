@@ -369,6 +369,11 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		if ( $this->github_response && 'request-error-wait' !== $this->github_response ) {
+			$changelog = sprintf( __( '<strong>Version %1$s Changes</strong>%2$s', 'wsuwp-help-docs' ),
+				$this->github_response['tag_name'],
+				apply_filters( 'the_content', $this->github_response['body'] )
+			);
+
 			$result                    = new stdClass();
 			$result->name              = $this->plugin_meta['Name'];
 			$result->slug              = $this->slug;
@@ -383,7 +388,7 @@ class WSUWP_Help_Docs_Updater {
 			$result->short_description = $this->plugin_meta['Description'];
 			$result->sections          = array(
 				'description' => $this->plugin_meta['Description'],
-				'changelog'   => $this->github_response['body'],
+				'changelog'   => $changelog,
 			);
 			$result->download_link     = $this->github_response['zipball_url'];
 
