@@ -1,5 +1,15 @@
 # WSUWP Help Docs
 
+Contributors: admturner, washingtonstateuniversity
+Requires at least: 4.0
+Tested up to: 4.9
+Stable tag: 0.4.1
+Requires PHP: 5.3
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+## Description
+
 This plugin creates a Help custom post type. The Help posts cannot be viewed or queried from the front end of the site. They're intended to provide help, guidance, and instructions for logged in site users. The plugin generates two new areas in the WP Admin area:
 
 1. A subpage under the Tools section where registered site users with Editor capabilities and up can manage Help posts.
