@@ -383,7 +383,7 @@ class WSUWP_Help_Docs_Updater {
 			$result->short_description = $this->plugin_meta['Description'];
 			$result->sections          = array(
 				'description' => $this->plugin_meta['Description'],
-				'changelog'     => $this->github_response['body'],
+				'changelog'   => $this->github_response['body'],
 			);
 			$result->download_link     = $this->github_response['zipball_url'];
 
@@ -428,13 +428,30 @@ class WSUWP_Help_Docs_Updater {
 	}
 
 	/**
-	 * try adding custom plugin headers
+	 * Adds custom headers for WordPress and PHP version requirements.
+	 *
+	 * Callback function for the `extra_{$context}_headers` WP Filter hook,
+	 * where here `$context` is `plugin`. This hook fires in `get_file_data()`,
+	 * called in this context by `get_plugin_data()`. The `get_plugin_data`
+	 * function passes the `plugin` context, allowing us to add some custom
+	 * headers to the plugin data parser. The values passed here must match
+	 * the head matter in the main plugin file, and must be passed as-is to the
+	 * `WSUWP_Help_Docs_Updater->display_plugin_details()` results object.
+	 *
+	 * @link https://developer.wordpress.org/reference/functions/get_file_data/
+	 * @link https://developer.wordpress.org/reference/functions/get_plugin_data/
+	 * @link https://codex.wordpress.org/File_Header
+	 *
+	 * @since 0.4.1
+	 *
+	 * @param array $extra_headers List of headers, in the format array('HeaderKey' => 'Header Name').
+	 * @return array Array of file headers to add to the default headers array.
 	 */
 	public function add_plugin_headers( $extra_headers ) {
 		$extra_headers = array(
-			'requires_at_least' => 'Requires at least',
-			'tested_up_to'      => 'Tested up to',
-			'requires_php'      => 'Requires PHP',
+			'RequiresAtLeast' => 'Requires at least',
+			'TestedUpTo'      => 'Tested up to',
+			'RequiresPHP'     => 'Requires PHP',
 		);
 
 		return $extra_headers;
