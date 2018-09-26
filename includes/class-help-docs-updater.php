@@ -135,7 +135,7 @@ class WSUWP_Help_Docs_Updater {
 		add_filter( 'site_transient_update_plugins', array( $this, 'push_transient_update' ), 10, 1 );
 		add_filter( 'plugins_api', array( $this, 'display_plugin_details' ), 10, 3 );
 		add_filter( 'plugin_row_meta', array( $this, 'update_plugin_row_meta' ), 10, 2 );
-		add_filter( 'upgrader_post_install', array( $this, 'after_install' ), 10, 3 );
+		add_filter( 'upgrader_post_install', array( $this, 'update_post_install' ), 10, 3 );
 		add_filter( 'extra_plugin_headers', array( $this, 'add_plugin_headers' ), 10, 1 );
 	}
 
@@ -463,9 +463,47 @@ class WSUWP_Help_Docs_Updater {
 	}
 
 	/**
-	 * actions for after installation
+	 * Moves plugin files back into place after installation and reactivates.
+	 *
+	 * The callback function for the `upgrader_post_install` WP Filter hook.
+	 *
+	 *     When you hit "install" WP removes the old plugin and then downloads and
+	 *     extracts the zip file from the URL we provided. All of this works (had
+	 *     to quit out of any applications using the files and maybe uncheck readonly
+	 *     from Windows to get the local version working) but the GitHub zip file
+	 *     is named incorrectly, so we need to follow the Smashing Magazine method
+	 *     for renaming the plugin directory and then reactivating the plugin.
+	 *
+	 * @since 0.4.1
+	 *
+	 * @param bool  $response   Installation response.
+	 * @param array $hook_extra Extra arguments passed to hooked filters.
+	 * @param array $result     Installation result data.
+	 * @return array The modified installation result data.
 	 */
-	public function after_install( $response, $hook_extra, $result ) {
-		// steps to take after installation
+	public function update_post_install( $response, $hook_extra, $result ) {
+		// Retrieve the global WP Filesystem API object.
+		global $wp_filesystem;
+
+		$install_dir = plugin_dir_path( $this->file ); // DEBUG: this might not always be correct, see https://codex.wordpress.org/Filesystem_API "Working with Paths"
+
+		dbgx_trace_var( $install_dir ); // DEBUG: see what this outputs.
+		dbgx_trace_var( $result );      // DEBUG: see what this starts as.
+		dbgx_trace_var( $response );    // DEBUG: what are we looking at here?
+
+		// Move (functionally rename) the installed directory to the plugin directory.
+		$wp_filesystem->move( $result['destination'], $install_dir );
+
+		// Set the destination for the rest of the stack.
+		$result['destination'] = $install_dir;
+
+		dbgx_trace_var( $result ); // DEBUG: what does this look like at the end?
+
+		// Reactivate the plugin if it was active.
+		if ( $this->active ) {
+			activate_plugin( $this->basename );
+		}
+
+		return $result;
 	}
 }

@@ -40,6 +40,7 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
+* WSUWP_Help_Docs_Updater method to ensure updated plugin files are in the correct place and the plugin reactivated if it was already active.
 * WSUWP_Help_Docs_Updater method to add additional header fields to the `get_plugin_data` function call.
 * WSUWP_Help_Docs_Updater method to handle displaying errors when the connection fails.
 * Method to add a "view details" link to the row meta on the plugins admin screen.
