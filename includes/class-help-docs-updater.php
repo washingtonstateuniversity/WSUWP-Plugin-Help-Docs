@@ -466,13 +466,15 @@ class WSUWP_Help_Docs_Updater {
 	 * Moves plugin files back into place after installation and reactivates.
 	 *
 	 * The callback function for the `upgrader_post_install` WP Filter hook.
+	 * When updating the plugin WP downloads and extracts the zip file from the
+	 * GitHub response URL. The WP Upgrader class then removes the old plugin
+	 * directory and replaces it with the new one. Because this came from GitHub
+	 * the name of the new directory will be wrong. This function renames the
+	 * new destination directory to match the old plugin directory. It also
+	 * reactivates the plugin if it was previously active and flushes the
+	 * plugin's transient cache.
 	 *
-	 *     When you hit "install" WP removes the old plugin and then downloads and
-	 *     extracts the zip file from the URL we provided. All of this works (had
-	 *     to quit out of any applications using the files and maybe uncheck readonly
-	 *     from Windows to get the local version working) but the GitHub zip file
-	 *     is named incorrectly, so we need to follow the Smashing Magazine method
-	 *     for renaming the plugin directory and then reactivating the plugin.
+	 * @link https://developer.wordpress.org/reference/classes/wp_upgrader/install_package/
 	 *
 	 * @since 0.4.1
 	 *
@@ -485,23 +487,23 @@ class WSUWP_Help_Docs_Updater {
 		// Retrieve the global WP Filesystem API object.
 		global $wp_filesystem;
 
-		$install_dir = plugin_dir_path( $this->file ); // DEBUG: this might not always be correct, see https://codex.wordpress.org/Filesystem_API "Working with Paths"
+		$install_dir = plugin_dir_path( $this->file );
 
-		dbgx_trace_var( $install_dir ); // DEBUG: see what this outputs.
-		dbgx_trace_var( $result );      // DEBUG: see what this starts as.
-		dbgx_trace_var( $response );    // DEBUG: what are we looking at here?
-
-		// Move (functionally rename) the installed directory to the plugin directory.
+		// Rename the installed directory to the plugin directory.
 		$wp_filesystem->move( $result['destination'], $install_dir );
 
 		// Set the destination for the rest of the stack.
-		$result['destination'] = $install_dir;
-
-		dbgx_trace_var( $result ); // DEBUG: what does this look like at the end?
+		$result['destination']      = $install_dir;
+		$result['destination_name'] = $this->slug;
 
 		// Reactivate the plugin if it was active.
 		if ( $this->active ) {
 			activate_plugin( $this->basename );
+		}
+
+		// Clear the plugin update cache after upgrade.
+		if ( $result && get_transient( 'update_plugin_' . $this->slug ) ) {
+			delete_transient( 'update_plugin_' . $this->slug );
 		}
 
 		return $result;
