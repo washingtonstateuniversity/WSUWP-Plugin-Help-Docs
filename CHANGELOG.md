@@ -1,7 +1,6 @@
 # WSUWP Help Docs Changelog
 
-Author: Adam Turner
-Author: Washington State University
+Authors: Adam Turner, Washington State University\
 URI: https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs
 
 <!--
@@ -17,6 +16,43 @@ Changelog formatting (http://semver.org/):
 ### Deprecated (for once-stable features removed in upcoming releases)
 ### Removed (for deprecated features removed in this release)
 -->
+
+## 0.4.1 (2018-09-27)
+
+### Fixed
+
+* Remove the "v" from the GitHub version number for more reliable version comparison.
+* Corrected plugin repo username.
+
+### Changed
+
+* Format WSUWP_Help_Docs_Updater changelog output with `the_content` filter.
+* Use plugin metadata for the required version fields when fetching plugin info in the WSUWP_Help_Docs_Updater class.
+* Move WP required version, tested version, and PHP version meta to plugin head matter.
+* Update WSUWP_Help_Docs_Updater class documentation.
+* Clean up debugging and phpcs issues in WSUWP_Help_Docs_Updater class.
+* The `update_pluign_{slug}` transient now not only stores the GitHub response of a successful request, but also an error placeholder (for 60 minutes) on a failed request. This guarantees we only ping the GitHub API at most once an hour, helping to prevent spamming the service if something breaks on our end.
+* Fine-tuned error handling in `WSUWP_Help_Docs_Updater->get_repository_details()` to warn of failed requests.
+* We only need the latest release from GitHub, so specify `/latest` in the request URI instead of requesting all releases (which means we also don't need the `is_array` > `current()` conditional on the API response).
+* Replace `current( explode(` method to build the plugin slug with `$slug` class property.
+* Use `transient_update_plugins` hook instead of `pre_set_site_transient_update_plugins`.
+* Load the updater class in the main plugin file and setup class and define the base credentials in the main plugin file.
+
+### Added
+
+* A `.gitattributes` file to ignore development files on GitHub's zip export.
+* WSUWP_Help_Docs_Updater method to ensure updated plugin files are in the correct place and the plugin reactivated if it was already active.
+* WSUWP_Help_Docs_Updater method to add additional header fields to the `get_plugin_data` function call.
+* WSUWP_Help_Docs_Updater method to handle displaying errors when the connection fails.
+* Method to add a "view details" link to the row meta on the plugins admin screen.
+* Dedicated `$slug` property in `WSUWP_Help_Docs_Updater` class to fetch slug separate from basename.
+* Method for retrieving plugin details from the GitHub API and displaying on the plugins admin screen.
+* Method for checking and updating the WP `update_plugins` transient with information from the GitHub API.
+* Updater class to check GitHub repo for newer plugin version and install it if found.
+
+### Removed
+
+* The `deploy` npm script in favor of GitHub exports.
 
 ## 0.3.1 (2018-09-18)
 

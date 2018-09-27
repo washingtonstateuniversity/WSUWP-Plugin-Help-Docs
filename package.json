@@ -1,6 +1,6 @@
 {
   "name": "wsuwp-help-docs",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs"
@@ -36,7 +36,6 @@
     "build:css": "npm run lintscss -s && npm run sass -s",
     "test": "npm run phpcs -s && npm run lintscss -s",
     "prebuild": "npm run clean -s && npm run phpcs -s",
-    "build": "npm run build:css -s",
-    "deploy": "mkdirp build && cpx {*.php,*.css,README.md,LICENSE.txt,css/**,includes/**,templates/**} build"
+    "build": "npm run build:css -s"
   }
 }
