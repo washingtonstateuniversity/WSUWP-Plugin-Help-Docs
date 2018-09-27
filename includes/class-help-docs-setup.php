@@ -22,7 +22,7 @@ class WSUWP_Help_Docs {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	protected $version = '0.3.1';
+	protected $version = '0.5.0';
 
 	/**
 	 * Slug used to register the post type.
@@ -132,9 +132,12 @@ class WSUWP_Help_Docs {
 	 * @since 0.1.0
 	 */
 	public static function deactivate() {
-		// Deregister custom post type, taxonomy, and shortcode (remove rules from memory).
+		// Deregister custom post type and shortcode (remove rules from memory).
 		unregister_post_type( self::$post_type_slug );
 		remove_shortcode( 'helplink' );
+
+		// Delete the update_plugin transient.
+		WSUWP_Help_Docs_Updater::flush_transient_cache();
 
 		// Flush rewrite rules on plugin deactivation to remove custom permalinks.
 		flush_rewrite_rules();

@@ -17,6 +17,16 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
+## 0.5.0 (2018-09-27)
+
+### Changed
+
+* The WSUWP_Help_Docs_Updater class $slug property is now public and static so that the flush transient method can run from outside the class.
+
+### Added
+
+* WSUWP_Help_Docs_Updater method to delete the `update_plugin_{slug}` transient so that it can be called from the plugin deactivation hook (allowing a method to force a check for new updates).
+
 ## 0.4.1 (2018-09-27)
 
 ### Fixed
