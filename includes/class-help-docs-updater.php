@@ -96,11 +96,11 @@ class WSUWP_Help_Docs_Updater {
 	/**
 	 * Instantiates WSUWP Help singleton.
 	 *
-	 * @since 0.1.0
+	 * @since 0.4.0
 	 *
-	 * @return object The WSUWP Help object
+	 * @return object The WSUWP_Help_Docs_Updater object
 	 */
-	public static function get_instance( $file = '' ) {
+	public static function get_instance( $file ) {
 		static $instance = null;
 
 		// Only set up and activate the plugin if it hasn't already been done.
@@ -116,7 +116,7 @@ class WSUWP_Help_Docs_Updater {
 	/**
 	 * An empty constructor to prevent WSUWP Help being loaded more than once.
 	 *
-	 * @since 0.1.0
+	 * @since 0.4.0
 	 */
 	public function __construct() {
 		/* Nothing doing. */
@@ -369,6 +369,7 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		if ( $this->github_response && 'request-error-wait' !== $this->github_response ) {
+			/* translators: 1: the plugin version number, 2: the HTML formatted release message from GitHub */
 			$changelog = sprintf( __( '<strong>Version %1$s Changes</strong>%2$s', 'wsuwp-help-docs' ),
 				$this->github_response['tag_name'],
 				apply_filters( 'the_content', $this->github_response['body'] )
@@ -401,7 +402,7 @@ class WSUWP_Help_Docs_Updater {
 	/**
 	 * Adds a "view details" link to the plugin row meta.
 	 *
-	 * Callback function for the `plugin_row_meta` filter hook. This funciton
+	 * Callback function for the `plugin_row_meta` filter hook. This function
 	 * modifies the plugin_meta variable to add a "View Details" link like the
 	 * one for plugins in the WP plugin repository. The link will generate
 	 * the modal ({@uses install_plugin_information()}) using `plugins_api()`,
