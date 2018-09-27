@@ -22,6 +22,15 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WSUWP_Help_Docs_Updater {
 	/**
+	 * The plugin slug.
+	 *
+	 * @since 0.4.1
+	 * @since 0.5.0 Changed from private to public static.
+	 * @var string
+	 */
+	public static $slug;
+
+	/**
 	 * The main plugin file path.
 	 *
 	 * @since 0.4.0
@@ -44,14 +53,6 @@ class WSUWP_Help_Docs_Updater {
 	 * @var string
 	 */
 	private $basename;
-
-	/**
-	 * The plugin slug.
-	 *
-	 * @since 0.4.1
-	 * @var string
-	 */
-	private $slug;
 
 	/**
 	 * Whether the plugin is activated.
@@ -177,7 +178,7 @@ class WSUWP_Help_Docs_Updater {
 
 		$this->plugin_meta = get_plugin_data( $this->file );
 		$this->basename    = plugin_basename( $this->file );
-		$this->slug        = current( explode( '/', $this->basename ) );
+		self::$slug        = current( explode( '/', $this->basename ) );
 		$this->active      = is_plugin_active( $this->basename );
 	}
 
@@ -239,6 +240,21 @@ class WSUWP_Help_Docs_Updater {
 	}
 
 	/**
+	 * Deletes the `update_plugin_{plugin-slug}` transient to clear the cache.
+	 *
+	 * @since 0.5.0
+	 *
+	 * @return bool True if successful, false otherwise or if transient doesn't exist.
+	 */
+	public static function flush_transient_cache() {
+		if ( get_transient( 'update_plugin_' . self::$slug ) ) {
+			$deleted = delete_transient( 'update_plugin_' . self::$slug );
+		}
+
+		return false;
+	}
+
+	/**
 	 * Prints errors if debugging is enabled.
 	 *
 	 * @since 0.4.1
@@ -296,17 +312,17 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		// Try to get plugin details from the cache before checking the API.
-		$this->github_response = get_transient( 'update_plugin_' . $this->slug );
+		$this->github_response = get_transient( 'update_plugin_' . self::$slug );
 
 		if ( false === $this->github_response ) {
 			$this->github_response = $this->get_repository_details();
 
 			if ( ! is_wp_error( $this->github_response ) && ! empty( $this->github_response['zipball_url'] ) ) {
 				// Save results of a successful API call to a 12-hour transient cache.
-				set_transient( 'update_plugin_' . $this->slug, $this->github_response, 43200 );
+				set_transient( 'update_plugin_' . self::$slug, $this->github_response, 43200 );
 			} else {
 				// Save results of an error to a 1-hour transient to prevent overloading the GitHub API.
-				set_transient( 'update_plugin_' . $this->slug, 'request-error-wait', 3600 );
+				set_transient( 'update_plugin_' . self::$slug, 'request-error-wait', 3600 );
 			}
 		}
 
@@ -315,7 +331,7 @@ class WSUWP_Help_Docs_Updater {
 			// If GitHub version greater than installed version.
 			if ( true === version_compare( str_replace( 'v', '', $this->github_response['tag_name'] ), $transient->checked[ $this->basename ], 'gt' ) ) {
 				$obj              = new stdClass();
-				$obj->slug        = $this->slug;
+				$obj->slug        = self::$slug;
 				$obj->plugin      = $this->basename;
 				$obj->new_version = $this->github_response['tag_name'];
 				$obj->package     = $this->github_response['zipball_url'];
@@ -349,22 +365,22 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		// Return the result now if it isn't our plugin.
-		if ( $this->slug !== $args->slug ) {
+		if ( self::$slug !== $args->slug ) {
 			return $result;
 		}
 
 		// Try to get plugin details from the cache before checking the API.
-		$this->github_response = get_transient( 'update_plugin_' . $this->slug );
+		$this->github_response = get_transient( 'update_plugin_' . self::$slug );
 
 		if ( false === $this->github_response ) {
 			$this->github_response = $this->get_repository_details();
 
 			if ( ! is_wp_error( $this->github_response ) && ! empty( $this->github_response['zipball_url'] ) ) {
 				// Save results of a successful API call to a 12-hour transient cache.
-				set_transient( 'update_plugin_' . $this->slug, $this->github_response, 43200 );
+				set_transient( 'update_plugin_' . self::$slug, $this->github_response, 43200 );
 			} else {
 				// Save results of an error to a 1-hour transient to prevent overloading the GitHub API.
-				set_transient( 'update_plugin_' . $this->slug, 'request-error-wait', 3600 );
+				set_transient( 'update_plugin_' . self::$slug, 'request-error-wait', 3600 );
 			}
 		}
 
@@ -377,7 +393,7 @@ class WSUWP_Help_Docs_Updater {
 
 			$result                    = new stdClass();
 			$result->name              = $this->plugin_meta['Name'];
-			$result->slug              = $this->slug;
+			$result->slug              = self::$slug;
 			$result->version           = str_replace( 'v', '', $this->github_response['tag_name'] );
 			$result->requires          = $this->plugin_meta['Requires at least'];
 			$result->tested            = $this->plugin_meta['Tested up to'];
@@ -422,7 +438,7 @@ class WSUWP_Help_Docs_Updater {
 
 		if ( current_user_can( 'install_plugins' ) ) {
 			$plugin_meta[] = sprintf( '<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
-				esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . $this->slug . '&TB_iframe=true&width=600&height=550' ) ),
+				esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . self::$slug . '&TB_iframe=true&width=600&height=550' ) ),
 				/* translators: the plugin name */
 				esc_attr( sprintf( __( 'More information about %s', 'wsuwp-help-docs' ), $this->plugin_meta['Name'] ) ),
 				esc_attr( $this->plugin_meta['Name'] ),
@@ -495,7 +511,7 @@ class WSUWP_Help_Docs_Updater {
 
 		// Set the destination for the rest of the stack.
 		$result['destination']      = $install_dir;
-		$result['destination_name'] = $this->slug;
+		$result['destination_name'] = self::$slug;
 
 		// Reactivate the plugin if it was active.
 		if ( $this->active ) {
@@ -503,8 +519,8 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		// Clear the plugin update cache after upgrade.
-		if ( $result && get_transient( 'update_plugin_' . $this->slug ) ) {
-			delete_transient( 'update_plugin_' . $this->slug );
+		if ( $result ) {
+			self::flush_transient_cache();
 		}
 
 		return $result;
