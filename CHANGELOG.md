@@ -17,7 +17,7 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
-## 0.4.1 (unreleased)
+## 0.4.1 (2018-09-27)
 
 ### Fixed
 
@@ -40,6 +40,7 @@ Changelog formatting (http://semver.org/):
 
 ### Added
 
+* A `.gitattributes` file to ignore development files on GitHub's zip export.
 * WSUWP_Help_Docs_Updater method to ensure updated plugin files are in the correct place and the plugin reactivated if it was already active.
 * WSUWP_Help_Docs_Updater method to add additional header fields to the `get_plugin_data` function call.
 * WSUWP_Help_Docs_Updater method to handle displaying errors when the connection fails.
@@ -48,6 +49,10 @@ Changelog formatting (http://semver.org/):
 * Method for retrieving plugin details from the GitHub API and displaying on the plugins admin screen.
 * Method for checking and updating the WP `update_plugins` transient with information from the GitHub API.
 * Updater class to check GitHub repo for newer plugin version and install it if found.
+
+### Removed
+
+* The `deploy` npm script in favor of GitHub exports.
 
 ## 0.3.1 (2018-09-18)
 
