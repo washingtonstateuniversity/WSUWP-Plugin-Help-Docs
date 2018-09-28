@@ -19,6 +19,10 @@ Changelog formatting (http://semver.org/):
 
 ## 0.6.0 (unreleased)
 
+### Changed
+
+* Update NPM dependencies.
+
 ### Added
 
 * Custom post updated messages for the Help custom post type.
