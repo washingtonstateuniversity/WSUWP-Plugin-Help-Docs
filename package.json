@@ -1,6 +1,6 @@
 {
   "name": "wsuwp-help-docs",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs"
@@ -18,14 +18,14 @@
     "Firefox ESR"
   ],
   "devDependencies": {
-    "autoprefixer": "^8.6.5",
+    "autoprefixer": "^9.1.x",
     "cpx": "^1.5.x",
-    "cssnano": "^4.0.x",
+    "cssnano": "^4.1.4",
     "mkdirp": "^0.5.1",
     "node-sass": "^4.9.1",
-    "postcss-cli": "^5.0.1",
+    "postcss-cli": "^6.0.x",
     "rimraf": "^2.6.x",
-    "stylelint": "^9.3.0"
+    "stylelint": "^9.6.x"
   },
   "scripts": {
     "clean": "rimraf {css/}",

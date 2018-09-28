@@ -17,6 +17,16 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
+## 0.6.0 (2018-09-28)
+
+### Changed
+
+* Update NPM dependencies.
+
+### Added
+
+* Custom post updated messages for the Help custom post type.
+
 ## 0.5.0 (2018-09-27)
 
 ### Changed
