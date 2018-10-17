@@ -2,7 +2,7 @@
 Plugin Name: WSUWP Help Docs
 Author: Adam Turner, WSU University Communication
 Author URI: https://hrs.wsu.edu/
-Version: 0.6.0
+Version: 0.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -213,6 +213,37 @@ The Help Dashboard Page
 			height: auto;
 			max-width: 100%;
 		}
+	}
+
+	.documentation--steps {
+		counter-reset: step;
+	}
+
+	.step {
+		margin: 2.5em 0 2em 3em;
+		position: relative;
+	}
+
+	.step-title {
+		font-size: 1.2em;
+	}
+
+	.step-title:before {
+		counter-increment: step;
+		content: counter(step);
+		display: inline-block;
+		padding: 12px;
+		min-width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background-color: #ca4a1f;
+		color: #fff;
+		font-size: 27px;
+		line-height: 27px;
+		text-align: center;
+		position: absolute;
+		left: -2.3em;
+		top: -.6em;
 	}
 
 }

@@ -22,7 +22,7 @@ class WSUWP_Help_Docs {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	protected $version = '0.6.0';
+	protected $version = '0.7.0';
 
 	/**
 	 * Slug used to register the post type.

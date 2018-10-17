@@ -17,6 +17,12 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
+## 0.7.0 (2018-10-17)
+
+### Added
+
+* Styles for a documentation steps list component.
+
 ## 0.6.0 (2018-09-28)
 
 ### Changed
