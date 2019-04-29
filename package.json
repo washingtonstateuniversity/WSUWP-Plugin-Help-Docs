@@ -18,14 +18,14 @@
     "Firefox ESR"
   ],
   "devDependencies": {
-    "autoprefixer": "^9.1.x",
+    "autoprefixer": "^9.5.1",
     "cpx": "^1.5.x",
-    "cssnano": "^4.1.4",
+    "cssnano": "^4.1.10",
     "mkdirp": "^0.5.1",
-    "node-sass": "^4.9.1",
-    "postcss-cli": "^6.0.x",
-    "rimraf": "^2.6.x",
-    "stylelint": "^9.6.x"
+    "node-sass": "^4.11.0",
+    "postcss-cli": "^6.1.2",
+    "rimraf": "^2.6.3",
+    "stylelint": "^10.0.1"
   },
   "scripts": {
     "clean": "rimraf {css/}",
