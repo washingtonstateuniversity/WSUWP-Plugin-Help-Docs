@@ -17,6 +17,12 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
+## 0.7.1 (2019-04-29)
+
+### Changed
+
+- :arrow_up: Upgrade NPM dev dependencies.
+
 ## 0.7.0 (2018-10-17)
 
 ### Added
