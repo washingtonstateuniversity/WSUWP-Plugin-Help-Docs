@@ -1,15 +1,15 @@
 <?php
 /*
 Plugin Name: WSUWP Help Docs
-Version: 0.7.0
+Version: 1.0.0-alpha01
 Description: A plugin to create Help documents for use in the Admin area.
 Author: Adam Turner, washingtonstateuniversity
 Author URI: https://github.com/washingtonstateuniversity/
 Plugin URI: https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs
 Text Domain: wsuwp-help-docs
 Requires at least: 3.5
-Tested up to: 4.9.9
-Requires PHP: 5.3
+Tested up to: 5.2.0
+Requires PHP: 5.6
 */
 
 // If this file is called directly, abort.
@@ -22,10 +22,10 @@ if ( ! defined( 'WPINC' ) ) {
  *
  * @since 0.1.0
  */
-require_once __DIR__ . '/includes/class-help-docs-setup.php';
+require_once __DIR__ . '/includes/class-wsuwp-help-docs.php';
 
 // Starts things up.
-add_action( 'after_setup_theme', 'load_wsuwp_help' );
+add_action( 'plugins_loaded', 'load_wsuwp_help' );
 
 // Flushes rules on activation and cleans up on deactivation.
 register_activation_hook( __FILE__, array( 'WSUWP_Help_Docs', 'activate' ) );
@@ -36,10 +36,16 @@ register_deactivation_hook( __FILE__, array( 'WSUWP_Help_Docs', 'deactivate' ) )
  *
  * @since 0.1.0
  *
- * @return object An instance of WSUWP_Help_Docs
+ * @return WSUWP_Help_Docs An instance of WSUWP_Help_Docs class.
  */
 function load_wsuwp_help() {
-	return WSUWP_Help_Docs::get_instance();
+	$wsuwp_help_docs = WSUWP_Help_Docs::get_instance();
+
+	$wsuwp_help_docs->setup_hooks();
+	$wsuwp_help_docs->set_properties( __FILE__ );
+	$wsuwp_help_docs->includes();
+
+	return $wsuwp_help_docs;
 }
 
 /**
@@ -62,10 +68,12 @@ function load_wsuwp_help_updater() {
 	 * For private repositories you must also include an auth token value for
 	 * the 'auth_token' property.
 	 */
-	$updater->set_github_credentials( array(
-		'username'   => 'washingtonstateuniversity',
-		'repository' => 'WSUWP-Plugin-Help-Docs',
-	) );
+	$updater->set_github_credentials(
+		array(
+			'username'   => 'washingtonstateuniversity',
+			'repository' => 'WSUWP-Plugin-Help-Docs',
+		)
+	);
 
 	return $updater;
 }
