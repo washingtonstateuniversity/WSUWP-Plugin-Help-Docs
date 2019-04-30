@@ -1,0 +1,176 @@
+/**
+ * Code Formatting and Syntax highlighting styles
+ */
+
+code {
+	padding: 1px 5px;
+}
+
+pre {
+	padding: 8px 12px;
+	overflow-x: auto;
+}
+
+pre > code {
+	border: 0;
+	padding-right: 0;
+	padding-left: 0;
+}
+
+/* Dracula Theme v1.2.5
+ *
+ * https://github.com/zenorocha/dracula-theme
+ *
+ * Copyright 2016, All rights reserved
+ *
+ * Code licensed under the MIT license
+ * http://zenorocha.mit-license.org
+ *
+ * @author Rob G <wowmotty@gmail.com>
+ * @author Chris Bracco <chris@cbracco.me>
+ * @author Zeno Rocha <hi@zenorocha.com>
+ * @author Piruin Panichphol <piruin.p@gmail.com>
+ */
+
+/*
+ * Styles
+ */
+
+.highlight {
+	background: var(--dt-gray-dark);
+	color: var(--dt-gray-light);
+	margin-bottom: 1.5em;
+}
+
+.highlight .highlighter-rouge {
+	background: var(--dt-gray-dark);
+	color: var(--dt-gray-light);
+}
+
+.highlighter-rouge & .hll,
+.highlighter-rouge & .s,
+.highlighter-rouge & .sa,
+.highlighter-rouge & .sb,
+.highlighter-rouge & .sc,
+.highlighter-rouge & .dl,
+.highlighter-rouge & .sd,
+.highlighter-rouge & .s2,
+.highlighter-rouge & .se,
+.highlighter-rouge & .sh,
+.highlighter-rouge & .si,
+.highlighter-rouge & .sx,
+.highlighter-rouge & .sr,
+.highlighter-rouge & .s1,
+.highlighter-rouge & .ss {
+	color: var(--dt-yellow);
+}
+
+.highlighter-rouge & .go {
+	color: var(--dt-gray);
+}
+
+.highlighter-rouge & .err,
+.highlighter-rouge & .g,
+.highlighter-rouge & .l,
+.highlighter-rouge & .n,
+.highlighter-rouge & .x,
+.highlighter-rouge & .p,
+.highlighter-rouge & .ge,
+.highlighter-rouge & .gr,
+.highlighter-rouge & .gh,
+.highlighter-rouge & .gi,
+.highlighter-rouge & .gp,
+.highlighter-rouge & .gs,
+.highlighter-rouge & .gu,
+.highlighter-rouge & .gt,
+.highlighter-rouge & .ld,
+.highlighter-rouge & .no,
+.highlighter-rouge & .nd,
+.highlighter-rouge & .ni,
+.highlighter-rouge & .ne,
+.highlighter-rouge & .nn,
+.highlighter-rouge & .nx,
+.highlighter-rouge & .py,
+.highlighter-rouge & .w,
+.highlighter-rouge & .bp {
+	color: var(--dt-gray-light);
+}
+
+.highlighter-rouge & .gh,
+.highlighter-rouge & .gi,
+.highlighter-rouge & .gu {
+	font-weight: 600;
+}
+
+.highlighter-rouge &  .ge {
+	text-decoration: underline;
+}
+
+.highlighter-rouge & .bp {
+	font-style: italic;
+}
+
+.highlighter-rouge & .c,
+.highlighter-rouge & .ch,
+.highlighter-rouge & .cm,
+.highlighter-rouge & .cpf,
+.highlighter-rouge & .c1,
+.highlighter-rouge & .cs {
+	color: var(--dt-blue);
+}
+
+.highlighter-rouge & .kd,
+.highlighter-rouge & .kt,
+.highlighter-rouge & .nb,
+.highlighter-rouge & .nl,
+.highlighter-rouge & .nv,
+.highlighter-rouge & .vc,
+.highlighter-rouge & .vg,
+.highlighter-rouge & .vi,
+.highlighter-rouge & .vm {
+	color: var(--dt-cyan);
+}
+
+.highlighter-rouge & .kd,
+.highlighter-rouge & .nb,
+.highlighter-rouge & .nl,
+.highlighter-rouge & .nv,
+.highlighter-rouge & .vc,
+.highlighter-rouge & .vg,
+.highlighter-rouge & .vi,
+.highlighter-rouge & .vm {
+	font-style: italic;
+}
+
+.highlighter-rouge & .na,
+.highlighter-rouge & .nc,
+.highlighter-rouge & .nf,
+.highlighter-rouge & .fm {
+	color: var(--dt-green);
+}
+
+.highlighter-rouge & .k,
+.highlighter-rouge & .o,
+.highlighter-rouge & .cp,
+.highlighter-rouge & .kc,
+.highlighter-rouge & .kn,
+.highlighter-rouge & .kp,
+.highlighter-rouge & .kr,
+.highlighter-rouge & .nt,
+.highlighter-rouge & .ow {
+	color: var(--dt-pink);
+}
+
+.highlighter-rouge & .m,
+.highlighter-rouge & .mb,
+.highlighter-rouge & .mf,
+.highlighter-rouge & .mh,
+.highlighter-rouge & .mi,
+.highlighter-rouge & .mo,
+.highlighter-rouge & .il {
+	color: var(--dt-purple);
+}
+
+.highlighter-rouge & .gd {
+	color: var(--dt-red);
+}
