@@ -201,7 +201,8 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		// Build the GitHub API request URI.
-		$request_uri = sprintf( 'https://api.github.com/repos/%1$s/%2$s/releases/latest',
+		$request_uri = sprintf(
+			'https://api.github.com/repos/%1$s/%2$s/releases/latest',
 			$this->username,
 			$this->repository
 		);
@@ -221,10 +222,14 @@ class WSUWP_Help_Docs_Updater {
 		$response_code = wp_remote_retrieve_response_code( $raw_response );
 
 		if ( 200 !== (int) $response_code ) {
-			$this->error( sprintf( 'GitHub API request failed. The request for <%1$s> returned HTTP code: %2$s',
-				esc_url_raw( $request_uri ),
-				$response_code
-			) );
+			$this->error(
+				sprintf(
+					/* translators: 1: the API request URL, 2: the HTTP response code */
+					__( 'GitHub API request failed. The request for <%1$s> returned HTTP code: %2$s', 'wsuwp-help-docs' ),
+					esc_url_raw( $request_uri ),
+					$response_code
+				)
+			);
 			return false;
 		}
 
@@ -270,15 +275,17 @@ class WSUWP_Help_Docs_Updater {
 
 		if ( is_array( $message ) ) {
 			foreach ( $message as $msg ) {
-				/* translators: 1: the plugin name, 2: the error message */
-				printf( __( '<div class="notice notice-error"><p><strong>%1$s updater error:</strong> %2$s</p></div>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
+				printf(
+					/* translators: 1: the plugin name, 2: the error message */
+					__( '<div class="notice notice-error"><p><strong>%1$s updater error:</strong> %2$s</p></div>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
 					esc_html( $this->plugin_meta['Name'] ),
 					esc_html( $msg['message'] )
 				);
 			}
 		} else {
-			/* translators: 1: the plugin name, 2: the error message */
-			printf( __( '<div class="notice notice-error"><p><strong>%1$s updater error:</strong> %2$s</p></div>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
+			printf(
+				/* translators: 1: the plugin name, 2: the error message */
+				__( '<div class="notice notice-error"><p><strong>%1$s updater error:</strong> %2$s</p></div>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
 				esc_html( $this->plugin_meta['Name'] ),
 				esc_html( $message )
 			);
@@ -385,8 +392,9 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		if ( $this->github_response && 'request-error-wait' !== $this->github_response ) {
-			/* translators: 1: the plugin version number, 2: the HTML formatted release message from GitHub */
-			$changelog = sprintf( __( '<strong>Version %1$s Changes</strong>%2$s', 'wsuwp-help-docs' ),
+			$changelog = sprintf(
+				/* translators: 1: the plugin version number, 2: the HTML formatted release message from GitHub */
+				__( '<strong>Version %1$s Changes</strong>%2$s', 'wsuwp-help-docs' ),
 				$this->github_response['tag_name'],
 				apply_filters( 'the_content', $this->github_response['body'] )
 			);
@@ -437,7 +445,8 @@ class WSUWP_Help_Docs_Updater {
 		}
 
 		if ( current_user_can( 'install_plugins' ) ) {
-			$plugin_meta[] = sprintf( '<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
+			$plugin_meta[] = sprintf(
+				'<a href="%s" class="thickbox open-plugin-details-modal" aria-label="%s" data-title="%s">%s</a>',
 				esc_url( network_admin_url( 'plugin-install.php?tab=plugin-information&plugin=' . self::$slug . '&TB_iframe=true&width=600&height=550' ) ),
 				/* translators: the plugin name */
 				esc_attr( sprintf( __( 'More information about %s', 'wsuwp-help-docs' ), $this->plugin_meta['Name'] ) ),

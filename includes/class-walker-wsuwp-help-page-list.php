@@ -131,7 +131,8 @@ class Walker_WSUWP_Help_Page_List extends Walker_Page {
 			}
 		}
 
-		$output .= $indent . sprintf( '<li class="%s"><a%s>%s%s%s</a>',
+		$output .= $indent . sprintf(
+			'<li class="%s"><a%s>%s%s%s</a>',
 			$css_classes,
 			$attributes,
 			$args['link_before'],
