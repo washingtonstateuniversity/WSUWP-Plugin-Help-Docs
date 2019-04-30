@@ -44,12 +44,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 				 * that uses `get_current_help_doc_id()` to output classes for
 				 * things like the current page.
 				 */
-				wp_list_pages( array(
-					'post_type'    => self::$post_type_slug,
-					'hierarchical' => true,
-					'title_li'     => '',
-					'walker'       => new Walker_WSUWP_Help_Page_List(),
-				) );
+				wp_list_pages(
+					array(
+						'post_type'    => self::$post_type_slug,
+						'hierarchical' => true,
+						'title_li'     => '',
+						'walker'       => new Walker_WSUWP_Help_Page_List(),
+					)
+				);
 				?>
 			</ul>
 		</nav>
@@ -60,13 +62,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$help_doc_id = $this->get_current_help_doc_id();
 
 			if ( '' !== $help_doc_id && 0 !== $help_doc_id ) :
-				$docs = new WP_Query( array(
-					'post_type' => self::$post_type_slug,
-					'p'         => $help_doc_id,
-				) );
+				$docs = new WP_Query(
+					array(
+						'post_type' => self::$post_type_slug,
+						'p'         => $help_doc_id,
+					)
+				);
 
-				if ( $docs->have_posts() ) :
-					while ( $docs->have_posts() ) : $docs->the_post();
+				if ( $docs->have_posts() ) {
+					while ( $docs->have_posts() ) {
+						$docs->the_post();
+
 						?>
 						<article class="wsuwp-help-document" id="wsuwp-help-document-<?php the_ID(); ?>">
 							<header class="article-header">
@@ -84,9 +90,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</div>
 						</article>
 						<?php
-					endwhile;
+
+					};
 					wp_reset_postdata();
-				else :
+				} else {
 					?>
 					<article class="wsuwp-help-document">
 						<header class="article-header">
@@ -94,7 +101,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</header>
 					</article>
 					<?php
-				endif;
+				}
 			elseif ( 0 === $help_doc_id ) :
 				?>
 				<article class="wsuwp-help-document" id="wsuwp-help-document-home">
