@@ -1,0 +1,230 @@
+/**
+ * Help Document Pages
+ */
+
+.wsuwp-help-documents-wrap {
+	background-color: #fff;
+	border: 1px solid var(--wp-gray);
+	border-radius: 3px;
+	margin-top: 1.5em;
+}
+
+/**
+ * The Help Documents navigation menu
+ */
+
+.wsuwp-help-documents-list li {
+	margin-bottom: 0;
+}
+
+.wsuwp-help-documents-list a {
+	border-left: 4px solid transparent;
+	display: block;
+	padding: 12px 10px;
+	text-decoration: none;
+}
+
+.wsuwp-help-documents-list li.current_page_item > a {
+	background-color: var(--wp-dark);
+	border-color: var(--highlight);
+	color: #fff;
+	font-weight: 600;
+	position: relative;
+}
+
+.wsuwp-help-documents-list li.current_page_item > a::after {
+	border: 8px solid transparent;
+	border-right-color: var(--highlight-light);
+	content: " ";
+	height: 0;
+	margin-top: -8px;
+	pointer-events: none;
+	position: absolute;
+	right: -1px;
+	top: 50%;
+	width: 0;
+}
+
+.wsuwp-help-documents-list li.current_page_parent > a {
+	background-color: var(--highlight);
+	color: #fff;
+}
+
+.wsuwp-help-documents-list ul.children {
+	list-style: none;
+	position: absolute;
+	top: -1000em;
+	left: 160px;
+	overflow: visible;
+	word-wrap: break-word;
+}
+
+.wsuwp-help-documents-list ul.children a {
+	color: #fff;
+}
+
+.wsuwp-help-documents-list ul.children a:hover,
+.wsuwp-help-documents-list ul.children a:focus {
+	color: var(--highlight-bright);
+}
+
+.wsuwp-help-documents-list li.page_item_has_children.current_page_item > a,
+.wsuwp-help-documents-list li.page_item_has_children.current_page_parent > a,
+.wsuwp-help-documents-list li.page_item_has_children.current_page_ancestor > a {
+	background-color: var(--highlight);
+	color: #fff;
+}
+
+.wsuwp-help-documents-list li.page_item_has_children.current_page_item > ul.children,
+.wsuwp-help-documents-list li.page_item_has_children.current_page_parent > ul.children,
+.wsuwp-help-documents-list li.page_item_has_children.current_page_ancestor > ul.children {
+	bottom: auto;
+	left: auto;
+	position: relative;
+	right: auto;
+	top: auto;
+	z-index: 3;
+}
+
+.wsuwp-help-documents-list li.page_item_has_children.current_page_item > ul.children,
+.wsuwp-help-documents-list li.page_item_has_children.current_page_parent > ul.children,
+.wsuwp-help-documents-list li.page_item_has_children.current_page_ancestor > ul.children {
+	background-color: #32373c;
+}
+
+.wsuwp-help-documents-list li.page_item_has_children.current_page_ancestor li.current_page_item > ul.children,
+.wsuwp-help-documents-list li.page_item_has_children.current_page_ancestor li.current_page_parent > ul.children {
+	background-color: #131517;
+}
+
+/**
+ * The Help document display
+ */
+
+.wsuwp-help-documents {
+	background-color: var(--highlight-light);
+}
+
+.wsuwp-help-document {
+	font-size: 18px;
+	min-height: 370px;
+	padding: 1em 2em;
+}
+
+.wsuwp-help-document .article-header h2 {
+	font-size: 1.8em;
+}
+
+.wsuwp-help-document p {
+	font-size: inherit;
+}
+
+.wsuwp-help-document ul {
+	list-style-type: disc;
+	margin-left: 2em;
+}
+
+.wsuwp-help-document dt {
+	font-weight: 600;
+	margin: 1.4em 0 0.5em;
+}
+
+.wsuwp-help-document dd,
+.wsuwp-help-document li {
+	line-height: 1.5;
+}
+
+.wsuwp-help-document .article-body {
+	margin-top: 1.5em;
+}
+
+.wsuwp-help-document aside p,
+.wsuwp-help-document .aside p {
+	font-size: 1.2rem;
+}
+
+.wsuwp-help-document .clarification {
+	background-color: #fff;
+	border: 1px solid var(--highlight);
+	box-sizing: border-box;
+	margin-bottom: 1.5rem;
+	padding: 0 1.5rem;
+}
+
+.wsuwp-help-document figure img,
+.wsuwp-help-document aside img,
+.wsuwp-help-document .aside img,
+.wsuwp-help-document .clarification img {
+	height: auto;
+	max-width: 100%;
+}
+
+.wsuwp-help-document .documentation--steps {
+	counter-reset: step;
+}
+
+.wsuwp-help-document .step {
+	margin: 2.5em 0 2em 3em;
+	position: relative;
+}
+
+.wsuwp-help-document .step-title {
+	font-size: 1.2em;
+}
+
+.wsuwp-help-document .step-title::before {
+	counter-increment: step;
+	content: counter(step);
+	display: inline-block;
+	padding: 12px;
+	min-width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: #ca4a1f;
+	color: #fff;
+	font-size: 27px;
+	line-height: 27px;
+	text-align: center;
+	position: absolute;
+	left: -2.3em;
+	top: -0.6em;
+}
+
+@media (min-width: 34em) {
+
+	.wsuwp-help-documents-wrap {
+		display: grid;
+		grid-auto-rows: minmax(4rem, auto);
+		grid-template-columns: minmax(100px, 0.25fr) minmax(300px, 1fr);
+	}
+
+	.wsuwp-help-document {
+		font-size: 21px;
+	}
+
+	.comparison {
+		display: grid;
+		margin-bottom: 1.5em;
+		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+	}
+
+	.comparison-option:not(:last-child) {
+		border-right: 3px solid var(--dt-orange);
+		margin-right: 2em;
+		padding-right: 2em;
+	}
+
+}
+
+@media (min-width: 46em) {
+
+	aside,
+	.aside {
+		float: right;
+		margin-top: 0;
+		margin-left: 2rem;
+		max-width: 594px;
+		width: 30vw;
+	}
+
+}
