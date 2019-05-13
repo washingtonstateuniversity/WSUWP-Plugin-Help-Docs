@@ -1,18 +1,52 @@
+/**
+ * Colors and sizes
+ */
 :root {
-	--dt-gray-dark: #282a36;  /* Background */
-	--dt-gray: #44475a;       /* Current Line & Selection */
-	--dt-gray-light: #f8f8f2; /* Foreground */
-	--dt-blue: #6272a4;       /* Comment */
-	--dt-cyan: #8be9fd;
-	--dt-green: #50fa7b;
-	--dt-orange: #ffb86c;
-	--dt-pink: #ff79c6;
-	--dt-purple: #bd93f9;
-	--dt-red: #f55;
-	--dt-yellow: #f1fa8c;
-	--highlight: #0073aa;        /* WP blue */
-	--highlight-bright: #00b9eb; /* Bright blue */
-	--highlight-light: #f7fcfe;  /* Light blue */
-	--wp-dark: #23282d;
-	--wp-gray: #e1e1e1;
+	--base-color: #23282d;
+	--base-color-light: #32373c;
+	--base-color-dark: #191e23;
+	--text-color: #fff;
+	--text-color-alt: #b4b9be;
+	--highlight-color: #0073aa;
+	--focus-color: #00a0d2;
+	--active-color: #006799;
+	--notification-color: #d54e21;
+	--success-color: #46b450;
+	--warning-color: #ffb900;
+	--info-color: var(--focus-color);
+	--link-color: var(--highlight-color);
+	--link-focus-color: var(--focus-color);
+	--link-active-color: var(--active-color);
+	--icon-color: var(--focus-color);
+	--button-color: var(--highlight-color);
+	--menu-text: var(--text-color);
+	--menu-icon: var(--section-background);
+	--menu-background: var(--base-color);
+	--menu-highlight-text: var(--text-color);
+	--menu-highlight-background: var(--highlight-color);
+	--menu-focus-text: var(--focus-color);
+	--menu-focus-background: var(--base-color-dark);
+	--menu-current-text: var(--text-color);
+	--menu-current-icon: var(--icon-color);
+	--menu-current-background: var(--menu-highlight-background);
+	--menu-submenu-text: var(--text-color-alt);
+	--menu-submenu-background: var(--base-color-dark);
+	--menu-subsubmenu-background: var(--base-color-light);
+	--section-text: var(--base-color);
+	--section-background: var(--text-color);
+	--line-height: 1.5;
+	--ratio: 1.333;
+	--menu-font-size: 0.88rem;
+	--section-font-size: 1rem;
+	--spacer: 1.5em;
+	--max-width: 690px;
+}
+
+@media (min-width: 1300px) {
+
+	:root {
+		--section-font-size: calc(1rem * var(--ratio));
+		--max-width: 862px;
+	}
+
 }
