@@ -86,6 +86,7 @@ class WSUWP_Help_Docs {
 		add_action( 'init', 'load_wsuwp_help_updater' );
 		add_action( 'init', array( $this, 'register' ), 10 );
 		add_action( 'after_setup_theme', array( $this, 'maybe_flush_rewrite_rules' ) );
+		add_action( 'current_screen', array( $this, 'modify_theme_support' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_assets' ) );
 		add_action( 'admin_menu', array( $this, 'help_menu' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'dashboard_setup' ) );
@@ -115,6 +116,80 @@ class WSUWP_Help_Docs {
 			delete_option( 'wsuwp-help-plugin-activated' );
 			flush_rewrite_rules();
 		}
+	}
+
+	/**
+	 * Sets the help document colors in the block editor color picker.
+	 *
+	 * @since 1.0.0
+	 */
+	public function modify_theme_support() {
+		$screen = get_current_screen();
+
+		if ( self::$post_type_slug !== $screen->post_type || ! current_user_can( 'publish_posts' ) ) {
+			return;
+		}
+
+		add_theme_support(
+			'editor-color-palette',
+			array(
+				array(
+					'name'  => __( 'WordPress Blue', 'bream' ),
+					'slug'  => 'wordpress-blue',
+					'color' => '#0073aa', // --highlight-color
+				),
+				array(
+					'name'  => __( 'Medium Blue', 'bream' ),
+					'slug'  => 'medium-blue',
+					'color' => '#00a0d2', // --focus-color
+				),
+				array(
+					'name'  => __( 'Ultra Dark Gray', 'bream' ),
+					'slug'  => 'ultra-dark-gray',
+					'color' => '#191e23', // --base-color-dark
+				),
+				array(
+					'name'  => __( 'Dark Gray', 'bream' ),
+					'slug'  => 'dark-gray',
+					'color' => '#23282d', // --base-color
+				),
+				array(
+					'name'  => __( 'Base Gray', 'bream' ),
+					'slug'  => 'base-gray',
+					'color' => '#32373c', // --base-color-light
+				),
+				array(
+					'name'  => __( 'Light Silver Gray', 'bream' ),
+					'slug'  => 'light-silver-gray',
+					'color' => '#b4b9be', // --text-color-alt
+				),
+				array(
+					'name'  => __( 'White', 'bream' ),
+					'slug'  => 'white',
+					'color' => '#fff', // --text-color
+				),
+				array(
+					'name'  => __( 'Accent Blue', 'bream' ),
+					'slug'  => 'accent-blue',
+					'color' => '#006799', // --info-color
+				),
+				array(
+					'name'  => __( 'Accent Green', 'bream' ),
+					'slug'  => 'accent-green',
+					'color' => '#46b450', // --success-color
+				),
+				array(
+					'name'  => __( 'Accent Yellow', 'bream' ),
+					'slug'  => 'accent-yellow',
+					'color' => '#ffb900', // --warning-color
+				),
+				array(
+					'name'  => __( 'Accent Orange', 'bream' ),
+					'slug'  => 'accent-orange',
+					'color' => '#d54e21', // --notification-color
+				),
+			)
+		);
 	}
 
 	/**
@@ -195,16 +270,27 @@ class WSUWP_Help_Docs {
 	}
 
 	/**
-	 * Sets up block editor scripts.
+	 * Sets up block editor scripts when editing a help document.
 	 *
 	 * @since 1.0.0
 	 */
 	public function enqueue_block_assets() {
+		$post = get_post();
+
+		if ( self::$post_type_slug !== $post->post_type || ! current_user_can( 'publish_posts' ) ) {
+			return $post->ID;
+		}
+
 		$plugin_meta = get_plugin_data( $this->basename );
 		wp_enqueue_script(
 			'wsuwp-help-docs-blocks',
 			plugins_url( 'build/index.js', $this->basename ),
-			array( 'wp-blocks' ),
+			array(
+				'wp-blocks',
+				'wp-data',
+				'wp-dom-ready',
+				'wp-i18n',
+			),
 			$plugin_meta['Version']
 		);
 	}
@@ -477,6 +563,8 @@ class WSUWP_Help_Docs {
 	 * @param array $messages The default post updated messages.
 	 *
 	 * @since 0.4.0
+	 *
+	 * @deprecated The block editor uses a different notification system. Retain this as long as we support the classic editor.
 	 */
 	public function help_doc_updated_messages( $messages ) {
 		global $post_ID, $post;
