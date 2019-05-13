@@ -2,18 +2,18 @@
  * Colors and sizes
  */
 :root {
-	--base-color: #23282d;
-	--base-color-light: #32373c;
-	--base-color-dark: #191e23;
-	--text-color: #fff;
-	--text-color-alt: #b4b9be;
-	--highlight-color: #0073aa;
-	--focus-color: #00a0d2;
-	--active-color: #006799;
-	--notification-color: #d54e21;
-	--success-color: #46b450;
-	--warning-color: #ffb900;
-	--info-color: var(--focus-color);
+	--base-color: #23282d; /* Dark Gray */
+	--base-color-light: #32373c; /* Base Gray */
+	--base-color-dark: #191e23; /* Ultra Dark Gray */
+	--text-color: #fff; /* White */
+	--text-color-alt: #b4b9be; /* Light Silver Gray */
+	--highlight-color: #0073aa; /* WordPress Blue */
+	--focus-color: #00a0d2; /* Medium Blue */
+	--active-color: #006799; /* Accent Blue */
+	--notification-color: #d54e21; /* Accent Orange */
+	--success-color: #46b450; /* Accent Green */
+	--warning-color: #ffb900; /* Accent Yellow */
+	--info-color: var(--active-color);
 	--link-color: var(--highlight-color);
 	--link-focus-color: var(--focus-color);
 	--link-active-color: var(--active-color);
@@ -23,12 +23,12 @@
 	--menu-icon: var(--section-background);
 	--menu-background: var(--base-color);
 	--menu-highlight-text: var(--text-color);
-	--menu-highlight-background: var(--highlight-color);
+	--menu-highlight-silver-gray: var(--highlight-color);
 	--menu-focus-text: var(--focus-color);
 	--menu-focus-background: var(--base-color-dark);
 	--menu-current-text: var(--text-color);
 	--menu-current-icon: var(--icon-color);
-	--menu-current-background: var(--menu-highlight-background);
+	--menu-current-background: var(--menu-highlight-silver-gray);
 	--menu-submenu-text: var(--text-color-alt);
 	--menu-submenu-background: var(--base-color-dark);
 	--menu-subsubmenu-background: var(--base-color-light);

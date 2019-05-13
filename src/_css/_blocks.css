@@ -553,19 +553,6 @@
 	z-index: 1;
 }
 
-.wsuwp-help-documents .wp-block-cover-image.has-light-background-color .wp-block-cover__inner-container,
-.wsuwp-help-documents .wp-block-cover-image.has-accent-green-background-color .wp-block-cover__inner-container,
-.wsuwp-help-documents .wp-block-cover-image.has-accent-yellow-background-color .wp-block-cover__inner-container,
-.wsuwp-help-documents .wp-block-cover-image.has-accent-blue-background-color .wp-block-cover__inner-container,
-.wsuwp-help-documents .wp-block-cover-image.has-accent-orange-background-color .wp-block-cover__inner-container,
-.wsuwp-help-documents .wp-block-cover.has-light-background-color .wp-block-cover__inner-container,
-.wsuwp-help-documents .wp-block-cover.has-accent-green-background-color .wp-block-cover__inner-container,
-.wsuwp-help-documents .wp-block-cover.has-accent-yellow-background-color .wp-block-cover__inner-container,
-.wsuwp-help-documents .wp-block-cover.has-accent-blue-background-color .wp-block-cover__inner-container,
-.wsuwp-help-documents .wp-block-cover.has-accent-orange-background-color .wp-block-cover__inner-container {
-	color: var(--base-color-light-dark);
-}
-
 .wsuwp-help-documents .wp-block-cover-image .wp-block-cover__inner-container a:not(.wp-block-button__link),
 .wsuwp-help-documents .wp-block-cover .wp-block-cover__inner-container a:not(.wp-block-button__link) {
 	color: inherit;
@@ -919,13 +906,6 @@
 	padding: 1em;
 }
 
-.wsuwp-help-documents .wp-block-media-text.has-dark-background-color,
-.wsuwp-help-documents .wp-block-media-text.has-brand-crimson-background-color,
-.wsuwp-help-documents .wp-block-media-text.has-brand-gray-background-color,
-.wsuwp-help-documents .wp-block-media-text.has-accent-crimson-background-color {
-	color: var(--text-color);
-}
-
 .wsuwp-help-documents .wp-block-media-text .wp-block-media-text__media {
 	grid-area: media-text-media;
 	margin: 0;
@@ -989,7 +969,7 @@
 
 .wsuwp-help-documents .wp-block-hrs-wsu-edu-notifications {
 	align-items: center;
-	border: 5px solid var(--base-color-light-dark);
+	border: 5px solid var(--base-color);
 	border-left-width: 1rem;
 	display: flex;
 	flex-wrap: wrap;
@@ -1044,7 +1024,7 @@
  */
 
 .wsuwp-help-documents .wp-block-hrs-wsu-edu-callouts {
-	border: 8px solid var(--base-color-light-dark);
+	border: 8px solid var(--base-color);
 	margin-top: 1.5em;
 	margin-bottom: 1.5em;
 	padding: 1.5rem 2rem;
@@ -1052,7 +1032,7 @@
 
 .wsuwp-help-documents .wp-block-hrs-wsu-edu-callouts .has-large-font-size:first-of-type {
 	border-bottom: 4px solid var(--neutral-light);
-	color: var(--base-color-light-dark);
+	color: var(--base-color);
 	font-weight: 900;
 	margin: 0 0 0.5em;
 	padding: 0 0 0.25em;
@@ -1118,16 +1098,32 @@
 	border-color: var(--notification-color);
 }
 
-.wsuwp-help-documents .has-brand-crimson-background-color.has-brand-crimson-background-color {
+.wsuwp-help-documents .has-wordpress-blue-background-color.has-wordpress-blue-background-color {
 	background-color: var(--highlight-color);
 }
 
-.wsuwp-help-documents .has-brand-gray-background-color.has-brand-gray-background-color {
+.wsuwp-help-documents .has-medium-blue-background-color.has-medium-blue-background-color {
+	background-color: var(--focus-color);
+}
+
+.wsuwp-help-documents .has-ultra-dark-gray-background-color.has-ultra-dark-gray-background-color {
+	background-color: var(--base-color-dark);
+}
+
+.wsuwp-help-documents .has-dark-gray-background-color.has-dark-gray-background-color {
+	background-color: var(--base-color);
+}
+
+.wsuwp-help-documents .has-base-gray-background-color.has-base-gray-background-color {
 	background-color: var(--base-color-light);
 }
 
-.wsuwp-help-documents .has-accent-crimson-background-color.has-accent-crimson-background-color {
-	background-color: var(--focus-color);
+.wsuwp-help-documents .has-white-background-color.has-white-background-color {
+	background-color: var(--text-color);
+}
+
+.wsuwp-help-documents .has-light-silver-gray-background-color.has-light-silver-gray-background-color {
+	background-color: var(--text-color-alt);
 }
 
 .wsuwp-help-documents .has-accent-green-background-color.has-accent-green-background-color {
@@ -1146,24 +1142,32 @@
 	background-color: var(--warning-color);
 }
 
-.wsuwp-help-documents .has-light-background-color.has-light-background-color {
-	background-color: var(--text-color);
-}
-
-.wsuwp-help-documents .has-dark-background-color.has-dark-background-color {
-	background-color: var(--base-color-light-dark);
-}
-
-.wsuwp-help-documents .has-brand-crimson-color.has-brand-crimson-color {
+.wsuwp-help-documents .has-wordpress-blue-color.has-wordpress-blue-color {
 	color: var(--highlight-color);
 }
 
-.wsuwp-help-documents .has-brand-gray-color.has-brand-gray-color {
+.wsuwp-help-documents .has-medium-blue-color.has-medium-blue-color {
+	color: var(--focus-color);
+}
+
+.wsuwp-help-documents .has-ultra-dark-gray-color.has-ultra-dark-gray-color {
+	color: var(--base-color-dark);
+}
+
+.wsuwp-help-documents .has-dark-gray-color.has-dark-gray-color {
+	color: var(--base-color);
+}
+
+.wsuwp-help-documents .has-base-gray-color.has-base-gray-color {
 	color: var(--base-color-light);
 }
 
-.wsuwp-help-documents .has-accent-crimson-color.has-accent-crimson-color {
-	color: var(--focus-color);
+.wsuwp-help-documents .has-light-silver-gray-color.has-light-silver-gray-color {
+	color: var(--text-color-alt);
+}
+
+.wsuwp-help-documents .has-white-color.has-white-color {
+	color: var(--text-color);
 }
 
 .wsuwp-help-documents .has-accent-green-color.has-accent-green-color {
@@ -1180,14 +1184,6 @@
 
 .wsuwp-help-documents .has-accent-yellow-color.has-accent-yellow-color {
 	color: var(--warning-color);
-}
-
-.wsuwp-help-documents .has-light-color.has-light-color {
-	color: var(--text-color);
-}
-
-.wsuwp-help-documents .has-dark-color.has-dark-color {
-	color: var(--base-color-light-dark);
 }
 
 /**
