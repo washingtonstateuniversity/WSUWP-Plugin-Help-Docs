@@ -43,6 +43,12 @@ Changelog formatting (http://semver.org/):
 - A config file for ES Lint using the WP recommended configuration.
 - An editorconfig file to help unify coding styles.
 
+## 0.7.2 (2019-08-07)
+
+### Changed
+
+- :array_up: Upgrade NPM dev dependencies.
+
 ## 0.7.1 (2019-04-29)
 
 ### Changed
