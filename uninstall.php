@@ -16,83 +16,72 @@
  * @since 0.1.0
  */
 
+namespace WSUWP\HelpDocs;
+
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'Uninstall_WSUWP_Help_Docs' ) ) :
-	/**
-	 * The WSUWP Help uninstall class.
-	 *
-	 * @since 0.1.0
-	 */
-	class Uninstall_WSUWP_Help_Docs {
-		/**
-		 * Runs through the uninstall functions.
-		 *
-		 * @since 0.1.0
-		 */
-		public function run_uninstaller() {
-			// Remove options if not already gone.
-			if ( get_option( 'wsuwp-help-plugin-activated' ) ) {
-				delete_option( 'wsuwp-help-plugin-activated' );
-			}
-			if ( get_option( 'wsuwp_help_homepage_id' ) ) {
-				delete_option( 'wsuwp_help_homepage_id' );
-			}
-
-			// Delete WSUWP Help posts.
-			$this->delete_wsuwp_help_posts();
-		}
-
-		/**
-		 * Gets post ids of the WSUWP Help post types.
-		 *
-		 * @since 0.1.0
-		 *
-		 * @param int $limit Limit how many ids are returned. Default 800.
-		 * @return array Array of post ids.
-		 */
-		private function wsuwp_help_get_post_ids( $limit = 800 ) {
-			global $post;
-
-			if ( ! absint( $limit ) ) {
-				return array();
-			}
-
-			$wsuwp_help_posts = get_posts( array(
-				'post_type'   => 'wsu_help_docs',
-				'numberposts' => absint( $limit ),
-			) );
-
-			$ids = array();
-			foreach ( $wsuwp_help_posts as $p ) {
-				$ids[] += $p->ID;
-			}
-
-			return $ids;
-		}
-
-		/**
-		 * Trashes WSUWP Help posts.
-		 *
-		 * @since 0.1.0
-		 *
-		 * @todo Currently only deletes up to the limit specified in
-		 *       wsuwp_help_get_post_ids. Need to find a way to delete more without
-		 *       introducing timeout errors.
-		 */
-		private function delete_wsuwp_help_posts() {
-			// Get the WSUWP Help post ID list
-			$help_docs_id_list = $this->wsuwp_help_get_post_ids();
-
-			// Move selected posts to trash
-			foreach ( $help_docs_id_list as $doc_id ) {
-				wp_trash_post( $doc_id );
-			}
-		}
+function run_uninstaller() {
+	// Remove options if not already gone.
+	if ( get_option( 'wsuwp-help-plugin-activated' ) ) {
+		delete_option( 'wsuwp-help-plugin-activated' );
 	}
-endif;
+	if ( get_option( 'wsuwp_help_homepage_id' ) ) {
+		delete_option( 'wsuwp_help_homepage_id' );
+	}
 
-$uninstall_wsuwp_help = new Uninstall_WSUWP_Help_Docs();
-$uninstall_wsuwp_help->run_uninstaller();
+	// Delete WSUWP Help posts.
+	WSUWP\HelpDocs\delete_wsuwp_help_posts();
+}
+
+/**
+ * Gets post ids of the WSUWP Help post types.
+ *
+ * @since 0.1.0
+ *
+ * @param int $limit Limit how many ids are returned. Default 800.
+ * @return array Array of post ids.
+ */
+function wsuwp_help_get_post_ids( $limit = 800 ) {
+	global $post;
+
+	if ( ! absint( $limit ) ) {
+		return array();
+	}
+
+	$wsuwp_help_posts = get_posts(
+		array(
+			'post_type'   => 'wsu_help_docs',
+			'numberposts' => absint( $limit ),
+		)
+	);
+
+	$ids = array();
+	foreach ( $wsuwp_help_posts as $p ) {
+		$ids[] += $p->ID;
+	}
+
+	return $ids;
+}
+
+/**
+ * Trashes WSUWP Help posts.
+ *
+ * @since 0.1.0
+ *
+ * @todo Currently only deletes up to the limit specified in
+ *       wsuwp_help_get_post_ids. Need to find a way to delete more without
+ *       introducing timeout errors.
+ */
+function delete_wsuwp_help_posts() {
+	// Get the WSUWP Help post ID list
+	$help_docs_id_list = WSUWP\HelpDocs\wsuwp_help_get_post_ids();
+
+	// Move selected posts to trash
+	foreach ( $help_docs_id_list as $doc_id ) {
+		wp_trash_post( $doc_id );
+	}
+}
+
+WSUWP\HelpDocs\run_uninstaller();

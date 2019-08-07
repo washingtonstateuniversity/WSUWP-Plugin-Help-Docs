@@ -17,6 +17,32 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
+## 1.0.0-RC-1 (:construction: 2019-08-07)
+
+### Changed
+
+- :art: Integrate WP block styles to facilitate using the block editor to write help docs and clean up nav menu.
+- Convert uninstall from a singleton class to namespaced functions.
+- :recycle: Refactor plugin setup methods and increment PHP minimum version and WP tested version.
+- :warning: Fix php lint issues following phpcs upgrade.
+- :recycle: Convert Sass to CSS (next).
+- Update git attributes and ignore files for new config files.
+- Convert stylelint config to json and use WordPress config.
+- :wrench: Replace old phpcs ruleset with updated version.
+- :warning: Update package.json lint issues.
+- :heavy_plus_sign: :heavy_minus_sign: Overhaul Composer dependencies to use updated phpcs packages and script commands.
+- :wrench: Overhaul NPM dependencies and scripts to use a build environment targeted to the WordPress block editor (using WP recommended babel, eslint, and related packages) and postCSS instead of Sass.
+
+### Added
+
+- Register block scripts in the main setup file.
+- Initial block editor script to add list styles.
+- A webpack config file modeled on the Gutenberg scripts package configuration.
+- A config file for the postCSS package.
+- A config file for the NPM package json lint tool using the WP recommended configuration.
+- A config file for ES Lint using the WP recommended configuration.
+- An editorconfig file to help unify coding styles.
+
 ## 0.7.2 (2019-08-07)
 
 ### Changed

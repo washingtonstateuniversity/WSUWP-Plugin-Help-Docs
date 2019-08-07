@@ -17,20 +17,20 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WSUWP_Help_Docs {
 	/**
-	 * The plugin version number.
-	 *
-	 * @since 0.1.0
-	 * @var string
-	 */
-	protected $version = '0.7.2';
-
-	/**
 	 * Slug used to register the post type.
 	 *
 	 * @since 0.1.0
 	 * @var string
 	 */
 	public static $post_type_slug = 'wsu_help_docs';
+
+	/**
+	 * The plugin file basename.
+	 *
+	 * @since 1.0.0
+	 * @var string
+	 */
+	private $basename;
 
 	/**
 	 * Slug used to handle rewrites.
@@ -53,8 +53,6 @@ class WSUWP_Help_Docs {
 		// Only set up and activate the plugin if it hasn't already been done.
 		if ( null === $instance ) {
 			$instance = new WSUWP_Help_Docs();
-			$instance->setup_hooks();
-			$instance->includes();
 		}
 
 		return $instance;
@@ -73,25 +71,23 @@ class WSUWP_Help_Docs {
 	 * Includes the required files.
 	 *
 	 * @since 0.1.0
-	 *
-	 * @access private
 	 */
-	private function includes() {
-		require __DIR__ . '/class-page-list-walker.php';
-		require __DIR__ . '/class-help-docs-updater.php';
+	public function includes() {
+		require __DIR__ . '/class-walker-wsuwp-help-page-list.php';
+		require __DIR__ . '/class-wsuwp-help-docs-updater.php';
 	}
 
 	/**
 	 * Loads the WP API actions and hooks.
 	 *
 	 * @since 0.1.0
-	 *
-	 * @access private
 	 */
-	private function setup_hooks() {
+	public function setup_hooks() {
 		add_action( 'init', 'load_wsuwp_help_updater' );
 		add_action( 'init', array( $this, 'register' ), 10 );
 		add_action( 'after_setup_theme', array( $this, 'maybe_flush_rewrite_rules' ) );
+		add_action( 'current_screen', array( $this, 'modify_theme_support' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_assets' ) );
 		add_action( 'admin_menu', array( $this, 'help_menu' ) );
 		add_action( 'wp_dashboard_setup', array( $this, 'dashboard_setup' ) );
 		add_action( 'post_submitbox_misc_actions', array( $this, 'post_submitbox_options' ) );
@@ -99,6 +95,15 @@ class WSUWP_Help_Docs {
 		add_filter( 'post_type_link', array( $this, 'set_page_link' ), 10, 2 );
 		add_filter( 'post_updated_messages', array( $this, 'help_doc_updated_messages' ) );
 		add_shortcode( 'helplink', array( $this, 'help_nonce_link_shortcode' ) );
+	}
+
+	/**
+	 * Sets the class properties.
+	 *
+	 * @since 1.0.0
+	 */
+	public function set_properties( $file ) {
+		$this->basename = $file;
 	}
 
 	/**
@@ -111,6 +116,80 @@ class WSUWP_Help_Docs {
 			delete_option( 'wsuwp-help-plugin-activated' );
 			flush_rewrite_rules();
 		}
+	}
+
+	/**
+	 * Sets the help document colors in the block editor color picker.
+	 *
+	 * @since 1.0.0
+	 */
+	public function modify_theme_support() {
+		$screen = get_current_screen();
+
+		if ( self::$post_type_slug !== $screen->post_type || ! current_user_can( 'publish_posts' ) ) {
+			return;
+		}
+
+		add_theme_support(
+			'editor-color-palette',
+			array(
+				array(
+					'name'  => __( 'WordPress Blue', 'bream' ),
+					'slug'  => 'wordpress-blue',
+					'color' => '#0073aa', // --highlight-color
+				),
+				array(
+					'name'  => __( 'Medium Blue', 'bream' ),
+					'slug'  => 'medium-blue',
+					'color' => '#00a0d2', // --focus-color
+				),
+				array(
+					'name'  => __( 'Ultra Dark Gray', 'bream' ),
+					'slug'  => 'ultra-dark-gray',
+					'color' => '#191e23', // --base-color-dark
+				),
+				array(
+					'name'  => __( 'Dark Gray', 'bream' ),
+					'slug'  => 'dark-gray',
+					'color' => '#23282d', // --base-color
+				),
+				array(
+					'name'  => __( 'Base Gray', 'bream' ),
+					'slug'  => 'base-gray',
+					'color' => '#32373c', // --base-color-light
+				),
+				array(
+					'name'  => __( 'Light Silver Gray', 'bream' ),
+					'slug'  => 'light-silver-gray',
+					'color' => '#b4b9be', // --text-color-alt
+				),
+				array(
+					'name'  => __( 'White', 'bream' ),
+					'slug'  => 'white',
+					'color' => '#fff', // --text-color
+				),
+				array(
+					'name'  => __( 'Accent Blue', 'bream' ),
+					'slug'  => 'accent-blue',
+					'color' => '#006799', // --info-color
+				),
+				array(
+					'name'  => __( 'Accent Green', 'bream' ),
+					'slug'  => 'accent-green',
+					'color' => '#46b450', // --success-color
+				),
+				array(
+					'name'  => __( 'Accent Yellow', 'bream' ),
+					'slug'  => 'accent-yellow',
+					'color' => '#ffb900', // --warning-color
+				),
+				array(
+					'name'  => __( 'Accent Orange', 'bream' ),
+					'slug'  => 'accent-orange',
+					'color' => '#d54e21', // --notification-color
+				),
+			)
+		);
 	}
 
 	/**
@@ -191,6 +270,48 @@ class WSUWP_Help_Docs {
 	}
 
 	/**
+	 * Sets up block editor scripts when editing a help document.
+	 *
+	 * @since 1.0.0
+	 */
+	public function enqueue_block_assets() {
+		$post = get_post();
+
+		if ( self::$post_type_slug !== $post->post_type || ! current_user_can( 'publish_posts' ) ) {
+			return $post->ID;
+		}
+
+		$plugin_meta = get_plugin_data( $this->basename );
+		wp_enqueue_script(
+			'wsuwp-help-docs-blocks',
+			plugins_url( 'build/index.js', $this->basename ),
+			array(
+				'wp-blocks',
+				'wp-data',
+				'wp-dom-ready',
+				'wp-editor',
+				'wp-i18n',
+			),
+			$plugin_meta['Version']
+		);
+	}
+
+	/**
+	 * Enqueues the plugin admin styles.
+	 *
+	 * @since 0.1.0
+	 */
+	public function enqueue_scripts() {
+		$plugin_meta = get_plugin_data( $this->basename );
+		wp_enqueue_style(
+			'wsuwp-help-dashboard',
+			plugins_url( 'build/main.css', $this->basename ),
+			array(),
+			$plugin_meta['Version']
+		);
+	}
+
+	/**
 	 * Retrieves the ID of the current requested Help document.
 	 *
 	 * Checks the URL for a document ID and returns it if it passes nonce
@@ -214,15 +335,6 @@ class WSUWP_Help_Docs {
 		}
 
 		return absint( get_option( 'wsuwp_help_homepage_id', 0 ) );
-	}
-
-	/**
-	 * Enqueues the plugin admin styles.
-	 *
-	 * @since 0.1.0
-	 */
-	public function enqueue_scripts() {
-		wp_enqueue_style( 'wsuwp-help-dashboard', plugins_url( 'css/dashboard.css', __DIR__ ), array(), $this->version );
 	}
 
 	/**
@@ -331,15 +443,18 @@ class WSUWP_Help_Docs {
 			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'wsuwp-help-docs' ) );
 		}
 
-		$docs = get_posts( array(
-			'numberposts' => 5,
-			'post_type'   => self::$post_type_slug,
-		) );
+		$docs = get_posts(
+			array(
+				'numberposts' => 5,
+				'post_type'   => self::$post_type_slug,
+			)
+		);
 		?>
 		<div id="wsuwp-help-welcome">
 			<?php
-			/* translators: the help documents dashboard page URL */
-			printf( __( '<p>Visit the <a href="%s">Help documents</a> for how-to guides and instructions.</p>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
+			printf(
+				/* translators: the help documents dashboard page URL */
+				__( '<p>Visit the <a href="%s">Help documents</a> for how-to guides and instructions.</p>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
 				esc_url( $this->get_admin_page_url() )
 			);
 			?>
@@ -350,8 +465,9 @@ class WSUWP_Help_Docs {
 			if ( ! empty( $docs ) ) {
 				echo '<ul class="wsuwp-updated-help-documents-list">';
 				foreach ( $docs as $doc ) {
-					/* translators: 1: the help document url, 2: the help document title, 3: the help document modified date. */
-					printf( __( '<li><a href="%1$s">%2$s</a><span>Updated %3$s</span></li>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
+					printf(
+						/* translators: 1: the help document url, 2: the help document title, 3: the help document modified date. */
+						__( '<li><a href="%1$s">%2$s</a><span>Updated %3$s</span></li>', 'wsuwp-help-docs' ), // WPCS: XSS ok.
 						esc_html( wp_nonce_url( get_permalink( $doc->ID ), 'wsuwp-help-docs-nav_' . absint( $doc->ID ), '_wsuwp_wsuwp_help_nonce' ) ),
 						esc_html( get_the_title( $doc->ID ) ),
 						esc_html( get_the_modified_date() )
@@ -448,6 +564,8 @@ class WSUWP_Help_Docs {
 	 * @param array $messages The default post updated messages.
 	 *
 	 * @since 0.4.0
+	 *
+	 * @deprecated The block editor uses a different notification system. Retain this as long as we support the classic editor.
 	 */
 	public function help_doc_updated_messages( $messages ) {
 		global $post_ID, $post;
@@ -458,19 +576,22 @@ class WSUWP_Help_Docs {
 		}
 
 		// The preview help document link element.
-		$preview_help_link_html = sprintf( ' <a target="_blank" href="%1$s">%2$s</a>',
+		$preview_help_link_html = sprintf(
+			' <a target="_blank" href="%1$s">%2$s</a>',
 			esc_url_raw( wp_nonce_url( add_query_arg( 'preview', 'true', $permalink ), 'wsuwp-help-docs-nav_' . $post_ID, '_wsuwp_wsuwp_help_nonce' ) ),
 			__( 'Preview help document', 'wsuwp-help-docs' )
 		);
 
 		// The scheduled help document link element.
-		$scheduled_help_link_html = sprintf( ' <a target="_blank" href="%1$s">%2$s</a>',
+		$scheduled_help_link_html = sprintf(
+			' <a target="_blank" href="%1$s">%2$s</a>',
 			esc_url_raw( wp_nonce_url( $permalink, 'wsuwp-help-docs-nav_' . $post_ID, '_wsuwp_wsuwp_help_nonce' ) ),
 			__( 'Preview help document', 'wsuwp-help-docs' )
 		);
 
 		// The view help document link element.
-		$view_help_link_html = sprintf( ' <a href="%1$s">%2$s</a>',
+		$view_help_link_html = sprintf(
+			' <a href="%1$s">%2$s</a>',
 			esc_url_raw( wp_nonce_url( $permalink, 'wsuwp-help-docs-nav_' . $post_ID, '_wsuwp_wsuwp_help_nonce' ) ),
 			__( 'View help document', 'wsuwp-help-docs' )
 		);
@@ -524,8 +645,9 @@ class WSUWP_Help_Docs {
 
 		$args = shortcode_atts( $defaults, $atts, 'helplink' );
 
-		/* translators: 1: the target permalink, 2: optional link anchor text, 3: the link text */
-		return sprintf( __( '<a href="%1$s%2$s">%3$s</a>', 'wsuwp-help-docs' ),
+		return sprintf(
+			/* translators: 1: the target permalink, 2: optional link anchor text, 3: the link text */
+			__( '<a href="%1$s%2$s">%3$s</a>', 'wsuwp-help-docs' ),
 			esc_url_raw( wp_nonce_url( get_permalink( $args['id'] ), 'wsuwp-help-docs-nav_' . $args['id'], '_wsuwp_wsuwp_help_nonce' ) ),
 			( '' !== $args['anchor'] ) ? '#' . esc_attr( $args['anchor'] ) : '',
 			esc_html( $content )

@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<hr class="wp-header-end">
 
 	<div class="wsuwp-help-documents-wrap">
-		<nav class="wsuwp-help-documents-list">
+		<nav id="wsuwp-help-documents-menu">
 			<ul>
 				<?php
 				/*
@@ -44,12 +44,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 				 * that uses `get_current_help_doc_id()` to output classes for
 				 * things like the current page.
 				 */
-				wp_list_pages( array(
-					'post_type'    => self::$post_type_slug,
-					'hierarchical' => true,
-					'title_li'     => '',
-					'walker'       => new Walker_WSUWP_Help_Page_List(),
-				) );
+				wp_list_pages(
+					array(
+						'post_type'    => self::$post_type_slug,
+						'hierarchical' => true,
+						'title_li'     => '',
+						'walker'       => new Walker_WSUWP_Help_Page_List(),
+					)
+				);
 				?>
 			</ul>
 		</nav>
@@ -60,17 +62,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$help_doc_id = $this->get_current_help_doc_id();
 
 			if ( '' !== $help_doc_id && 0 !== $help_doc_id ) :
-				$docs = new WP_Query( array(
-					'post_type' => self::$post_type_slug,
-					'p'         => $help_doc_id,
-				) );
+				$docs = new WP_Query(
+					array(
+						'post_type' => self::$post_type_slug,
+						'p'         => $help_doc_id,
+					)
+				);
 
-				if ( $docs->have_posts() ) :
-					while ( $docs->have_posts() ) : $docs->the_post();
+				if ( $docs->have_posts() ) {
+					while ( $docs->have_posts() ) {
+						$docs->the_post();
+
 						?>
 						<article class="wsuwp-help-document" id="wsuwp-help-document-<?php the_ID(); ?>">
 							<header class="article-header">
-								<h2><?php the_title(); ?></h2>
+								<h2 class="article-title"><?php the_title(); ?></h2>
 								<p><small><em><?php echo esc_html__( 'Last updated:', 'wsuwp-help-docs' ); ?></em> <time class="article-modify-date" datetime="<?php esc_attr( the_modified_date( 'c' ) ); ?>"><?php esc_html( the_modified_date() ); ?></time></small></p>
 							</header>
 							<div class="article-body">
@@ -84,22 +90,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 							</div>
 						</article>
 						<?php
-					endwhile;
+
+					};
 					wp_reset_postdata();
-				else :
+				} else {
 					?>
 					<article class="wsuwp-help-document">
 						<header class="article-header">
-							<h2><?php __( 'No documents found', 'wsuwp-help-docs' ); ?></h2>
+							<h2 class="article-title"><?php __( 'No documents found', 'wsuwp-help-docs' ); ?></h2>
 						</header>
 					</article>
 					<?php
-				endif;
+				}
 			elseif ( 0 === $help_doc_id ) :
 				?>
 				<article class="wsuwp-help-document" id="wsuwp-help-document-home">
 					<header class="article-header">
-						<h2><?php echo esc_html__( 'Welcome to the Help Dashboard', 'wsuwp-help-docs' ); ?></h2>
+						<h2 class="article-title"><?php echo esc_html__( 'Welcome to the Help Dashboard', 'wsuwp-help-docs' ); ?></h2>
 					</header>
 					<div class="article-body">
 						<p><?php echo esc_html__( 'This is the home dashboard of the Help Documents.', 'wsuwp-help-docs' ); ?></p>

@@ -1,0 +1,13 @@
+{
+	"name": "hrs-help-docs/howto",
+	"category": "common",
+	"attributes": {
+		"values": {
+			"type": "string",
+			"source": "html",
+			"selector": "ol",
+			"multiline": "li",
+			"default": ""
+		}
+	}
+}

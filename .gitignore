@@ -1,94 +1,28 @@
 ## Folders and files for git to ignore
 
-# Project #
-###########
-tmp/
-temp/
-build/
+# Build/test tool files and directories
+/jsdoc
+/node_modules
+/npm-debug.log
 /phpunit.xml
+/phpcs.xml
 /tests/phpunit/data/plugins/wordpress-importer
 /tests/phpunit/data/.trac-ticket-cache*
 /tests/qunit/compiled.html
-/src/.wp-tests-version
-node_modules
-/npm-debug.log
 /tests/phpunit/build
+/vendor
 /wp-cli.local.yml
-*.codekit
-composer.lock
-vendor
-*.bak
-*.[Cc]ache
-*.php.in
 
-# Logs and databases #
-######################
-*.log
-*.sql
-*.sqlite
-
-# OS generated files #
-######################
-
-# Linux
+# OS generated files
 *~
 .Trash-*
-
-# Windows
-Thumbs.db
-thumbs.db
-ehthumbs.db
-Desktop.ini
-desktop.ini
-$RECYCLE.BIN/
-*.cab
-*.msi
-*.msm
-*.msp
-*.lnk
-
-# OSX
 .DS_Store
-*.DS_Store
-.DS_Store?
-.AppleDouble
-.LSOverride
 ._*
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
 
-# Specific Programs #
-#####################
+# Ignore other .gitignore files to allow per-user customization
+.gitignore
 
-# SASS
-*.scssc
-.sass-cache
-*.css.map
-**/.sass-cache
-**/.sass-cache/*
-
-# WordPress
-.htaccess
-sitemap.xml
-sitemap.xml.gz
+# Just in case
 wp-config.php
-wp-content/advanced-cache.php
-wp-content/backup-db/
-wp-content/backups/
-wp-content/blogs.dir/
-wp-content/cache/
-wp-content/upgrade/
-wp-content/uploads/
-wp-content/wp-cache-config.php
-wp-content/plugins/hello.php
-/readme.html
-/license.txt
+wp-tests-config.php
+.htaccess

@@ -1,0 +1,249 @@
+/**
+ * Alignments
+ */
+
+.alignleft {
+
+	/*rtl:ignore*/
+	float: left;
+
+	/*rtl:ignore*/
+	margin-right: var(--spacer);
+
+}
+
+.alignright {
+
+	/*rtl:ignore*/
+	float: right;
+
+	/*rtl:ignore*/
+	margin-left: var(--spacer);
+
+}
+
+.wp-block-button.alignright,
+.wp-block-file.alignright {
+
+	/*rtl:ignore*/
+	text-align: right;
+
+}
+
+.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.alignwide {
+	max-width: 100%;
+}
+
+.alignfull {
+	margin-right: calc(var(--spacer) * -1);
+	margin-left: calc(var(--spacer) * -1);
+}
+
+figure.aligncenter,
+.wp-block-button.aligncenter,
+.wp-block-file.aligncenter {
+	text-align: center;
+}
+
+/**
+ * Help Document Pages
+ */
+
+.wsuwp-help-documents-wrap {
+	background-color: var(--section-background);
+	border: 1px solid var(--text-color-alt);
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	margin-top: var(--spacer);
+}
+
+/**
+ * The Help document display
+ */
+
+.wsuwp-help-documents {
+	width: 100%;
+}
+
+.wsuwp-help-document {
+	font-size: var(--section-font-size);
+	min-height: 100%;
+	padding: 0 var(--spacer) var(--spacer);
+}
+
+.wsuwp-help-document .article-body > *:not(.alignwide):not(.alignfull) {
+	max-width: var(--max-width);
+}
+
+.wsuwp-help-document h1,
+.wsuwp-help-document h2,
+.wsuwp-help-document h3,
+.wsuwp-help-document h4 {
+	line-height: calc(var(--line-height) * 0.75);
+}
+
+.wsuwp-help-document h1,
+.wsuwp-help-document h2 {
+	font-size: calc(var(--section-font-size) * var(--ratio) * var(--ratio) * var(--ratio));
+	font-weight: 100;
+}
+
+.wsuwp-help-document h3 {
+	font-size: calc(var(--section-font-size) * var(--ratio) * var(--ratio));
+}
+
+.wsuwp-help-document h4 {
+	font-size: calc(var(--section-font-size) * var(--ratio));
+	font-weight: 700;
+}
+
+.wsuwp-help-document h5 {
+	font-size: var(--section-font-size);
+	font-weight: 700;
+}
+
+.wsuwp-help-document h6 {
+	font-size: calc(var(--section-font-size) / var(--ratio));
+}
+
+
+.wsuwp-help-document p {
+	font-size: var(--section-font-size);
+	line-height: var(--line-height);
+	margin-bottom: var(--spacer);
+}
+
+.wsuwp-help-document ul {
+	list-style-type: disc;
+	margin-left: var(--spacer);
+}
+
+.wsuwp-help-document dt {
+	font-weight: 600;
+	line-height: var(--line-height);
+}
+
+.wsuwp-help-document dd,
+.wsuwp-help-document li {
+	line-height: var(--line-height);
+	margin-bottom: calc(var(--spacer) / 2);
+}
+
+.wsuwp-help-document .article-title {
+	margin: calc(var(--spacer) / 2) 0;
+}
+
+.wsuwp-help-document .article-body {
+	margin-top: var(--spacer);
+}
+
+.wsuwp-help-document figure img {
+	height: auto;
+	max-width: 100%;
+}
+
+@media (min-width: 780px) {
+
+	.wsuwp-help-documents-wrap {
+		flex-flow: row nowrap;
+	}
+
+}
+
+/**
+ * The Help Documents navigation menu
+ */
+
+#wsuwp-help-documents-menu {
+	background: var(--menu-background);
+	font-size: var(--menu-font-size);
+	flex: 0 0 240px;
+	padding: 0;
+}
+
+#wsuwp-help-documents-menu ul {
+	list-style: none;
+	margin: 0;
+}
+
+#wsuwp-help-documents-menu li {
+	line-height: var(--line-height);
+	margin: 0;
+}
+
+#wsuwp-help-documents-menu a {
+	color: var(--menu-text);
+	display: block;
+	padding: calc(var(--spacer) / 2);
+	text-decoration: none;
+}
+
+#wsuwp-help-documents-menu .page_item_has_children {
+	position: relative;
+}
+
+#wsuwp-help-documents-menu .children {
+	left: 240px;
+	overflow: visible;
+	position: absolute;
+	top: -1000em;
+	word-wrap: break-word;
+}
+
+#wsuwp-help-documents-menu .children a {
+	color: var(--menu-submenu-text);
+	padding: calc(var(--spacer) / 3) var(--spacer);
+}
+
+#wsuwp-help-documents-menu a:hover,
+#wsuwp-help-documents-menu a:focus {
+	background: var(--menu-focus-background);
+	color: var(--menu-focus-text);
+}
+
+#wsuwp-help-documents-menu > ul > .current_page_item > a,
+#wsuwp-help-documents-menu > ul > .current_page_ancestor > a {
+	background: var(--menu-current-background);
+	color: var(--menu-current-text);
+}
+
+#wsuwp-help-documents-menu .children a:hover,
+#wsuwp-help-documents-menu .children a:focus {
+	background: var(--menu-focus-background);
+	color: var(--menu-focus-text);
+}
+
+#wsuwp-help-documents-menu .current_page_item > .children,
+#wsuwp-help-documents-menu .current_page_ancestor > .children {
+	background: var(--menu-submenu-background);
+	bottom: auto;
+	left: auto;
+	position: relative;
+	right: auto;
+	top: auto;
+	z-index: 3;
+}
+
+#wsuwp-help-documents-menu .current_page_ancestor > .children .children {
+	background: var(--menu-subsubmenu-background);
+	border-left: 8px solid var(--menu-submenu-background);
+	font-size: calc(var(--menu-font-size) * 0.95);
+}
+
+#wsuwp-help-documents-menu .children .current_page_item > a,
+#wsuwp-help-documents-menu .children .current_page_ancestor > a {
+	background: var(--base-color-dark);
+	color: var(--menu-text);
+	font-weight: 600;
+}
+
+#wsuwp-help-documents-menu .current_page_ancestor > .children .children .current_page_item > a {
+	background: var(--menu-subsubmenu-background);
+}

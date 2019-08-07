@@ -1,0 +1,44 @@
+/*
+ * The Help Dashboard Widget
+ */
+
+#wsuwp-help-welcome p:first-of-type::before {
+	color: #82878c;
+	content: "\f339";
+	font: 400 20px/1 dashicons, sans-serif;
+	speak: none;
+	display: inline-block;
+	padding: 0 5px 0 0;
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-decoration: none !important;
+	vertical-align: top;
+}
+
+#wsuwp-help-updated {
+	border-top: 1px solid #eee;
+}
+
+.wsuwp-updated-help-documents-list li {
+	color: #72777c;
+	display: flex;
+	justify-content: space-between;
+}
+
+#wsuwp-help-access {
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+#wsuwp-help-access a {
+	margin-left: 1em;
+}
+
+#wsuwp-help-access .wsu-cougar-head {
+	height: 36px;
+	margin-right: auto;
+	width: auto;
+}
