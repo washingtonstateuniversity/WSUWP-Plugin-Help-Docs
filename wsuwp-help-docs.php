@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WSUWP Help Docs
-Version: 1.0.0-alpha-3
+Version: 1.0.0-RC-1
 Description: A plugin to create Help documents for use in the Admin area.
 Author: Adam Turner, washingtonstateuniversity
 Author URI: https://github.com/washingtonstateuniversity/
