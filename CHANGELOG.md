@@ -17,10 +17,11 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
-## 1.0.0-alpha01 (:construction: WIP 2019-04-30)
+## 1.0.0-alpha-3 (:construction: WIP 2019-08-07)
 
 ### Changed
 
+- :art: Integrate WP block styles to facilitate using the block editor to write help docs and clean up nav menu.
 - Convert uninstall from a singleton class to namespaced functions.
 - :recycle: Refactor plugin setup methods and increment PHP minimum version and WP tested version.
 - :warning: Fix php lint issues following phpcs upgrade.
