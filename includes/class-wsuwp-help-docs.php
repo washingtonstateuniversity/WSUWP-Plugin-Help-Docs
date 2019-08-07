@@ -289,6 +289,7 @@ class WSUWP_Help_Docs {
 				'wp-blocks',
 				'wp-data',
 				'wp-dom-ready',
+				'wp-editor',
 				'wp-i18n',
 			),
 			$plugin_meta['Version']

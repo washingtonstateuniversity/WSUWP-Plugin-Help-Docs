@@ -1,6 +1,7 @@
-const { registerBlockStyle } = wp.blocks;
+/**
+ * Internal dependencies
+ */
+//import { init as modifyBlockStyles } from './blocks/styles';
+import { registerHelpDocBlocks } from './blocks';
 
-registerBlockStyle( 'core/list', {
-	name: 'step-list',
-	label: 'Steps',
-} );
+registerHelpDocBlocks();
