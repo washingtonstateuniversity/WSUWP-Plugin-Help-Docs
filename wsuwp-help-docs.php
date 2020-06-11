@@ -1,16 +1,18 @@
 <?php
-/*
-Plugin Name: WSUWP Help Docs
-Version: 1.0.0-RC-1
-Description: A plugin to create Help documents for use in the Admin area.
-Author: Adam Turner, washingtonstateuniversity
-Author URI: https://github.com/washingtonstateuniversity/
-Plugin URI: https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs
-Text Domain: wsuwp-help-docs
-Requires at least: 3.5
-Tested up to: 5.2.0
-Requires PHP: 5.6
-*/
+/**
+ * Plugin Name: WSUWP Help Docs
+ * Version: 1.0.0-rc.2
+ * Description: A plugin to create Help documents for use in the Admin area.
+ * Author: Adam Turner, washingtonstateuniversity
+ * Author URI: https://github.com/washingtonstateuniversity/
+ * Plugin URI: https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs
+ * Text Domain: wsuwp-help-docs
+ * Requires at least: 5.0
+ * Tested up to: 5.3.2
+ * Requires PHP: 5.6
+ *
+ * @package WSUWP_Help_Docs
+ */
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {

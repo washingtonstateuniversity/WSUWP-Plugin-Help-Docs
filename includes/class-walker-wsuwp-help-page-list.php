@@ -42,10 +42,8 @@ class Walker_WSUWP_Help_Page_List extends Walker_Page {
 	public function start_el( &$output, $page, $depth = 0, $args = array(), $current_page = 0 ) {
 		if ( isset( $args['item_spacing'] ) && 'preserve' === $args['item_spacing'] ) {
 			$t = "\t";
-			$n = "\n";
 		} else {
 			$t = '';
-			$n = '';
 		}
 
 		if ( $depth ) {

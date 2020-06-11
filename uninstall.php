@@ -22,6 +22,11 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	die;
 }
 
+/**
+ * Triggers the uninstall processes.
+ *
+ * @since 1.0.0
+ */
 function run_uninstaller() {
 	// Remove options if not already gone.
 	if ( get_option( 'wsuwp-help-plugin-activated' ) ) {
@@ -44,8 +49,6 @@ function run_uninstaller() {
  * @return array Array of post ids.
  */
 function wsuwp_help_get_post_ids( $limit = 800 ) {
-	global $post;
-
 	if ( ! absint( $limit ) ) {
 		return array();
 	}
@@ -75,10 +78,10 @@ function wsuwp_help_get_post_ids( $limit = 800 ) {
  *       introducing timeout errors.
  */
 function delete_wsuwp_help_posts() {
-	// Get the WSUWP Help post ID list
+	// Get the WSUWP Help post ID list.
 	$help_docs_id_list = WSUWP\HelpDocs\wsuwp_help_get_post_ids();
 
-	// Move selected posts to trash
+	// Move selected posts to trash.
 	foreach ( $help_docs_id_list as $doc_id ) {
 		wp_trash_post( $doc_id );
 	}

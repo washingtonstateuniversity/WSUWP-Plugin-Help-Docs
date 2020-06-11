@@ -1,6 +1,6 @@
 # WSUWP Help Docs Changelog
 
-Authors: Adam Turner, Washington State University\
+Authors: Adam Turner, Washington State University  
 URI: https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs
 
 <!--
@@ -17,10 +17,11 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
-## 1.0.0-RC-1 (:construction: 2019-08-07)
+## 1.0.0-rc.2 (:construction: 2020-02-06)
 
 ### Changed
 
+- Increment WP required version to 5.0 and tested-up-to version to 5.3.2.
 - :art: Integrate WP block styles to facilitate using the block editor to write help docs and clean up nav menu.
 - Convert uninstall from a singleton class to namespaced functions.
 - :recycle: Refactor plugin setup methods and increment PHP minimum version and WP tested version.
@@ -32,6 +33,25 @@ Changelog formatting (http://semver.org/):
 - :warning: Update package.json lint issues.
 - :heavy_plus_sign: :heavy_minus_sign: Overhaul Composer dependencies to use updated phpcs packages and script commands.
 - :wrench: Overhaul NPM dependencies and scripts to use a build environment targeted to the WordPress block editor (using WP recommended babel, eslint, and related packages) and postCSS instead of Sass.
+- :arrow_up: @wordpress/babel-preset-default => 4.10.0
+- :arrow_up: @wordpress/eslint-plugin => 3.4.1
+- :arrow_up: @wordpress/jest-preset-default => 5.4.0
+- :arrow_up: @wordpress/npm-package-json-lint-config => 2.2.0
+- :arrow_up: eslint => 6.8.0
+- :arrow_up: jest => 25.1.0
+- :arrow_up: jest-puppeteer => 4.4.0
+- :arrow_up: npm-package-json-lint => 4.6.0
+- :arrow_up: postcss-cli => 7.1.0
+- :arrow_up: puppeteer => 2.1.1
+- :arrow_up: rimraf => 3.0.1
+- :arrow_up: stylelint => 13.0.0
+- :arrow_up: stylelint-config-wordpress => 16.0.0
+- :arrow_up: thread-loader => 2.1.3
+- :arrow_up: webpack => 4.41.5
+- :arrow_up: webpack-bundle-analyzer => 3.6.0
+- :arrow_up: webpack-cli => 3.3.1
+- :arrow_up: dealerdirect/phpcodesniffer-composer-installer => 0.6.2
+- :arrow_up: wp-coding-standards/wpcs => 2.2.1
 
 ### Added
 
@@ -42,6 +62,10 @@ Changelog formatting (http://semver.org/):
 - A config file for the NPM package json lint tool using the WP recommended configuration.
 - A config file for ES Lint using the WP recommended configuration.
 - An editorconfig file to help unify coding styles.
+- :heavy_plus_sign: squizlabs/php_codesniffer => 3.5.4
+- :heavy_plus_sign: phpcompatibility/php-compatibility => 9.2.0
+- :heavy_plus_sign: sirbrillig/phpcs-variable-analysis => 2.7
+- :heavy_plus_sign: roave/security-advisories = dev-master
 
 ## 0.7.2 (2019-08-07)
 

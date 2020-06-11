@@ -26,8 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	if ( current_user_can( 'publish_posts' ) ) {
 		?>
-		<a class="page-title-action" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' ) . self::$post_type_slug ); ?>">
-			<?php echo esc_html_x( 'Manage', 'verb. Button with limited space', 'wsu-wsuwp-help' ); ?>
+		<a class="page-title-action" href="<?php echo esc_url( admin_url( 'edit.php?post_type=' ) . WSUWP_Help_Docs::$post_type_slug ); ?>">
+			<?php echo esc_html_x( 'Manage', 'verb. Button with limited space', 'wsuwp-help-docs' ); ?>
 		</a>
 		<?php
 	}
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				 */
 				wp_list_pages(
 					array(
-						'post_type'    => self::$post_type_slug,
+						'post_type'    => WSUWP_Help_Docs::$post_type_slug,
 						'hierarchical' => true,
 						'title_li'     => '',
 						'walker'       => new Walker_WSUWP_Help_Page_List(),
