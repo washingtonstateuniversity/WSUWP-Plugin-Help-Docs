@@ -45,6 +45,6 @@ Use the [Browserlist online demo](http://browserl.ist/) (search for `> 1%,ie 8-1
 
 ### Bugs and/or Fixes for WSUP Help Docs
 
-Please submit bugs and/or fixes to: [GitHub Issues](https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs/issues). Please read (and adhere to) the guidelines for contributions detailed in [CONTRIBUTING.md](https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs/blob/master/CONTRIBUTING.md).
+Please submit bugs and/or fixes to: [GitHub Issues](https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs/issues). Please read (and adhere to) the guidelines for contributions detailed in [CONTRIBUTING.md](https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs/blob/stable/CONTRIBUTING.md).
 
-To view release & update notes, read the [CHANGELOG.md](https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs/blob/master/CHANGELOG.md).
+To view release & update notes, read the [CHANGELOG.md](https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs/blob/stable/CHANGELOG.md).

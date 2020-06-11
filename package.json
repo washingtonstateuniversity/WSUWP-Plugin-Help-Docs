@@ -16,7 +16,7 @@
 		"documentation",
 		"user-help"
 	],
-	"homepage": "https://github.com/washingtonstateuniversity/WSUWP-Plugin-Help-Docs/blob/master/README.md",
+	"homepage": "https://github.com/washingtonstateuniversity/WSUWP-Plugin-Help-Docs/blob/stable/README.md",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/washingtonstateuniversity/wsuwp-plugin-help-docs"

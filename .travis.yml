@@ -24,7 +24,7 @@ notifications:
 
 branches:
   only:
-    - master
+    - stable
 
 matrix:
   include:
