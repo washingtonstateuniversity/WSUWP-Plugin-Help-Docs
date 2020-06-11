@@ -17,10 +17,11 @@ Changelog formatting (http://semver.org/):
 ### Removed (for deprecated features removed in this release)
 -->
 
-## 1.0.0-rc.2 (:construction: 2020-02-06)
+## 1.0.0-rc.3 (:construction: 2020-02-07)
 
 ### Changed
 
+- Rename "master" branch to "stable." See the Internet Engineering Task Force (IEFT), [Terminology, Power and Oppressive Language](https://tools.ietf.org/id/draft-knodel-terminology-00.html#rfc.section.1.1.1).
 - Increment WP required version to 5.0 and tested-up-to version to 5.3.2.
 - :art: Integrate WP block styles to facilitate using the block editor to write help docs and clean up nav menu.
 - Convert uninstall from a singleton class to namespaced functions.
